@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "818746190794",
+    "firebase_url": "https://controleelevador.firebaseio.com",
+    "project_id": "controleelevador",
+    "storage_bucket": "controleelevador.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818746190794:android:32910ef62c52fe07",
+        "android_client_info": {
+          "package_name": "com.br.uellisson.controleelevador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818746190794-rfn8thf4d5icul4vpl0sjfoo1hg232gb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2NJad8JDdXdfjWUkdEKZtPFGBcXH7MRI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

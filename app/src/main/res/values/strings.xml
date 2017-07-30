@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Controle Elevador</string>
+
+    <!-- Strings login -->
+    <string name="name">Nome</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="new_password">Nova senha</string>
+    <string name="enter">Entrar</string>
+    <string name="reset_password">Recuperar Senha</string>
+    <string name="register_user">Cadastrar usuário</string>
+
+    <!-- Strings Main Activity -->
+    <string name="exit">Sair</string>
+
+
+</resources>
