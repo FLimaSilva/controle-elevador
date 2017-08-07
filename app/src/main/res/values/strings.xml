@@ -8,10 +8,19 @@
     <string name="new_password">Nova senha</string>
     <string name="enter">Entrar</string>
     <string name="reset_password">Recuperar Senha</string>
-    <string name="register_user">Cadastrar usuário</string>
+    <string name="reset_bt_label">Iniciar recuperação acesso</string>
+    <string name="reset">Recuperar acesso</string>
 
     <!-- Strings Main Activity -->
+    <string name="register_user">Cadastrar usuário</string>
+    <string name="edit_user">Editar Usuário</string>
+    <string name="delete_user">Excluir Usuário</string>
     <string name="exit">Sair</string>
+
+    <!-- Strings Permissoes -->
+    <string name="permissions.required_permission_internet">Por favor, conceda a permissão de internet para utilizar o aplicativo</string>
+    <string name="permissions.required_permissions">A permissão de gravar a imagem no seu celular é necessária para a utilização deste aplicativo</string>
+    <string name="permissions.go_to_settings">Vá para configurações e habilite as permissões necessárias</string>
 
 
 </resources>

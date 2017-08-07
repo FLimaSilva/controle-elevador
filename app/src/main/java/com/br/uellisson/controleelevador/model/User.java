@@ -1,0 +1,109 @@
+package com.br.uellisson.controleelevador.model;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+
+import com.br.uellisson.controleelevador.dados.Util;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.Map;
+
+/**
+ * Created by uellisson on 05/08/2017.
+ */
+
+public class User {
+    public static String PROVIDER = "com.br.uellisson.controleelevador.model.User.PROVIDER";
+
+    private String id;
+    private String name;
+    private String email;
+    private String password;
+    private String newPassword;
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String id, String name, String email, String password, String newPassword) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.newPassword = newPassword;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private void setNameInMap( Map<String, Object> map ) {
+        if( getName() != null ){
+            map.put( "name", getName() );
+        }
+    }
+
+    public void setNameIfNull(String name) {
+        if( this.name == null ){
+            this.name = name;
+        }
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    private void setEmailInMap( Map<String, Object> map ) {
+        if( getEmail() != null ){
+            map.put( "email", getEmail() );
+        }
+    }
+
+    public void setEmailIfNull(String email) {
+        if( this.email == null ){
+            this.email = email;
+        }
+
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void saveDB( DatabaseReference.CompletionListener... completionListener ){
+        DatabaseReference firebase = Util.getFirebase().child("users").child( getId() );
+
+        if( completionListener.length == 0 ){
+            firebase.setValue(this);
+        }
+        else{
+            firebase.setValue(this, completionListener[0]);
+        }
+    }
+
+    public void saveProviderSP(Context context, String token ){
+        Util.saveSP( context, PROVIDER, token );
+    }
+    public String getProviderSP(Context context ){
+        return( Util.getSP( context, PROVIDER) );
+    }
+}

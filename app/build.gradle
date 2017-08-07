@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE' // will not include LICENSE file
+    }
 }
 
 dependencies {
@@ -26,9 +29,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.google.firebase:firebase-core:10.2.1'
+    compile 'com.google.firebase:firebase-database:9.0.2'
+    compile 'com.google.firebase:firebase-auth:9.0.2'
+    compile 'com.google.firebase:firebase-crash:9.0.2'
+    compile 'com.firebaseui:firebase-ui:0.4.0'
+    compile 'com.firebase:firebase-client-android:2.+'
     testCompile 'junit:junit:4.12'
 }
 
