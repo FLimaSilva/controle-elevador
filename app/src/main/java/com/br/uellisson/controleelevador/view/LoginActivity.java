@@ -81,8 +81,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     user.setEmailIfNull( userFirebase.getEmail() );
                     user.saveDB();
                 }
-
-                callMainActivity();
+                callMainActivity(user.getEmail());
             }
         };
         return( callback );
@@ -112,15 +111,21 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         verifyLogin();
     }
 
-    private void callMainActivity(){
-        Intent intent = new Intent( this, MainActivity.class );
-        startActivity(intent);
+    private void callMainActivity(String email){
+        if (email.equals("admin@elevador.com")){
+            Intent intent = new Intent( this, MainActivityAdmin.class );
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent( this, MainActivityUser.class );
+            startActivity(intent);
+        }
         finish();
     }
 
     private void verifyLogged(){
         if( mAuth.getCurrentUser() != null ){
-            callMainActivity();
+            callMainActivity(mAuth.getCurrentUser().getEmail());
         }
         else{
             mAuth.addAuthStateListener( mAuthListener );

@@ -11,7 +11,7 @@ import com.br.uellisson.controleelevador.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityAdmin extends AppCompatActivity {
 
     private Button btRegisterUser;
     private Button btExit;
@@ -24,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
         btRegisterUser = (Button)findViewById(R.id.bt_register_user);
         btExit = (Button) findViewById(R.id.bt_exit);
 
+    }
+
+    public void callElevator(View view){
+        Intent intent = new Intent(getApplicationContext(), MainActivityUser.class);
+        startActivity(intent);
+        //finish();
     }
 
     public void registerUser(View view){

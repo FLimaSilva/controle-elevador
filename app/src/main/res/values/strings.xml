@@ -16,6 +16,7 @@
     <string name="edit_user">Editar Usuário</string>
     <string name="delete_user">Excluir Usuário</string>
     <string name="exit">Sair</string>
+    <string name="call_elevator">Chamar Elevador</string>
 
     <!-- Strings Permissoes -->
     <string name="permissions.required_permission_internet">Por favor, conceda a permissão de internet para utilizar o aplicativo</string>
