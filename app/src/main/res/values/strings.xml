@@ -11,6 +11,12 @@
     <string name="reset_bt_label">Iniciar recuperação acesso</string>
     <string name="reset">Recuperar acesso</string>
 
+    <!-- Strings Register -->
+    <string name="floors_allowed">Andares permitidos</string>
+    <string name="floors_one">1º Andar</string>
+    <string name="floors_two">2º Andar</string>
+    <string name="floors_three">3º Andar</string>
+
     <!-- Strings Main Activity -->
     <string name="register_user">Cadastrar usuário</string>
     <string name="edit_user">Editar Usuário</string>

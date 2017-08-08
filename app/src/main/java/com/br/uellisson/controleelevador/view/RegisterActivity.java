@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
 import com.br.uellisson.controleelevador.model.User;
@@ -81,9 +82,19 @@ public class RegisterActivity extends BaseActivity implements DatabaseReference.
     }
 
     public void sendSignUpData( View view ){
-        openProgressBar();
         initUser();
-        saveUser();
+        if (user!=null){
+            if (user.getEmail().equals("") || user.getPassword().equals("")){
+                Toast.makeText(this, "Preencha todos as informações", Toast.LENGTH_LONG).show();
+            }
+            else {
+                openProgressBar();
+                saveUser();
+            }
+        }
+        else {
+            Toast.makeText(this, "Preencha todos as informações", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void saveUser(){
@@ -112,7 +123,6 @@ public class RegisterActivity extends BaseActivity implements DatabaseReference.
     @Override
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
         mAuth.signOut();
-
         showToast( "Conta criada com sucesso!" );
         closeProgressBar();
         finish();

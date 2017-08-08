@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
 import com.br.uellisson.controleelevador.model.User;
@@ -105,10 +106,20 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     }
 
     public void sendLoginData( View view ){
-        FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginData()");
-        openProgressBar();
-        initUser();
-        verifyLogin();
+        if (user!=null){
+            initUser();
+            if (user.getEmail().equals("")||user.getPassword().equals("")){
+                Toast.makeText(this, "Preencha todos as informações", Toast.LENGTH_LONG).show();
+            }
+            else{
+                FirebaseCrash.log("LoginActivity:clickListener:button:sendLoginData()");
+                openProgressBar();
+                verifyLogin();
+            }
+        }
+        else {
+            Toast.makeText(this, "Preencha todos as informações", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void callMainActivity(String email){

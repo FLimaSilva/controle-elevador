@@ -33,17 +33,19 @@
 
         <Button
             android:id="@+id/bt_edit_user"
-            android:onClick="editUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_user" />
+            android:onClick="editUser"
+            android:text="@string/edit_user"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/bt_delete_user"
-            android:onClick="deleteUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/delete_user" />
+            android:onClick="deleteUser"
+            android:text="@string/delete_user"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/bt_exit"

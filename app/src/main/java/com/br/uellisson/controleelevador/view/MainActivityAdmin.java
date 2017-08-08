@@ -35,7 +35,6 @@ public class MainActivityAdmin extends AppCompatActivity {
     public void registerUser(View view){
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void editUser(View view){
