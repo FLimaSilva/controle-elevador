@@ -1,11 +1,13 @@
 package com.br.uellisson.controleelevador.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 
 import com.br.uellisson.controleelevador.dados.Util;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -20,24 +22,47 @@ public class User {
     private String email;
     private String password;
     private String newPassword;
+    private ArrayList<Integer> floorsAllowed;
 
+    /**
+     * Construtor login usuario
+     * @param email
+     * @param password
+     */
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public User(String name, String email, String password) {
+    /** Contrutor cadastro usuario
+      * @param name
+     * @param email
+     * @param password
+     * @param floorsAllowed
+     */
+    public User(String name, String email, String password, ArrayList<Integer> floorsAllowed) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.floorsAllowed = floorsAllowed;
     }
 
-    public User(String id, String name, String email, String password, String newPassword) {
+    /**
+     * Construtor Editar usuario
+     * @param id
+     * @param name
+     * @param email
+     * @param password
+     * @param newPassword
+     * @param floorsAllowed
+     */
+    public User(String id, String name, String email, String password, String newPassword, ArrayList<Integer> floorsAllowed) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.newPassword = newPassword;
+        this.floorsAllowed = floorsAllowed;
     }
 
     public String getId() {
@@ -89,7 +114,11 @@ public class User {
         return newPassword;
     }
 
-    public void saveDB( DatabaseReference.CompletionListener... completionListener ){
+    public ArrayList<Integer> getFloorsAllowed() {
+        return floorsAllowed;
+    }
+
+    public void saveDB(DatabaseReference.CompletionListener... completionListener ){
         DatabaseReference firebase = Util.getFirebase().child("users").child( getId() );
 
         if( completionListener.length == 0 ){

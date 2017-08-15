@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.br.uellisson.controleelevador.view.RegisterActivity">
+    tools:context="com.br.uellisson.controleelevador.view.UserActivity">
 
     <!-- progress -->
 
@@ -35,6 +35,12 @@
                 android:text="@string/name"
                 android:textSize="@dimen/medium_text"
                 android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spn_users"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
             <EditText
                 android:id="@+id/et_name"
@@ -91,7 +97,7 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
+                    android:id="@+id/checkBox1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/floors_one" />
@@ -104,7 +110,7 @@
                     android:text="@string/floors_two" />
 
                 <CheckBox
-                    android:id="@+id/checkBox"
+                    android:id="@+id/checkBox3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/min_margin"

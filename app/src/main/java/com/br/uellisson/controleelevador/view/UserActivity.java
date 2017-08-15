@@ -1,12 +1,17 @@
 package com.br.uellisson.controleelevador.view;
 
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
@@ -21,18 +26,25 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
-public class RegisterActivity extends BaseActivity implements DatabaseReference.CompletionListener{
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserActivity extends BaseActivity implements DatabaseReference.CompletionListener{
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private User user;
     private EditText name;
-
+    private Spinner spnUsers;
+    private ArrayList<Integer> floorsAllowed;
+    private CheckBox checkBox1;
+    private CheckBox checkBox2;
+    private CheckBox checkBox3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_user);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -48,12 +60,19 @@ public class RegisterActivity extends BaseActivity implements DatabaseReference.
                     }
 
                     user.setId( firebaseUser.getUid() );
-                    user.saveDB(RegisterActivity.this);
+                    user.saveDB(UserActivity.this);
                 }
             }
         };
 
         initViews();
+        ArrayList<User> listUsers = new ArrayList<>();
+        floorsAllowed = new ArrayList<>();
+        floorsAllowed.add(1);
+        User user2 = new User("uel", "@uel", "123456", floorsAllowed);
+        listUsers.add(user2);
+        actionSpinner(listUsers);
+        actionCheckBox();
     }
 
     @Override
@@ -75,10 +94,14 @@ public class RegisterActivity extends BaseActivity implements DatabaseReference.
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_password);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);
+        spnUsers = (Spinner) findViewById(R.id.spn_users);
+        checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
+        checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
+        checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
     }
 
     protected void initUser(){
-        user = new User(name.getText().toString(), email.getText().toString(),password.getText().toString());
+        user = new User(name.getText().toString(), email.getText().toString(),password.getText().toString(), floorsAllowed);
     }
 
     public void sendSignUpData( View view ){
@@ -126,5 +149,50 @@ public class RegisterActivity extends BaseActivity implements DatabaseReference.
         showToast( "Conta criada com sucesso!" );
         closeProgressBar();
         finish();
+    }
+
+    public void actionSpinner(final ArrayList<User> listUsers) {
+        spnUsers.setAdapter(populateAdapter(listUsers));
+        spnUsers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+                name.setText(listUsers.get(position).getName());
+                email.setText(listUsers.get(position).getEmail());
+                password.setText(listUsers.get(position).getPassword());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public ArrayAdapter<String> populateAdapter(ArrayList<User> listUsers){
+        final ArrayList<String> listUserNames = new ArrayList<>();
+        ArrayAdapter<String> adapter;
+        for (int i = 0; i<listUsers.size(); i++){
+            listUserNames.add(i, listUsers.get(i).getName());
+        }
+
+        adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, listUserNames);
+
+        return adapter;
+    }
+
+    public void actionCheckBox(){
+        checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    Toast.makeText(getApplicationContext(), "Selecionou 1º Andar", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "1º Andar", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
     }
 }
