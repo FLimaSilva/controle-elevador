@@ -22,7 +22,7 @@ public class User {
     private String email;
     private String password;
     private String newPassword;
-    private ArrayList<Integer> floorsAllowed;
+    private Integer[] floorsAllowed;
 
     /**
      * Construtor login usuario
@@ -40,7 +40,7 @@ public class User {
      * @param password
      * @param floorsAllowed
      */
-    public User(String name, String email, String password, ArrayList<Integer> floorsAllowed) {
+    public User(String name, String email, String password, Integer[] floorsAllowed) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -56,7 +56,7 @@ public class User {
      * @param newPassword
      * @param floorsAllowed
      */
-    public User(String id, String name, String email, String password, String newPassword, ArrayList<Integer> floorsAllowed) {
+    public User(String id, String name, String email, String password, String newPassword, Integer[] floorsAllowed) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -114,7 +114,7 @@ public class User {
         return newPassword;
     }
 
-    public ArrayList<Integer> getFloorsAllowed() {
+    public Integer[] getFloorsAllowed() {
         return floorsAllowed;
     }
 

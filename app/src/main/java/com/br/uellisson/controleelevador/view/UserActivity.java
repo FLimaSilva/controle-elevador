@@ -36,7 +36,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     private User user;
     private EditText name;
     private Spinner spnUsers;
-    private ArrayList<Integer> floorsAllowed;
+    private Integer[] floorsAllowed = {0, 0, 0};
     private CheckBox checkBox1;
     private CheckBox checkBox2;
     private CheckBox checkBox3;
@@ -67,10 +67,6 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
 
         initViews();
         ArrayList<User> listUsers = new ArrayList<>();
-        floorsAllowed = new ArrayList<>();
-        floorsAllowed.add(1);
-        User user2 = new User("uel", "@uel", "123456", floorsAllowed);
-        listUsers.add(user2);
         actionSpinner(listUsers);
         actionCheckBox();
     }
@@ -186,13 +182,52 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    Toast.makeText(getApplicationContext(), "Selecionou 1º Andar", Toast.LENGTH_LONG).show();
+                    floorsAllowed[0] = 1;
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "1º Andar", Toast.LENGTH_LONG).show();
+                    floorsAllowed[0] = 0;
                 }
+                andares();
 
             }
         });
+
+        checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    floorsAllowed[1] = 2;
+                }
+                else {
+                    floorsAllowed[1] = 0;
+                }
+                andares();
+
+            }
+        });
+
+        checkBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    floorsAllowed[2] = 3;
+                }
+                else {
+                    floorsAllowed[2] = 0;
+                }
+                andares();
+
+            }
+        });
+
+        //Toast.makeText(getApplicationContext(), floorsAllowed.get(0).toString()+"-"+floorsAllowed.get(1).toString()+"-"+floorsAllowed.get(2).toString(), Toast.LENGTH_SHORT).show();
+    }
+    public void andares(){
+//        String andares = "";
+//        for (int i = 0; i<floorsAllowed.length; i++){
+//            andares = andares +"-"+floorsAllowed[i];
+//        }
+//
+//        //Toast.makeText(getApplicationContext(), andares, Toast.LENGTH_SHORT).show();
     }
 }
