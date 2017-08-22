@@ -25,7 +25,7 @@ public class MainActivityAdmin extends AppCompatActivity {
     }
 
     public void callElevator(View view){
-        Intent intent = new Intent(getApplicationContext(), MainActivityUser.class);
+        Intent intent = new Intent(getApplicationContext(), CallElevatorActivity.class);
         startActivity(intent);
         //finish();
     }

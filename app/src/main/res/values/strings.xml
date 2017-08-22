@@ -29,5 +29,8 @@
     <string name="permissions.required_permissions">A permissão de gravar a imagem no seu celular é necessária para a utilização deste aplicativo</string>
     <string name="permissions.go_to_settings">Vá para configurações e habilite as permissões necessárias</string>
 
+    <!-- Strings Call Elevator -->
+    <string name="origin">Você está no: </string>
+    <string name="destination">Deseja ir para:</string>
 
 </resources>
