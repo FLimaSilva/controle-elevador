@@ -36,7 +36,8 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     private User user;
     private EditText name;
     private Spinner spnUsers;
-    private Integer[] floorsAllowed = {0, 0, 0};
+    private String floorsAllowed;
+    private Integer[] arrayFloors = {0, 0, 0};
     private CheckBox checkBox1;
     private CheckBox checkBox2;
     private CheckBox checkBox3;
@@ -97,6 +98,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     }
 
     protected void initUser(){
+        floorsAllowed = arrayFloors[0].toString()+arrayFloors[1].toString()+arrayFloors[2].toString();
         user = new User(name.getText().toString(), email.getText().toString(),password.getText().toString(), floorsAllowed);
     }
 
@@ -182,13 +184,11 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    floorsAllowed[0] = 1;
+                    arrayFloors[0] = 1;
                 }
                 else {
-                    floorsAllowed[0] = 0;
+                    arrayFloors[0] = 0;
                 }
-                andares();
-
             }
         });
 
@@ -196,13 +196,11 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    floorsAllowed[1] = 2;
+                    arrayFloors[1] = 2;
                 }
                 else {
-                    floorsAllowed[1] = 0;
+                    arrayFloors[1] = 0;
                 }
-                andares();
-
             }
         });
 
@@ -210,24 +208,12 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    floorsAllowed[2] = 3;
+                    arrayFloors[2] = 3;
                 }
                 else {
-                    floorsAllowed[2] = 0;
+                    arrayFloors[2] = 0;
                 }
-                andares();
-
             }
         });
-
-        //Toast.makeText(getApplicationContext(), floorsAllowed.get(0).toString()+"-"+floorsAllowed.get(1).toString()+"-"+floorsAllowed.get(2).toString(), Toast.LENGTH_SHORT).show();
-    }
-    public void andares(){
-//        String andares = "";
-//        for (int i = 0; i<floorsAllowed.length; i++){
-//            andares = andares +"-"+floorsAllowed[i];
-//        }
-//
-//        //Toast.makeText(getApplicationContext(), andares, Toast.LENGTH_SHORT).show();
     }
 }
