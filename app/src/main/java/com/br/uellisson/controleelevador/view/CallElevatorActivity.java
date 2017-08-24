@@ -23,7 +23,8 @@ public class CallElevatorActivity extends AppCompatActivity {
     private CheckedTextView checkOrigin1;
     private CheckedTextView checkOrigin2;
     private CheckedTextView checkOrigin3;
-
+    int origin;
+    int destination;
 
 
     @Override
@@ -67,6 +68,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedOrigin();
                     checkOriginT.setChecked(true);
+                    origin = 0;
                 }
             }
         });
@@ -79,6 +81,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedOrigin();
                     checkOrigin1.setChecked(true);
+                    origin = 1;
                 }
             }
         });
@@ -91,6 +94,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedOrigin();
                     checkOrigin2.setChecked(true);
+                    origin = 2;
                 }
             }
         });
@@ -103,6 +107,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedOrigin();
                     checkOrigin3.setChecked(true);
+                    origin = 3;
                 }
             }
         });
@@ -125,6 +130,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedDestination();
                     checkDestinationT.setChecked(true);
+                    destination = 0;
                 }
             }
         });
@@ -137,6 +143,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedDestination();
                     checkDestination1.setChecked(true);
+                    destination = 1;
                 }
             }
         });
@@ -149,6 +156,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedDestination();
                     checkDestination2.setChecked(true);
+                    destination = 2;
                 }
             }
         });
@@ -161,6 +169,7 @@ public class CallElevatorActivity extends AppCompatActivity {
                 else {
                     unCheckedDestination();
                     checkDestination3.setChecked(true);
+                    origin = 3;
                 }
             }
         });
@@ -182,6 +191,18 @@ public class CallElevatorActivity extends AppCompatActivity {
             ivDown.setEnabled(true);
             ivUp.setEnabled(false);
         }
+    }
+
+    public void callElevator(View view){
+        if (origin<destination){
+            ivUp.setEnabled(true);
+            ivDown.setEnabled(false);
+        }
+        else {
+            ivDown.setEnabled(true);
+            ivUp.setEnabled(false);
+        }
+        Toast.makeText(this, "O elevador está vindo", Toast.LENGTH_SHORT).show();
     }
 }
 

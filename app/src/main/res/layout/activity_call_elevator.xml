@@ -93,7 +93,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:checked="true"/>
 
         <CheckedTextView
             android:id="@+id/check_origin_1"
@@ -132,7 +133,7 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
 
     </LinearLayout>
@@ -206,7 +207,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:checked="true"/>
     </LinearLayout>
 
     <LinearLayout
@@ -226,7 +228,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_margin"
             android:text="@string/call_elevator"
-            android:textSize="@dimen/big_text" />
+            android:textSize="@dimen/big_text"
+            android:onClick="callElevator"/>
 
     </LinearLayout>
 
