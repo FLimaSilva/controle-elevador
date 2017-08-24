@@ -15,6 +15,7 @@ public class CallElevatorActivity extends AppCompatActivity {
 
     private ImageView ivUp;
     private ImageView ivDown;
+    private ImageView ivElevator;
     private CheckedTextView checkDestinationT;
     private CheckedTextView checkDestination1;
     private CheckedTextView checkDestination2;
@@ -34,6 +35,7 @@ public class CallElevatorActivity extends AppCompatActivity {
 
         ivUp = (ImageView)findViewById(R.id.iv_up);
         ivDown = (ImageView)findViewById(R.id.iv_down);
+        ivElevator = (ImageView) findViewById(R.id.iv_elevator);
 
         checkOriginT = (CheckedTextView) findViewById(R.id.check_origin_t);
         checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
@@ -198,10 +200,11 @@ public class CallElevatorActivity extends AppCompatActivity {
             ivUp.setEnabled(true);
             ivDown.setEnabled(false);
         }
-        else {
+        else if(origin>destination){
             ivDown.setEnabled(true);
             ivUp.setEnabled(false);
         }
+        ivElevator.setImageResource(R.mipmap.elevator_close);
         Toast.makeText(this, "O elevador está vindo", Toast.LENGTH_SHORT).show();
     }
 }
