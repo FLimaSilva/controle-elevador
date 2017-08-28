@@ -18,20 +18,7 @@ public class UserRecyclerAdapter extends FirebaseRecyclerAdapter<UserUI, UserVie
     }
     @Override
     protected void populateViewHolder(UserViewHolder userViewHolder, UserUI user, int i) {
-        listUsers.add(user);
-
-
-
-
-
-
-
-
-
-
-
-
-        userViewHolder.text1.setText( user.getName() );
-        userViewHolder.text2.setText( user.getEmail() );
+        //listUsers.add(user);
+        userViewHolder.text1.setText(user.getFloorsAllowed());
     }
 }

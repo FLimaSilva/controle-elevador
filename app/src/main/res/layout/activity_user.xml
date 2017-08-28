@@ -125,14 +125,14 @@
                 android:onClick="sendSignUpData"
                 android:text="@string/register_user" />
 
-            <android.support.v7.widget.RecyclerView
+            <!--<android.support.v7.widget.RecyclerView
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:id="@+id/rv_users"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"/>
+                android:visibility="gone"/>-->
         </LinearLayout>
 
 

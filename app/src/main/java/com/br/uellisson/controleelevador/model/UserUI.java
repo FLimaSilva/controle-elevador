@@ -9,6 +9,7 @@ public class UserUI {
     private String id;
     private String name;
     private String password;
+    private String floorsAllowed;
 
 
     public UserUI(){}
@@ -18,6 +19,14 @@ public class UserUI {
         this.id = id;
         this.name = name;
         this.password = password;
+    }
+
+    public UserUI(String email, String id, String name, String password, String floorsAllowed) {
+        this.email = email;
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.floorsAllowed = floorsAllowed;
     }
 
     public static String getPROVIDER() {
@@ -58,6 +67,14 @@ public class UserUI {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFloorsAllowed() {
+        return floorsAllowed;
+    }
+
+    public void setFloorsAllowed(String floorsAllowed) {
+        this.floorsAllowed = floorsAllowed;
     }
 
     //

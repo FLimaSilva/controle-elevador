@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener{
     private User user;
@@ -85,6 +86,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 callMainActivity(user.getEmail());
             }
         };
+
         return( callback );
     }
 
@@ -126,6 +128,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         if (email.equals("admin@elevador.com")){
             Intent intent = new Intent( this, MainActivityAdmin.class );
             startActivity(intent);
+
         }
         else {
             Intent intent = new Intent( this, CallElevatorActivity.class );

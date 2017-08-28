@@ -24,6 +24,9 @@ public class User {
     private String newPassword;
     private String floorsAllowed;
 
+    public User() {
+    }
+
     /**
      * Construtor login usuario
      * @param email
@@ -116,6 +119,13 @@ public class User {
 
     public String getFloorsAllowed() {
         return floorsAllowed;
+    }
+
+    public void setFloorsAllowedIfNull(String email) {
+        if( this.floorsAllowed == null ){
+            this.floorsAllowed = floorsAllowed;
+        }
+
     }
 
     public void saveDB(DatabaseReference.CompletionListener... completionListener ){
