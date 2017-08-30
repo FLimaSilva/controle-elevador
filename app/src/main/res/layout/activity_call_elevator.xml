@@ -7,24 +7,35 @@
     android:layout_height="match_parent"
     tools:context="com.br.uellisson.controleelevador.view.CallElevatorActivity">
 
+    <include
+        android:id="@+id/m_toolbar"
+        layout="@layout/toolbar_custom" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/min_margin"
+        app:srcCompat="@drawable/keyboard_backspace" />
+
     <TextView
         android:id="@+id/tv_floor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/m_toolbar"
         android:layout_marginBottom="@dimen/min_margin"
         android:layout_marginTop="@dimen/min_margin"
-        android:layout_weight="1"
         android:text=" 2º"
         android:textAlignment="center"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="@dimen/xbig_text"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/layout_elevator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_floor"
+        android:layout_below="@id/tv_floor"
         android:layout_marginLeft="@dimen/min_margin"
         android:layout_marginRight="@dimen/min_margin"
         android:orientation="horizontal"
@@ -64,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/layout_elevator"
+        android:layout_below="@id/layout_elevator"
         android:layout_marginLeft="@dimen/h_margin"
         android:layout_marginRight="@dimen/h_margin"
         android:layout_marginTop="@dimen/fab_margin"
@@ -142,7 +153,7 @@
         android:id="@+id/destination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_origin"
+        android:layout_below="@id/layout_origin"
         android:layout_marginLeft="@dimen/h_margin"
         android:layout_marginRight="@dimen/h_margin"
         android:layout_marginTop="@dimen/normal_margin"
@@ -216,7 +227,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/destination"
+        android:layout_below="@id/destination"
         android:layout_marginLeft="@dimen/normal_margin"
         android:layout_marginRight="@dimen/normal_margin"
         android:gravity="center_vertical|center_horizontal"
@@ -236,7 +247,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_call"
+        android:layout_below="@id/layout_call"
         android:layout_marginBottom="@dimen/min_margin"
         android:gravity="bottom|center_horizontal"
         android:orientation="horizontal">

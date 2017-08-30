@@ -10,6 +10,9 @@
     <string name="reset_password">Recuperar Senha</string>
     <string name="reset_bt_label">Iniciar recuperação acesso</string>
     <string name="reset">Recuperar acesso</string>
+    <string name="notifications">Notificações</string>
+    <string name="report_ls_ld">Limite de Subida e Descida </string>
+    <string name="report_frequency">Frequênica de Uso</string>
 
     <!-- Strings Register -->
     <string name="floors_allowed">Andares permitidos</string>

@@ -43,6 +43,21 @@ public class MainActivityAdmin extends AppCompatActivity {
 
     }
 
+    public void clickReportLsLd(View view){
+        Intent intent = new Intent(getApplicationContext(), ReportLsLd.class);
+        startActivity(intent);
+    }
+
+    public void clickReportFrequency(View view){
+        Intent intent = new Intent(getApplicationContext(), ReportFrequency.class);
+        startActivity(intent);
+    }
+
+    public void clickNotification(View view){
+        Intent intent = new Intent(getApplicationContext(), NotificationsActivity.class);
+        startActivity(intent);
+    }
+
     public void exitApp(View view){
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

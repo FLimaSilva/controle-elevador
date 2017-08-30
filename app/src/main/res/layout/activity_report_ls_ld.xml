@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.br.uellisson.controleelevador.view.ReportLsLd">
+
+    <TextView
+        android:id="@+id/tv_reports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/report_ls_ld"
+        android:textSize="@dimen/big_text"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/min_margin"
+        android:layout_marginLeft="@dimen/min_margin"
+        android:layout_marginRight="@dimen/min_margin"
+    />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/min_margin"
+        android:layout_marginRight="@dimen/min_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/tv_reports">
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

@@ -7,52 +7,83 @@
     android:gravity="bottom"
     tools:context="com.br.uellisson.controleelevador.view.MainActivityAdmin">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button3"
-            android:onClick="callElevator"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/call_elevator" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginRight="@dimen/normal_margin"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/bt_register_user"
-            android:onClick="registerUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_user" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/normal_margin"
+                app:srcCompat="@mipmap/monitor" />
 
-        <Button
-            android:id="@+id/bt_edit_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="editUser"
-            android:text="@string/edit_user"
-            android:visibility="gone" />
+            <Button
+                android:id="@+id/bt_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickNotification"
+                android:text="@string/notifications" />
 
-        <Button
-            android:id="@+id/bt_delete_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="deleteUser"
-            android:text="@string/delete_user"
-            android:visibility="gone" />
+            <Button
+                android:id="@+id/bt_report_ls_ld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickReportLsLd"
+                android:text="@string/report_ls_ld" />
 
-        <Button
-            android:id="@+id/bt_exit"
-            android:onClick="exitApp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/exit" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/bt_register_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="registerUser"
+                android:text="@string/register_user" />
+
+            <Button
+                android:id="@+id/bt_report_frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickReportFrequency"
+                android:text="@string/report_frequency" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="callElevator"
+                android:text="@string/call_elevator" />
+
+            <Button
+                android:id="@+id/bt_edit_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="editUser"
+                android:text="@string/edit_user"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_delete_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="deleteUser"
+                android:text="@string/delete_user"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="exitApp"
+                android:text="@string/exit" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
