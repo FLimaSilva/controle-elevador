@@ -27,18 +27,11 @@
                 app:srcCompat="@mipmap/monitor" />
 
             <Button
-                android:id="@+id/bt_notification"
+                android:id="@+id/bt_call_elevator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="clickNotification"
-                android:text="@string/notifications" />
-
-            <Button
-                android:id="@+id/bt_report_ls_ld"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="clickReportLsLd"
-                android:text="@string/report_ls_ld" />
+                android:onClick="callElevator"
+                android:text="@string/call_elevator" />
 
             <Button
                 android:id="@+id/bt_register_user"
@@ -46,20 +39,6 @@
                 android:layout_height="wrap_content"
                 android:onClick="registerUser"
                 android:text="@string/register_user" />
-
-            <Button
-                android:id="@+id/bt_report_frequency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="clickReportFrequency"
-                android:text="@string/report_frequency" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="callElevator"
-                android:text="@string/call_elevator" />
 
             <Button
                 android:id="@+id/bt_edit_user"
@@ -76,6 +55,27 @@
                 android:onClick="deleteUser"
                 android:text="@string/delete_user"
                 android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bt_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickNotification"
+                android:text="@string/notifications" />
+
+            <Button
+                android:id="@+id/bt_report_ls_ld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickReportLsLd"
+                android:text="@string/report_ls_ld" />
+
+            <Button
+                android:id="@+id/bt_report_frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickReportFrequency"
+                android:text="@string/report_frequency" />
 
             <Button
                 android:id="@+id/bt_exit"

@@ -5,6 +5,17 @@
     android:id="@+id/toolbar_custom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:title="@string/app_name"
+    android:titleTextColor="@color/colorWhite"
     android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp" />
 
 </android.support.v7.widget.Toolbar>

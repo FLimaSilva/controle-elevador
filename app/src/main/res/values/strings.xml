@@ -36,4 +36,8 @@
     <string name="origin">Você está no: </string>
     <string name="destination">Deseja ir para:</string>
 
+    <!-- Strings Titulo das telas -->
+    <string name="manager_elevator">Gestão do elevador </string>
+    <string name="login">Login </string>
+
 </resources>

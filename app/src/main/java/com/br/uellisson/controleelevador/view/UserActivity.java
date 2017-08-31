@@ -49,6 +49,8 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
 
         mAuth = FirebaseAuth.getInstance();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.register_user));
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override

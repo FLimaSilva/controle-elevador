@@ -9,15 +9,9 @@ public class NotificationsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.notifications));
     }
 
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void initUser() {
-
-    }
 }

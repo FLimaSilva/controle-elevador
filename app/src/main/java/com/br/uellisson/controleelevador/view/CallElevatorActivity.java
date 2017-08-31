@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
@@ -21,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
-public class CallElevatorActivity extends AppCompatActivity {
+public class CallElevatorActivity extends BaseActivity {
 
     private ImageView ivUp;
     private ImageView ivDown;
@@ -45,6 +47,12 @@ public class CallElevatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_elevator);
+
+        //mToolbar = (Toolbar) findViewById(R.id.toolbar_custom);
+       // mToolbar.setTitle("Uellisson");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.call_elevator));
 
         ivUp = (ImageView)findViewById(R.id.iv_up);
         ivDown = (ImageView)findViewById(R.id.iv_down);

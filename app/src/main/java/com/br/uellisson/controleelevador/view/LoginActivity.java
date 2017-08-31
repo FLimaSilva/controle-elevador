@@ -58,6 +58,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_password);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.login));
     }
 
     protected void initUser(){

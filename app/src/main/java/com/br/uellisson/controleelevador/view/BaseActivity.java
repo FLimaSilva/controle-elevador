@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -36,6 +37,14 @@ abstract public class BaseActivity extends AppCompatActivity {
                 .setAction("Action", null).show();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return false;
+    }
+
     protected void showToast( String message ){
         Toast.makeText(this,
                 message,
@@ -51,9 +60,8 @@ abstract public class BaseActivity extends AppCompatActivity {
         progressBar.setVisibility( View.GONE );
     }
 
-    abstract protected void initViews();
-
-    abstract protected void initUser();
+    //abstract protected void initViews();
+    //abstract protected void initUser();
 
 
     /**

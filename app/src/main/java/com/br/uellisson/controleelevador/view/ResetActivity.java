@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crash.FirebaseCrash;
 
-public class ResetActivity extends AppCompatActivity {
+public class ResetActivity extends BaseActivity {
 
     private AutoCompleteTextView email;
     private FirebaseAuth firebaseAuth;
