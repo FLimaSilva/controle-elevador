@@ -35,7 +35,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.NotificationsActivity" />
         <activity android:name=".view.ReportLsLd" />
-        <activity android:name=".view.ReportFrequency"></activity>
+        <activity android:name=".view.ReportFrequencyActivity"></activity>
     </application>
 
 </manifest>

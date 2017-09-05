@@ -14,7 +14,7 @@ public class UserRecyclerAdapter extends FirebaseRecyclerAdapter<UserUI, UserVie
             int modelLayout,
             Class<UserViewHolder> viewHolderClass,
             Query ref ){
-        super( modelClass, modelLayout, viewHolderClass, ref );
+        super(modelClass, modelLayout, viewHolderClass, ref);
     }
     @Override
     protected void populateViewHolder(UserViewHolder userViewHolder, UserUI user, int i) {

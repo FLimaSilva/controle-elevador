@@ -5,22 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.br.uellisson.controleelevador.view.ReportFrequency">
-
-    <TextView
-        android:id="@+id/tv_reports"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/report_frequency"
-        android:textSize="@dimen/big_text"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_marginTop="@dimen/min_margin"
-        android:layout_marginLeft="@dimen/min_margin"
-        android:layout_marginRight="@dimen/min_margin"
-        />
+    tools:context="com.br.uellisson.controleelevador.view.ReportFrequencyActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_frequency"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/min_margin"
