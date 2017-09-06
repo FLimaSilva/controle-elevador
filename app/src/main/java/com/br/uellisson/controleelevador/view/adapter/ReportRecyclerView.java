@@ -19,7 +19,9 @@ public class ReportRecyclerView extends FirebaseRecyclerAdapter<FrequencyUse, Re
 
     @Override
     protected void populateViewHolder(ReportViewHolder viewHolder, FrequencyUse model, int position) {
-        viewHolder.text1.setText(model.getUserName());
-        viewHolder.text2.setText(model.getDate());
+        viewHolder.tvRoute.setText(model.getRoute());
+        viewHolder.tvUser.setText(model.getUserName());
+        viewHolder.tvDate.setText(model.getDate());
+        viewHolder.tvHour.setText(model.getHour());
     }
 }

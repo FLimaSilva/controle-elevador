@@ -50,7 +50,7 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         rvUsers.setLayoutManager( new LinearLayoutManager(this));
         ReportRecyclerView adapter = new ReportRecyclerView(
                 FrequencyUse.class,
-                android.R.layout.two_line_list_item,
+                R.layout.item_report,
                 ReportViewHolder.class,
                 databaseReference.child("frequency_use") );
 

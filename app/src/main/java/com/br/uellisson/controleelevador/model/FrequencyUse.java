@@ -16,23 +16,23 @@ import java.util.Map;
  * o relatório de frequência de uso do elevador
  */
 public class FrequencyUse {
+    private String route;
+    private String userName;
     private String date;
     private String hour;
-    private String userName;
 
     /**
      * Contrutor do objeto
-     * @param date
-     * @param hour
-     * @param userName
      */
-    public FrequencyUse(String date, String hour, String userName) {
-        this.date = date;
-        this.hour = hour;
-        this.userName = userName;
+    public FrequencyUse() {
     }
 
-    public FrequencyUse() {
+    public String getRoute() {
+        return route;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public String getDate() {
@@ -43,10 +43,11 @@ public class FrequencyUse {
         return hour;
     }
 
-    public String getUserName() {
-        return userName;
+    private void seRouteInMap( Map<String, Object> map ) {
+        if( getUserName() != null ){
+            map.put( "route", getRoute() );
+        }
     }
-
 
     private void setUserNameInMap( Map<String, Object> map ) {
         if( getUserName() != null ){
