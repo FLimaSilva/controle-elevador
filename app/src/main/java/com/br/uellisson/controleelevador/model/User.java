@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.br.uellisson.controleelevador.dados.Util;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -144,5 +145,10 @@ public class User {
     }
     public String getProviderSP(Context context ){
         return( Util.getSP( context, PROVIDER) );
+    }
+
+    public void dataUser(Context context ){
+        DatabaseReference firebase = Util.getFirebase().child("users");
+        firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
     }
 }

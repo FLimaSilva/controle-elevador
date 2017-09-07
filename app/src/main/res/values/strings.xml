@@ -40,10 +40,13 @@
     <string name="manager_elevator">Gestão do elevador </string>
     <string name="login">Login </string>
 
-    <!-- Strings Header -->
+    <!-- Strings report_frequency -->
     <string name="route">Rota </string>
     <string name="user">Usuário</string>
     <string name="date">Data </string>
     <string name="hour">Hora</string>
+    <string name="first_use">Primeiro uso: </string>
+    <string name="last_use">Último uso: </string>
+    <string name="quantity_call">Quantidade de chamadas: </string>
 
 </resources>

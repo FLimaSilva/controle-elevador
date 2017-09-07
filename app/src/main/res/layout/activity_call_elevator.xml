@@ -167,7 +167,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:checked="true"/>
 
         <CheckedTextView
             android:id="@+id/check_destination_1"
@@ -206,8 +207,7 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold"
-            android:checked="true"/>
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout

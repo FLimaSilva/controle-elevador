@@ -3,77 +3,99 @@ package com.br.uellisson.controleelevador.model;
 import android.content.Context;
 
 import com.br.uellisson.controleelevador.dados.Util;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by uellisson on 31/08/2017.
- *
- * Modelo do objeto que representa
- * o relatório de frequência de uso do elevador
+ * Created by uellisson on 07/09/2017.
  */
+@IgnoreExtraProperties
 public class FrequencyUse {
-    private String route;
-    private String userName;
-    private String date;
-    private String hour;
 
-    /**
-     * Contrutor do objeto
-     */
+   // private CallElevator calls;
+    private String firstUse;
+    private String lastUse;
+    private int quantityCall;
+
     public FrequencyUse() {
     }
 
-    public String getRoute() {
-        return route;
+    public String getFirstUse() {
+        return firstUse;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getHour() {
-        return hour;
-    }
-
-    private void seRouteInMap( Map<String, Object> map ) {
-        if( getUserName() != null ){
-            map.put( "route", getRoute() );
+    private void setFirstUseInMap( Map<String, Object> map ) {
+        if( getFirstUse() != null ){
+            map.put( "firstUse", getFirstUse() );
         }
     }
 
-    private void setUserNameInMap( Map<String, Object> map ) {
-        if( getUserName() != null ){
-            map.put( "user_name", getUserName() );
+    public String getLastUse() {
+        return lastUse;
+    }
+
+    private void setLastUseInMap( Map<String, Object> map ) {
+        if( getLastUse() != null ){
+            map.put( "lastUse", getLastUse() );
         }
     }
 
-    private void setDateInMap( Map<String, Object> map ) {
-        if( getDate() != null ){
-            map.put("date", getDate());
+    public int getQuantityCall() {
+        return quantityCall;
+    }
+
+    private void setQuantityCallInMap( Map<String, Object> map ) {
+        if( getQuantityCall() != 0 ){
+            map.put( "quantityCall", getQuantityCall() );
         }
     }
 
-    private void setHourInMap( Map<String, Object> map ) {
-        if( getDate() != null ){
-            map.put("hour", getDate());
+    public void setFirstUse(String firstUse) {
+        this.firstUse = firstUse;
+    }
+
+    public void setLastUse(String lastUse) {
+        this.lastUse = lastUse;
+    }
+
+    public void setQuantityCall(int quantityCall) {
+        this.quantityCall = quantityCall;
+    }
+
+    public void dataFrequencyUse(Context context ){
+        DatabaseReference firebase = Util.getFirebase().child("frequency_use");
+        firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
+    }
+
+    public void dataFrequencyUseUpdated(Context context ){
+        DatabaseReference firebase = Util.getFirebase().child("frequency_use");
+        firebase.addValueEventListener( (ValueEventListener) context );
+    }
+
+    public void saveFrequencyCall(DatabaseReference.CompletionListener... completionListener ){
+        DatabaseReference firebase = Util.getFirebase().child("frequency_use");
+
+        if( completionListener.length == 0 ){
+            firebase.setValue(this);
+        }
+        else{
+            firebase.setValue(this, completionListener[0]);
         }
     }
 
-    public void updateDB( DatabaseReference.CompletionListener... completionListener ){
+    public void updateFrequencyCall( DatabaseReference.CompletionListener... completionListener ){
 
         DatabaseReference firebase = Util.getFirebase().child("frequency_use");
 
         Map<String, Object> map = new HashMap<>();
-        setUserNameInMap(map);
-        setDateInMap(map);
+        setLastUseInMap(map);
+        setQuantityCallInMap(map);
 
         if( map.isEmpty() ){
             return;
@@ -85,17 +107,5 @@ public class FrequencyUse {
         else{
             firebase.updateChildren(map);
         }
-    }
-
-    public void removeDB( DatabaseReference.CompletionListener completionListener ){
-
-        DatabaseReference firebase = Util.getFirebase().child("frequency_use");
-        firebase.setValue(null, completionListener);
-    }
-
-    public void contextDataDB( Context context ){
-        DatabaseReference firebase = Util.getFirebase().child("frequency_use");
-
-        firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
     }
 }

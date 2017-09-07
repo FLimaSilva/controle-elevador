@@ -10,7 +10,6 @@ public final class Util {
     public static String PREF = "com.br.uellisson.controleelevador.PREF";
     private static DatabaseReference firebase;
 
-
     private Util(){}
 
     public static DatabaseReference getFirebase(){
@@ -29,6 +28,17 @@ public final class Util {
     static public String getSP(Context context, String key ){
         SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
         String token = sp.getString(key, "");
+        return( token );
+    }
+
+    static public void saveSPInt(Context context, String key, int value ){
+        SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        sp.edit().putInt(key, value).apply();
+    }
+
+    static public int getSPInt(Context context, String key ){
+        SharedPreferences sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        int token = sp.getInt(key, 0);
         return( token );
     }
 }

@@ -1,12 +1,16 @@
 package com.br.uellisson.controleelevador.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.TimeZone;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -14,16 +18,24 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
+import com.br.uellisson.controleelevador.dados.Constants;
 import com.br.uellisson.controleelevador.dados.Util;
+import com.br.uellisson.controleelevador.model.CallElevator;
+import com.br.uellisson.controleelevador.model.FrequencyUse;
 import com.br.uellisson.controleelevador.model.User;
 import com.br.uellisson.controleelevador.model.UserUI;
 import com.br.uellisson.controleelevador.view.adapter.UserRecyclerAdapter;
 import com.br.uellisson.controleelevador.view.adapter.UserViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
-public class CallElevatorActivity extends BaseActivity {
+import java.util.Calendar;
+
+public class CallElevatorActivity extends BaseActivity implements ValueEventListener, DatabaseReference.CompletionListener{
 
     private ImageView ivUp;
     private ImageView ivDown;
@@ -38,10 +50,13 @@ public class CallElevatorActivity extends BaseActivity {
     private CheckedTextView checkOrigin3;
     int origin;
     int destination;
+    int quantityCall;
 
     private UserRecyclerAdapter adapterRecycle;
     private DatabaseReference databaseReference;
     final User user = new User();
+    private CallElevator callElevator;
+    private FrequencyUse frequencyUse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +86,11 @@ public class CallElevatorActivity extends BaseActivity {
         enableDestination();
 
         enableArrow(ivUp);
+
         databaseReference = Util.getFirebase();
+        final FrequencyUse frequencyUseContext = new FrequencyUse();
+        frequencyUseContext.dataFrequencyUse( this );
+        databaseReference.child("frequency_use");
     }
 
     public void exitApp(View view){
@@ -227,7 +246,77 @@ public class CallElevatorActivity extends BaseActivity {
         }
         ivElevator.setImageResource(R.mipmap.elevator_close);
         Toast.makeText(this, "O elevador está vindo", Toast.LENGTH_SHORT).show();
+        saveCall();
+        view.setEnabled(false);
     }
 
+    private void initFrequencyUse(){
+        frequencyUse = new FrequencyUse();
+        frequencyUse.setFirstUse("01-07-2017");
+        frequencyUse.setLastUse("10-09-2017");
+
+        callElevator = new CallElevator();
+        callElevator.setRoute(String.valueOf(origin)+"-"+String.valueOf(destination));
+        callElevator.setUserName("Uel");
+        getDates();
+    }
+
+    private void saveCall(){
+        initFrequencyUse();
+
+        frequencyUse.setQuantityCall(quantityCall+1);
+        frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
+        callElevator.saveCall("call_"+String.valueOf(quantityCall+1), CallElevatorActivity.this);
+    }
+
+    @Override
+    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+       // showToast( "Chamada salva com sucesso!" );
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        FrequencyUse frequencyUseDate = dataSnapshot.getValue(FrequencyUse.class);
+        quantityCall = frequencyUseDate.getQuantityCall();
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
+
+    public void getDates(){
+        Calendar calendar = Calendar.getInstance();
+
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        String dd = String.valueOf(day);
+        String mm = String.valueOf(month);
+        String yy = String.valueOf(year);
+
+        if (day<10){
+            dd = "0"+dd;
+        }
+        if (month<10){
+            mm = "0"+mm;
+        }
+
+        String ddMMaa = dd+"-"+mm+"-"+yy;
+        callElevator.setDate(ddMMaa);
+        frequencyUse.setLastUse(ddMMaa);
+
+        int h = calendar.get(Calendar.HOUR_OF_DAY);
+        int m = calendar.get(Calendar.MINUTE);
+        String hourString = "" + h;
+        if (h < 10){
+            hourString = "0" + hourString;
+        }
+        String minuteString = "" + m;
+        if (m < 10){
+            minuteString = "0" + minuteString;
+        }
+        callElevator.setHour(hourString+":"+minuteString);
+    }
 }
 

@@ -7,10 +7,81 @@
     android:layout_height="match_parent"
     tools:context="com.br.uellisson.controleelevador.view.ReportFrequencyActivity">
 
+    <RelativeLayout
+        android:id="@+id/layout_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="false"
+        android:layout_marginLeft="@dimen/min_margin"
+        android:layout_marginRight="@dimen/min_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/first_use"
+            android:textSize="@dimen/big_text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/first_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/min_margin"
+            android:layout_toRightOf="@+id/textView10"
+            android:text="TextView"
+            android:textSize="@dimen/big_text" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/first_use"
+            android:layout_weight="1"
+            android:text="@string/last_use"
+            android:textSize="@dimen/big_text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/last_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/first_use"
+            android:layout_marginLeft="@dimen/min_margin"
+            android:layout_toRightOf="@+id/textView11"
+            android:text="TextView"
+            android:textSize="@dimen/big_text" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/last_use"
+            android:layout_weight="1"
+            android:text="@string/quantity_call"
+            android:textSize="@dimen/big_text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quantity_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/last_use"
+            android:layout_marginLeft="@dimen/min_margin"
+            android:layout_toRightOf="@+id/textView12"
+            android:text="TextView"
+            android:textSize="@dimen/big_text" />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/layout_info"
+        android:background="@android:drawable/screen_background_dark"
         android:orientation="horizontal">
 
         <TextView
@@ -21,6 +92,7 @@
             android:layout_marginTop="@dimen/min_margin"
             android:layout_weight="4"
             android:text="@string/route"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 
         <TextView
@@ -31,6 +103,7 @@
             android:layout_marginTop="@dimen/min_margin"
             android:layout_weight="2.5"
             android:text="@string/user"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 
         <TextView
@@ -43,6 +116,7 @@
             android:layout_marginTop="@dimen/min_margin"
             android:layout_weight="3.5"
             android:text="@string/date"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 
         <TextView
@@ -55,6 +129,7 @@
             android:layout_marginTop="@dimen/min_margin"
             android:layout_weight="4"
             android:text="@string/hour"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold" />
     </LinearLayout>
 

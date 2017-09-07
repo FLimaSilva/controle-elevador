@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
 import com.br.uellisson.controleelevador.dados.Util;
+import com.br.uellisson.controleelevador.model.CallElevator;
 import com.br.uellisson.controleelevador.model.FrequencyUse;
+import com.br.uellisson.controleelevador.model.User;
 import com.br.uellisson.controleelevador.view.adapter.ReportRecyclerView;
 import com.br.uellisson.controleelevador.view.adapter.ReportViewHolder;
 import com.google.firebase.crash.FirebaseCrash;
@@ -18,22 +21,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class ReportFrequencyActivity extends BaseActivity implements ValueEventListener, DatabaseReference.CompletionListener {
+    private TextView firstUse;
+    private TextView lastUSe;
+    private TextView quantityCall;
 
     private DatabaseReference databaseReference;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_frequency);
+
+        firstUse = (TextView)findViewById(R.id.first_use);
+        lastUSe = (TextView)findViewById(R.id.last_use);
+        quantityCall = (TextView)findViewById(R.id.quantity_call);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.report_frequency));
 
         databaseReference = Util.getFirebase();
 
-        FrequencyUse frequencyUse = new FrequencyUse();
-        frequencyUse.contextDataDB( this );
-        frequencyUse.updateDB( ReportFrequencyActivity.this );
+        final FrequencyUse frequencyUseContext = new FrequencyUse();
+        frequencyUseContext.dataFrequencyUse( this );
+        databaseReference.child("frequency_use");
         init();
     }
 
@@ -45,14 +54,16 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         return false;
     }
     private void init(){
+        final CallElevator callElevator = new CallElevator();
+        callElevator.dataCallElevatorUpdated( this );
         RecyclerView rvUsers = (RecyclerView) findViewById(R.id.rv_frequency);
         rvUsers.setHasFixedSize( true );
         rvUsers.setLayoutManager( new LinearLayoutManager(this));
         ReportRecyclerView adapter = new ReportRecyclerView(
-                FrequencyUse.class,
+                CallElevator.class,
                 R.layout.item_report,
                 ReportViewHolder.class,
-                databaseReference.child("frequency_use") );
+                databaseReference.child("frequency_use").child("calls") );
 
         rvUsers.setAdapter(adapter);
     }
@@ -70,11 +81,20 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-
+        FrequencyUse frequencyUseDate = dataSnapshot.getValue(FrequencyUse.class);
+        firstUse.setText(frequencyUseDate.getFirstUse());
+        lastUSe.setText(frequencyUseDate.getLastUse());
+        quantityCall.setText(String.valueOf(frequencyUseDate.getQuantityCall()));
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
