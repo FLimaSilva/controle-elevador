@@ -49,4 +49,8 @@
     <string name="last_use">Último uso: </string>
     <string name="quantity_call">Quantidade de chamadas: </string>
 
+    <!-- Strings report_notify -->
+    <string name="notify">Notificação </string>
+    <string name="dateHour">Data e Hora</string>
+
 </resources>

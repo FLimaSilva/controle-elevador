@@ -253,7 +253,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private void initFrequencyUse(){
         frequencyUse = new FrequencyUse();
         frequencyUse.setFirstUse("01-07-2017");
-        frequencyUse.setLastUse("10-09-2017");
 
         callElevator = new CallElevator();
         callElevator.setRoute(String.valueOf(origin)+"-"+String.valueOf(destination));
@@ -264,7 +263,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
     private void saveCall(){
         initFrequencyUse();
-
         frequencyUse.setQuantityCall(quantityCall+1);
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+String.valueOf(quantityCall+1), CallElevatorActivity.this);
