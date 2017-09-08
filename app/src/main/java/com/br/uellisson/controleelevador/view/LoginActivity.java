@@ -9,6 +9,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
+import com.br.uellisson.controleelevador.dados.Constants;
+import com.br.uellisson.controleelevador.dados.Util;
 import com.br.uellisson.controleelevador.model.User;
 import com.facebook.CallbackManager;
 import com.google.android.gms.common.ConnectionResult;
@@ -143,6 +145,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     private void verifyLogged(){
         if( mAuth.getCurrentUser() != null ){
             callMainActivity(mAuth.getCurrentUser().getEmail());
+            Util.saveSP(getApplicationContext(), Constants.USER_NAME, mAuth.getCurrentUser().getEmail());
         }
         else{
             mAuth.addAuthStateListener( mAuthListener );

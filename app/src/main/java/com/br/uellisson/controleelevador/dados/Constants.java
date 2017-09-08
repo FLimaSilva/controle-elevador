@@ -5,6 +5,6 @@ package com.br.uellisson.controleelevador.dados;
  */
 
 public class Constants {
-    public static final String ID_CALL = "idCall";
+    public static final String USER_NAME = "userName";
 
 }

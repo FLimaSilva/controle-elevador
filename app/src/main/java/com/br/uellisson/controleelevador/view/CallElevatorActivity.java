@@ -257,7 +257,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
         callElevator = new CallElevator();
         callElevator.setRoute(String.valueOf(origin)+"-"+String.valueOf(destination));
-        callElevator.setUserName("Uel");
+        String currentUser = Util.getSP(getApplicationContext(), Constants.USER_NAME);
+        callElevator.setUserName(currentUser);
         getDates();
     }
 
