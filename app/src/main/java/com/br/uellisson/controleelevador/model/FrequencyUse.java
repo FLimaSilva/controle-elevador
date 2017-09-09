@@ -96,6 +96,7 @@ public class FrequencyUse {
         Map<String, Object> map = new HashMap<>();
         setLastUseInMap(map);
         setQuantityCallInMap(map);
+        setFirstUseInMap(map);
 
         if( map.isEmpty() ){
             return;

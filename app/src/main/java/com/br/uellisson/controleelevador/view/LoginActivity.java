@@ -145,7 +145,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     private void verifyLogged(){
         if( mAuth.getCurrentUser() != null ){
             callMainActivity(mAuth.getCurrentUser().getEmail());
-            Util.saveSP(getApplicationContext(), Constants.USER_NAME, mAuth.getCurrentUser().getEmail());
         }
         else{
             mAuth.addAuthStateListener( mAuthListener );
@@ -168,6 +167,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                             showSnackbar("Login falhou");
                             closeProgressBar();
                             return;
+                        }
+                        else {
+                            Util.saveSP(getApplicationContext(), Constants.USER_NAME, mAuth.getCurrentUser().getEmail());
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
