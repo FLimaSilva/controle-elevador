@@ -82,9 +82,11 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         FrequencyUse frequencyUseDate = dataSnapshot.getValue(FrequencyUse.class);
-        firstUse.setText(frequencyUseDate.getFirstUse());
-        lastUSe.setText(frequencyUseDate.getLastUse());
-        quantityCall.setText(String.valueOf(frequencyUseDate.getQuantityCall()));
+        if (frequencyUseDate!=null){
+            firstUse.setText(frequencyUseDate.getFirstUse());
+            lastUSe.setText(frequencyUseDate.getLastUse());
+            quantityCall.setText(String.valueOf(frequencyUseDate.getQuantityCall()));
+        }
     }
 
     @Override

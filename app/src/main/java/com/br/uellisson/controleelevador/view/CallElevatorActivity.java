@@ -263,9 +263,13 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
     private void saveCall(){
         initFrequencyUse();
-        frequencyUse.setQuantityCall(quantityCall+1);
+        String qCallString = String.valueOf(quantityCall+1);
+        if (quantityCall<9){
+            qCallString = "0"+qCallString;
+        }
+        frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
-        callElevator.saveCall("call_"+String.valueOf(quantityCall+1), CallElevatorActivity.this);
+        callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
     }
 
     @Override
