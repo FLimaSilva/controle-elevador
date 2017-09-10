@@ -5,6 +5,7 @@ package com.br.uellisson.controleelevador.dados;
  */
 
 public class Constants {
-    public static final String USER_NAME = "userName";
+    public static final String USER_MAIL = "userMail";
+    public static final String USER_ID = "userId";
 
 }

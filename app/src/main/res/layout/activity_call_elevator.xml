@@ -106,7 +106,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <CheckedTextView
             android:id="@+id/check_origin_2"
@@ -119,7 +120,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <CheckedTextView
             android:id="@+id/check_origin_3"
@@ -132,7 +134,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="gone" />
 
 
     </LinearLayout>
@@ -181,7 +184,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <CheckedTextView
             android:id="@+id/check_destination_2"
@@ -194,7 +198,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <CheckedTextView
             android:id="@+id/check_destination_3"
@@ -207,7 +212,8 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorGrayLight"
             android:textSize="@dimen/big_text"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

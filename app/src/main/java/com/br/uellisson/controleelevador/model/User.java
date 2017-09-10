@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.br.uellisson.controleelevador.dados.Constants;
 import com.br.uellisson.controleelevador.dados.Util;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
@@ -148,7 +149,9 @@ public class User {
     }
 
     public void dataUser(Context context ){
-        DatabaseReference firebase = Util.getFirebase().child("users");
+        String idUser = Util.getSP(context, Constants.USER_ID);
+
+        DatabaseReference firebase = Util.getFirebase().child("users").child(idUser);
         firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
     }
 }

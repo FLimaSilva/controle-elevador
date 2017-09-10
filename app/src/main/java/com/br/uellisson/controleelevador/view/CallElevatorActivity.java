@@ -51,6 +51,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     int origin;
     int destination;
     int quantityCall;
+    String floorAllowed;
 
     private UserRecyclerAdapter adapterRecycle;
     private DatabaseReference databaseReference;
@@ -77,13 +78,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
         checkOrigin2 = (CheckedTextView) findViewById(R.id.check_origin_2);
         checkOrigin3 = (CheckedTextView) findViewById(R.id.check_origin_3);
-        enableOrigin();
 
         checkDestinationT = (CheckedTextView) findViewById(R.id.check_destination_t);
         checkDestination1 = (CheckedTextView) findViewById(R.id.check_destination_1);
         checkDestination2 = (CheckedTextView) findViewById(R.id.check_destination_2);
         checkDestination3 = (CheckedTextView) findViewById(R.id.check_destination_3);
-        enableDestination();
 
         enableArrow(ivUp);
 
@@ -91,6 +90,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         final FrequencyUse frequencyUseContext = new FrequencyUse();
         frequencyUseContext.dataFrequencyUse( this );
         databaseReference.child("frequency_use");
+        getAcessFloor();
     }
 
     public void exitApp(View view){
@@ -100,7 +100,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         finish();
     }
 
-    public void enableOrigin(){
+    public void enableOrigin(int floorAllowed){
         checkOriginT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,45 +114,55 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 }
             }
         });
-        checkOrigin1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkOrigin1.isChecked()){
-                    checkOrigin1.setChecked(false);
-                }
-                else {
-                    unCheckedOrigin();
-                    checkOrigin1.setChecked(true);
-                    origin = 1;
-                }
+        if (floorAllowed != 0){
+            if (floorAllowed == 1){
+                checkOrigin1.setVisibility(View.VISIBLE);
+                checkOrigin1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkOrigin1.isChecked()){
+                            checkOrigin1.setChecked(false);
+                        }
+                        else {
+                            unCheckedOrigin();
+                            checkOrigin1.setChecked(true);
+                            origin = 1;
+                        }
+                    }
+                });
+            }else if (floorAllowed == 2){
+                checkOrigin2.setVisibility(View.VISIBLE);
+                checkOrigin2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkOrigin2.isChecked()){
+                            checkOrigin2.setChecked(false);
+                        }
+                        else {
+                            unCheckedOrigin();
+                            checkOrigin2.setChecked(true);
+                            origin = 2;
+                        }
+                    }
+                });
             }
-        });
-        checkOrigin2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkOrigin2.isChecked()){
-                    checkOrigin2.setChecked(false);
-                }
-                else {
-                    unCheckedOrigin();
-                    checkOrigin2.setChecked(true);
-                    origin = 2;
-                }
+            else if (floorAllowed==3){
+                checkOrigin3.setVisibility(View.VISIBLE);
+                checkOrigin3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkOrigin3.isChecked()){
+                            checkOrigin3.setChecked(false);
+                        }
+                        else {
+                            unCheckedOrigin();
+                            checkOrigin3.setChecked(true);
+                            origin = 3;
+                        }
+                    }
+                });
             }
-        });
-        checkOrigin3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkOrigin3.isChecked()){
-                    checkOrigin3.setChecked(false);
-                }
-                else {
-                    unCheckedOrigin();
-                    checkOrigin3.setChecked(true);
-                    origin = 3;
-                }
-            }
-        });
+        }
     }
 
     public void unCheckedOrigin(){
@@ -162,7 +172,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         checkOrigin3.setChecked(false);
     }
 
-    public void enableDestination(){
+    public void enableDestination(int floorAllowed){
         checkDestinationT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,45 +186,57 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 }
             }
         });
-        checkDestination1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkDestination1.isChecked()){
-                    checkDestination1.setChecked(false);
-                }
-                else {
-                    unCheckedDestination();
-                    checkDestination1.setChecked(true);
-                    destination = 1;
-                }
+
+        if (floorAllowed != 0){
+            if (floorAllowed == 1){
+                checkDestination1.setVisibility(View.VISIBLE);
+                checkDestination1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkDestination1.isChecked()){
+                            checkDestination1.setChecked(false);
+                        }
+                        else {
+                            unCheckedDestination();
+                            checkDestination1.setChecked(true);
+                            destination = 1;
+                        }
+                    }
+                });
             }
-        });
-        checkDestination2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkDestination2.isChecked()){
-                    checkDestination2.setChecked(false);
-                }
-                else {
-                    unCheckedDestination();
-                    checkDestination2.setChecked(true);
-                    destination = 2;
-                }
+            else if (floorAllowed == 2){
+                checkDestination2.setVisibility(View.VISIBLE);
+                checkDestination2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkDestination2.isChecked()){
+                            checkDestination2.setChecked(false);
+                        }
+                        else {
+                            unCheckedDestination();
+                            checkDestination2.setChecked(true);
+                            destination = 2;
+                        }
+                    }
+                });
             }
-        });
-        checkDestination3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkDestination3.isChecked()){
-                    checkDestination3.setChecked(false);
-                }
-                else {
-                    unCheckedDestination();
-                    checkDestination3.setChecked(true);
-                    origin = 3;
-                }
+            else if (floorAllowed == 3){
+                checkDestination3.setVisibility(View.VISIBLE);
+                checkDestination3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkDestination3.isChecked()){
+                            checkDestination3.setChecked(false);
+                        }
+                        else {
+                            unCheckedDestination();
+                            checkDestination3.setChecked(true);
+                            origin = 3;
+                        }
+                    }
+                });
             }
-        });
+        }
     }
 
     public void unCheckedDestination(){
@@ -256,8 +278,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
         callElevator = new CallElevator();
         callElevator.setRoute(String.valueOf(origin)+"-"+String.valueOf(destination));
-        String currentUser = Util.getSP(getApplicationContext(), Constants.USER_NAME);
-        callElevator.setUserName(currentUser);
+        String currentMail = Util.getSP(getApplicationContext(), Constants.USER_MAIL);
+        callElevator.setUserName(currentMail);
         getDates();
     }
 
@@ -280,7 +302,15 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         FrequencyUse frequencyUseDate = dataSnapshot.getValue(FrequencyUse.class);
-        quantityCall = frequencyUseDate.getQuantityCall();
+        if (frequencyUseDate.getQuantityCall()!=0){
+            quantityCall = frequencyUseDate.getQuantityCall();
+        }
+        User currentUser = dataSnapshot.getValue(User.class);
+        this.floorAllowed = currentUser.getFloorsAllowed();
+        Toast.makeText(this, floorAllowed, Toast.LENGTH_SHORT).show();
+        if (floorAllowed!=null){
+            manageAcessFloor(floorAllowed);
+        }
     }
 
     @Override
@@ -320,6 +350,24 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             minuteString = "0" + minuteString;
         }
         callElevator.setHour(hourString+":"+minuteString);
+    }
+
+    public void getAcessFloor(){
+        String idUser = Util.getSP(getApplicationContext(), Constants.USER_ID);
+
+        databaseReference.child("users").child(idUser);
+        final User user = new User();
+        user.dataUser( this );
+
+    }
+
+    public void manageAcessFloor(String acessFloor){
+        for (int i = 0; i<acessFloor.length(); i++){
+            if (!acessFloor.substring(i, i+1).equals("0")){
+                enableOrigin(Integer.parseInt(acessFloor.substring(i, i+1)));
+                enableDestination(Integer.parseInt(acessFloor.substring(i, i+1)));
+            }
+        }
     }
 }
 

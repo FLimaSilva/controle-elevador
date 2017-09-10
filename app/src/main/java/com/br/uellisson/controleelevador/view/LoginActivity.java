@@ -169,7 +169,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                             return;
                         }
                         else {
-                            Util.saveSP(getApplicationContext(), Constants.USER_NAME, mAuth.getCurrentUser().getEmail());
+                            Util.saveSP(getApplicationContext(), Constants.USER_MAIL, mAuth.getCurrentUser().getEmail());
+                            Util.saveSP(getApplicationContext(), Constants.USER_ID, mAuth.getCurrentUser().getUid());
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
