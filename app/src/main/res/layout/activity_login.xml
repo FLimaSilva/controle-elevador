@@ -67,7 +67,8 @@
                 android:gravity="right"
                 android:onClick="callReset"
                 android:text="@string/reset_password"
-                android:textColor="#0000ff" />
+                android:textColor="#0000ff"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/bt_enter"

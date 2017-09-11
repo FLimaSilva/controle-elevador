@@ -12,7 +12,7 @@
     <string name="reset">Recuperar acesso</string>
     <string name="notifications">Notificações</string>
     <string name="report_ls_ld">Limite de Subida e Descida </string>
-    <string name="report_frequency">Frequênica de Uso</string>
+    <string name="report_frequency">Frequência de Uso</string>
 
     <!-- Strings Register -->
     <string name="floors_allowed">Andares permitidos</string>
@@ -52,5 +52,9 @@
     <!-- Strings report_notify -->
     <string name="notify">Notificação </string>
     <string name="dateHour">Data e Hora</string>
+
+    <!-- Strings messages -->
+    <string name="msg_elevator"> O elevador está a caminho.</string>
+    <string name="error_mail_password"> Cadastre um e-mail válido e uma senha com no mínimo 6 caracteres.</string>
 
 </resources>

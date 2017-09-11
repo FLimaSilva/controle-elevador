@@ -146,7 +146,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     }
                 });
             }
-            else if (floorAllowed==3){
+            /**
+             else if (floorAllowed==3){
                 checkOrigin3.setVisibility(View.VISIBLE);
                 checkOrigin3.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -161,7 +162,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         }
                     }
                 });
-            }
+            }*
+             */
         }
     }
 
@@ -220,7 +222,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     }
                 });
             }
-            else if (floorAllowed == 3){
+            /**
+             else if (floorAllowed == 3){
                 checkDestination3.setVisibility(View.VISIBLE);
                 checkDestination3.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -236,6 +239,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     }
                 });
             }
+             *
+             */
         }
     }
 
@@ -267,7 +272,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             ivUp.setEnabled(false);
         }
         ivElevator.setImageResource(R.mipmap.elevator_close);
-        Toast.makeText(this, "O elevador está vindo", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
         saveCall();
         view.setEnabled(false);
     }

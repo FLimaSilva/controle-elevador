@@ -138,7 +138,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             @Override
             public void onFailure(@NonNull Exception e) {
                 FirebaseCrash.report( e );
-                showSnackbar(e.getMessage());
+                showSnackbar(getString(R.string.error_mail_password));
             }
         });
     }
