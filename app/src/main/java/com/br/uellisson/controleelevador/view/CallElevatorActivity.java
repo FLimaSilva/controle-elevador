@@ -312,7 +312,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
         User currentUser = dataSnapshot.getValue(User.class);
         this.floorAllowed = currentUser.getFloorsAllowed();
-        Toast.makeText(this, floorAllowed, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, floorAllowed, Toast.LENGTH_SHORT).show();
         if (floorAllowed!=null){
             manageAcessFloor(floorAllowed);
         }

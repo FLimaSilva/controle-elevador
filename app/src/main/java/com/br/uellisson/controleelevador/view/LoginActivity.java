@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     }
 
     public void sendLoginData( View view ){
-        if (user!=null){
+       if (user!=null){
             initUser();
             if (user.getEmail().equals("")||user.getPassword().equals("")){
                 Toast.makeText(this, "Preencha todos as informações", Toast.LENGTH_LONG).show();
@@ -130,10 +130,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     }
 
     private void callMainActivity(String email){
-        if (email.equals("admin@elevador.com")){
+        if (email.equals(Constants.EMAIL_ADMIN)){
             Intent intent = new Intent( this, MainActivityAdmin.class );
             startActivity(intent);
-
         }
         else {
             Intent intent = new Intent( this, CallElevatorActivity.class );

@@ -7,5 +7,6 @@ package com.br.uellisson.controleelevador.dados;
 public class Constants {
     public static final String USER_MAIL = "userMail";
     public static final String USER_ID = "userId";
+    public static final String EMAIL_ADMIN = "admin@elevador.com";
 
 }

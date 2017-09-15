@@ -37,7 +37,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     private EditText name;
     private Spinner spnUsers;
     private String floorsAllowed;
-    private Integer[] arrayFloors = {0, 0, 0};
+    private Integer[] arrayFloors = {0, 0};
     private CheckBox checkBox1;
     private CheckBox checkBox2;
     private CheckBox checkBox3;
@@ -100,7 +100,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     }
 
     protected void initUser(){
-        floorsAllowed = arrayFloors[0].toString()+arrayFloors[1].toString()+arrayFloors[2].toString();
+        floorsAllowed = arrayFloors[0].toString()+arrayFloors[1].toString();//+arrayFloors[2].toString();
         user = new User(name.getText().toString(), email.getText().toString(),password.getText().toString(), floorsAllowed);
     }
 
@@ -206,7 +206,8 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             }
         });
 
-        checkBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /**
+         checkBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
@@ -217,5 +218,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
                 }
             }
         });
+     *
+     */
+        }
     }
-}
