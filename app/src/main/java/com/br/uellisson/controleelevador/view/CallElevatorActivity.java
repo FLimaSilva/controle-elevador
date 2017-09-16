@@ -330,7 +330,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
         String dd = String.valueOf(day);
-        String mm = String.valueOf(month);
+        String mm = String.valueOf(month+1);
         String yy = String.valueOf(year);
 
         if (day<10){
