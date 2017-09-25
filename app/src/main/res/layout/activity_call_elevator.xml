@@ -23,11 +23,12 @@
         android:id="@+id/layout_elevator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_floor"
         android:layout_marginLeft="@dimen/min_margin"
         android:layout_marginRight="@dimen/min_margin"
         android:orientation="horizontal"
-        android:weightSum="10">
+        android:weightSum="10"
+        android:layout_below="@+id/tv_floor"
+        android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/iv_up"
@@ -36,8 +37,7 @@
             android:layout_marginBottom="@dimen/max_margin"
             android:layout_marginLeft="@dimen/normal_margin"
             android:layout_marginTop="@dimen/max_margin"
-            android:layout_weight="3"
-            android:background="@drawable/arrow_up_selector" />
+            android:layout_weight="3" />
 
         <ImageView
             android:id="@+id/iv_elevator"
@@ -53,8 +53,7 @@
             android:layout_marginBottom="@dimen/max_margin"
             android:layout_marginRight="@dimen/normal_margin"
             android:layout_marginTop="@dimen/max_margin"
-            android:layout_weight="3"
-            android:background="@drawable/arrow_down_selector"></ImageView>
+            android:layout_weight="3"></ImageView>
 
     </LinearLayout>
 
@@ -85,7 +84,7 @@
             android:id="@+id/check_origin_t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="T"
@@ -99,7 +98,7 @@
             android:id="@+id/check_origin_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="1º"
@@ -113,7 +112,7 @@
             android:id="@+id/check_origin_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="2º"
@@ -127,7 +126,7 @@
             android:id="@+id/check_origin_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="3º"
@@ -163,7 +162,7 @@
             android:id="@+id/check_destination_t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="T"
@@ -177,7 +176,7 @@
             android:id="@+id/check_destination_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="1º"
@@ -191,7 +190,7 @@
             android:id="@+id/check_destination_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="2º"
@@ -205,7 +204,7 @@
             android:id="@+id/check_destination_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/cicle_selector"
+            app:srcCompat="@drawable/cicle_selector"
             android:gravity="center_vertical|center_horizontal"
             android:padding="@dimen/normal_margin"
             android:text="3º"

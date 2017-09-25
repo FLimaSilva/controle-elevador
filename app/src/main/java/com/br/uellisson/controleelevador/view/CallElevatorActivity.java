@@ -2,11 +2,18 @@ package com.br.uellisson.controleelevador.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
+import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -62,6 +69,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_call_elevator);
 
         //mToolbar = (Toolbar) findViewById(R.id.toolbar_custom);
@@ -71,18 +79,28 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         getSupportActionBar().setTitle(getString(R.string.call_elevator));
 
         ivUp = (ImageView)findViewById(R.id.iv_up);
+        setBackgroundImageView(ivUp, R.drawable.arrow_up_selector);
         ivDown = (ImageView)findViewById(R.id.iv_down);
+        setBackgroundImageView(ivDown, R.drawable.arrow_down_selector);
         ivElevator = (ImageView) findViewById(R.id.iv_elevator);
 
         checkOriginT = (CheckedTextView) findViewById(R.id.check_origin_t);
         checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
         checkOrigin2 = (CheckedTextView) findViewById(R.id.check_origin_2);
         checkOrigin3 = (CheckedTextView) findViewById(R.id.check_origin_3);
+        setBackgroundCheckedTextView(checkOriginT, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkOrigin1, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkOrigin2, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkOrigin3, R.drawable.cicle_selector);
 
         checkDestinationT = (CheckedTextView) findViewById(R.id.check_destination_t);
         checkDestination1 = (CheckedTextView) findViewById(R.id.check_destination_1);
         checkDestination2 = (CheckedTextView) findViewById(R.id.check_destination_2);
         checkDestination3 = (CheckedTextView) findViewById(R.id.check_destination_3);
+        setBackgroundCheckedTextView(checkDestinationT, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkDestination1, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkDestination2, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkDestination3, R.drawable.cicle_selector);
 
         enableArrow(ivUp);
 
@@ -373,6 +391,19 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 enableDestination(Integer.parseInt(acessFloor.substring(i, i+1)));
             }
         }
+    }
+
+    private void setBackgroundCheckedTextView(CheckedTextView checkedTextView, int drawable){
+        if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1)
+            checkedTextView.setBackground(getResources().getDrawable(drawable));
+        else
+            checkedTextView.setBackground(ContextCompat.getDrawable(this, drawable));
+    }
+    private void setBackgroundImageView(ImageView imageView, int drawable){
+        if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1)
+            imageView.setBackground(getResources().getDrawable(drawable));
+        else
+            imageView.setBackground(ContextCompat.getDrawable(this, drawable));
     }
 }
 
