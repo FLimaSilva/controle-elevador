@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="editUser"
                 android:text="@string/edit_user"
-                android:visibility="gone" />
+                />
 
             <Button
                 android:id="@+id/bt_delete_user"

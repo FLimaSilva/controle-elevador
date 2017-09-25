@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.br.uellisson.controleelevador.R;
+import com.br.uellisson.controleelevador.nfc.TagViewer;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivityAdmin extends BaseActivity {
@@ -27,7 +28,7 @@ public class MainActivityAdmin extends BaseActivity {
     }
 
     public void callElevator(View view){
-        Intent intent = new Intent(getApplicationContext(), CallElevatorActivity.class);
+        Intent intent = new Intent(getApplicationContext(), TagViewer.class);
         startActivity(intent);
         //finish();
     }
@@ -38,7 +39,8 @@ public class MainActivityAdmin extends BaseActivity {
     }
 
     public void editUser(View view){
-
+        Intent intent = new Intent(getApplicationContext(), TagViewer.class);
+        startActivity(intent);
     }
 
     public void deleteUser(View view){
