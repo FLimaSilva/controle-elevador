@@ -2,41 +2,22 @@ package com.br.uellisson.controleelevador.view;
 
 import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.TimeZone;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.MifareClassic;
-import android.nfc.tech.MifareUltralight;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
@@ -45,13 +26,8 @@ import com.br.uellisson.controleelevador.dados.Util;
 import com.br.uellisson.controleelevador.model.CallElevator;
 import com.br.uellisson.controleelevador.model.FrequencyUse;
 import com.br.uellisson.controleelevador.model.User;
-import com.br.uellisson.controleelevador.model.UserUI;
-import com.br.uellisson.controleelevador.nfc.NdefMessageParser;
-import com.br.uellisson.controleelevador.nfc.record.ParsedNdefRecord;
-import com.br.uellisson.controleelevador.view.adapter.UserRecyclerAdapter;
-import com.br.uellisson.controleelevador.view.adapter.UserViewHolder;
+import com.br.uellisson.controleelevador.presenter.CallPresenter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,8 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,19 +57,16 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     int quantityCall;
     String floorAllowed;
 
-    private UserRecyclerAdapter adapterRecycle;
     private DatabaseReference databaseReference;
-    final User user = new User();
     private CallElevator callElevator;
     private FrequencyUse frequencyUse;
+    CallPresenter callPresenter;
 
-    private static final java.text.DateFormat TIME_FORMAT = java.text.SimpleDateFormat.getDateTimeInstance();
     private PendingIntent mPendingIntent;
     private NdefMessage mNdefPushMessage;
-    private AlertDialog mDialog;
     private List<Tag> mTags = new ArrayList<Tag>();
     private NfcAdapter mAdapter;
-
+    private String nfcRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,48 +74,32 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_call_elevator);
 
-        //mToolbar = (Toolbar) findViewById(R.id.toolbar_custom);
-       // mToolbar.setTitle("Uellisson");
-        resolveIntent(getIntent());
-        mAdapter = NfcAdapter.getDefaultAdapter(this);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.call_elevator));
-
-        ivUp = (ImageView)findViewById(R.id.iv_up);
-        setBackgroundImageView(ivUp, R.drawable.arrow_up_selector);
-        ivDown = (ImageView)findViewById(R.id.iv_down);
-        setBackgroundImageView(ivDown, R.drawable.arrow_down_selector);
-        ivElevator = (ImageView) findViewById(R.id.iv_elevator);
-        btCallElevator = (Button) findViewById(R.id.bt_call_elevator);
-
-        checkOriginT = (CheckedTextView) findViewById(R.id.check_origin_t);
-        checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
-        checkOrigin2 = (CheckedTextView) findViewById(R.id.check_origin_2);
-        checkOrigin3 = (CheckedTextView) findViewById(R.id.check_origin_3);
-        setBackgroundCheckedTextView(checkOriginT, R.drawable.cicle_selector);
-        setBackgroundCheckedTextView(checkOrigin1, R.drawable.cicle_selector);
-        setBackgroundCheckedTextView(checkOrigin2, R.drawable.cicle_selector);
-        setBackgroundCheckedTextView(checkOrigin3, R.drawable.cicle_selector);
-
-        checkDestinationT = (CheckedTextView) findViewById(R.id.check_destination_t);
-        checkDestination1 = (CheckedTextView) findViewById(R.id.check_destination_1);
-        checkDestination2 = (CheckedTextView) findViewById(R.id.check_destination_2);
-        checkDestination3 = (CheckedTextView) findViewById(R.id.check_destination_3);
-        setBackgroundCheckedTextView(checkDestinationT, R.drawable.cicle_selector);
-        setBackgroundCheckedTextView(checkDestination1, R.drawable.cicle_selector);
-        setBackgroundCheckedTextView(checkDestination2, R.drawable.cicle_selector);
-        setBackgroundCheckedTextView(checkDestination3, R.drawable.cicle_selector);
-
-        enableArrow(ivUp);
-
-        databaseReference = Util.getFirebase();
-        final FrequencyUse frequencyUseContext = new FrequencyUse();
-        frequencyUseContext.dataFrequencyUse( this );
-        databaseReference.child("frequency_use");
-        getAcessFloor();
-
+        initViews();
+        initClass();
         initNfc();
+        resolveIntent(getIntent());
+        enableArrow(ivUp);
+        getAcessFloor();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null) {
+            if (!mAdapter.isEnabled()) {
+                showWirelessSettingsDialog();
+            }
+            mAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
+            mAdapter.enableForegroundNdefPush(this, mNdefPushMessage);
+        }
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
     }
 
     public void exitApp(View view){
@@ -200,24 +155,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     }
                 });
             }
-            /**
-             else if (floorAllowed==3){
-                checkOrigin3.setVisibility(View.VISIBLE);
-                checkOrigin3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (checkOrigin3.isChecked()){
-                            checkOrigin3.setChecked(false);
-                        }
-                        else {
-                            unCheckedOrigin();
-                            checkOrigin3.setChecked(true);
-                            origin = 3;
-                        }
-                    }
-                });
-            }*
-             */
         }
     }
 
@@ -276,25 +213,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     }
                 });
             }
-            /**
-             else if (floorAllowed == 3){
-                checkDestination3.setVisibility(View.VISIBLE);
-                checkDestination3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (checkDestination3.isChecked()){
-                            checkDestination3.setChecked(false);
-                        }
-                        else {
-                            unCheckedDestination();
-                            checkDestination3.setChecked(true);
-                            origin = 3;
-                        }
-                    }
-                });
-            }
-             *
-             */
         }
     }
 
@@ -339,7 +257,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         callElevator.setRoute(String.valueOf(origin)+"-"+String.valueOf(destination));
         String currentMail = Util.getSP(getApplicationContext(), Constants.USER_MAIL);
         callElevator.setUserName(currentMail);
-        getDates();
+        setDateHour();
     }
 
     private void saveCall(){
@@ -377,38 +295,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
     }
 
-    public void getDates(){
-        Calendar calendar = Calendar.getInstance();
+    public void setDateHour(){
 
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-        String dd = String.valueOf(day);
-        String mm = String.valueOf(month+1);
-        String yy = String.valueOf(year);
-
-        if (day<10){
-            dd = "0"+dd;
-        }
-        if (month<10){
-            mm = "0"+mm;
-        }
-
-        String ddMMaa = dd+"-"+mm+"-"+yy;
-        callElevator.setDate(ddMMaa);
-        frequencyUse.setLastUse(ddMMaa);
-
-        int h = calendar.get(Calendar.HOUR_OF_DAY);
-        int m = calendar.get(Calendar.MINUTE);
-        String hourString = "" + h;
-        if (h < 10){
-            hourString = "0" + hourString;
-        }
-        String minuteString = "" + m;
-        if (m < 10){
-            minuteString = "0" + minuteString;
-        }
-        callElevator.setHour(hourString+":"+minuteString);
+        callElevator.setDate(callPresenter.getDate());
+        frequencyUse.setLastUse(callPresenter.getDate());
+        callElevator.setHour(callPresenter.getHour());
     }
 
     public void getAcessFloor(){
@@ -440,6 +331,42 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             imageView.setBackground(getResources().getDrawable(drawable));
         else
             imageView.setBackground(ContextCompat.getDrawable(this, drawable));
+    }
+
+    public void initViews(){
+        ivUp = (ImageView)findViewById(R.id.iv_up);
+        setBackgroundImageView(ivUp, R.drawable.arrow_up_selector);
+        ivDown = (ImageView)findViewById(R.id.iv_down);
+        setBackgroundImageView(ivDown, R.drawable.arrow_down_selector);
+        ivElevator = (ImageView) findViewById(R.id.iv_elevator);
+        btCallElevator = (Button) findViewById(R.id.bt_call_elevator);
+
+        checkOriginT = (CheckedTextView) findViewById(R.id.check_origin_t);
+        checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
+        checkOrigin2 = (CheckedTextView) findViewById(R.id.check_origin_2);
+        checkOrigin3 = (CheckedTextView) findViewById(R.id.check_origin_3);
+        setBackgroundCheckedTextView(checkOriginT, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkOrigin1, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkOrigin2, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkOrigin3, R.drawable.cicle_selector);
+
+        checkDestinationT = (CheckedTextView) findViewById(R.id.check_destination_t);
+        checkDestination1 = (CheckedTextView) findViewById(R.id.check_destination_1);
+        checkDestination2 = (CheckedTextView) findViewById(R.id.check_destination_2);
+        checkDestination3 = (CheckedTextView) findViewById(R.id.check_destination_3);
+        setBackgroundCheckedTextView(checkDestinationT, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkDestination1, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkDestination2, R.drawable.cicle_selector);
+        setBackgroundCheckedTextView(checkDestination3, R.drawable.cicle_selector);
+    }
+
+    public void initClass(){
+        mAdapter = NfcAdapter.getDefaultAdapter(this);
+        databaseReference = Util.getFirebase();
+        final FrequencyUse frequencyUseContext = new FrequencyUse();
+        frequencyUseContext.dataFrequencyUse( this );
+        databaseReference.child("frequency_use");
+        callPresenter = new CallPresenter();
     }
 
     public void initNfc() {
@@ -515,7 +442,12 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         String id = String.valueOf(toDec(tag.getId()));
         //Toast.makeText(this,id, Toast.LENGTH_LONG).show();
         if (id.equals("2089877081")){
-            callElevator(btCallElevator);
+            if (btCallElevator.isEnabled()){
+                callElevator(btCallElevator);
+            }
+            else{
+                Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
+            }
         }
 
         return id;
@@ -529,23 +461,5 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             factor *= 256l;
         }
         return result;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mAdapter != null) {
-            if (!mAdapter.isEnabled()) {
-                showWirelessSettingsDialog();
-            }
-            mAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
-            mAdapter.enableForegroundNdefPush(this, mNdefPushMessage);
-        }
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-        setIntent(intent);
-        resolveIntent(intent);
     }
 }
