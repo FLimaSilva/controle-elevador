@@ -1,11 +1,22 @@
 package com.br.uellisson.controleelevador.view;
 
+import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
+import android.nfc.tech.MifareUltralight;
 import android.os.Build;
+import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -18,10 +29,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
@@ -31,6 +46,8 @@ import com.br.uellisson.controleelevador.model.CallElevator;
 import com.br.uellisson.controleelevador.model.FrequencyUse;
 import com.br.uellisson.controleelevador.model.User;
 import com.br.uellisson.controleelevador.model.UserUI;
+import com.br.uellisson.controleelevador.nfc.NdefMessageParser;
+import com.br.uellisson.controleelevador.nfc.record.ParsedNdefRecord;
 import com.br.uellisson.controleelevador.view.adapter.UserRecyclerAdapter;
 import com.br.uellisson.controleelevador.view.adapter.UserViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +57,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class CallElevatorActivity extends BaseActivity implements ValueEventListener, DatabaseReference.CompletionListener{
 
@@ -55,6 +77,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private CheckedTextView checkOrigin1;
     private CheckedTextView checkOrigin2;
     private CheckedTextView checkOrigin3;
+    private Button btCallElevator;
     int origin;
     int destination;
     int quantityCall;
@@ -66,6 +89,14 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private CallElevator callElevator;
     private FrequencyUse frequencyUse;
 
+    private static final java.text.DateFormat TIME_FORMAT = java.text.SimpleDateFormat.getDateTimeInstance();
+    private PendingIntent mPendingIntent;
+    private NdefMessage mNdefPushMessage;
+    private AlertDialog mDialog;
+    private List<Tag> mTags = new ArrayList<Tag>();
+    private NfcAdapter mAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +105,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
         //mToolbar = (Toolbar) findViewById(R.id.toolbar_custom);
        // mToolbar.setTitle("Uellisson");
+        resolveIntent(getIntent());
+        mAdapter = NfcAdapter.getDefaultAdapter(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.call_elevator));
@@ -83,6 +116,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         ivDown = (ImageView)findViewById(R.id.iv_down);
         setBackgroundImageView(ivDown, R.drawable.arrow_down_selector);
         ivElevator = (ImageView) findViewById(R.id.iv_elevator);
+        btCallElevator = (Button) findViewById(R.id.bt_call_elevator);
 
         checkOriginT = (CheckedTextView) findViewById(R.id.check_origin_t);
         checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
@@ -109,6 +143,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUseContext.dataFrequencyUse( this );
         databaseReference.child("frequency_use");
         getAcessFloor();
+
+        initNfc();
     }
 
     public void exitApp(View view){
@@ -405,5 +441,111 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         else
             imageView.setBackground(ContextCompat.getDrawable(this, drawable));
     }
-}
 
+    public void initNfc() {
+        mPendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        mNdefPushMessage = new NdefMessage(new NdefRecord[] { newTextRecord(
+                "Message from NFC Reader :-)", Locale.ENGLISH, true) });
+    }
+
+    private NdefRecord newTextRecord(String text, Locale locale, boolean encodeInUtf8) {
+        byte[] langBytes = locale.getLanguage().getBytes(Charset.forName("US-ASCII"));
+
+        Charset utfEncoding = encodeInUtf8 ? Charset.forName("UTF-8") : Charset.forName("UTF-16");
+        byte[] textBytes = text.getBytes(utfEncoding);
+
+        int utfBit = encodeInUtf8 ? 0 : (1 << 7);
+        char status = (char) (utfBit + langBytes.length);
+
+        byte[] data = new byte[1 + langBytes.length + textBytes.length];
+        data[0] = (byte) status;
+        System.arraycopy(langBytes, 0, data, 1, langBytes.length);
+        System.arraycopy(textBytes, 0, data, 1 + langBytes.length, textBytes.length);
+
+        return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], data);
+    }
+
+    private void showWirelessSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.nfc_disabled);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        builder.create().show();
+        return;
+    }
+
+    private void resolveIntent(Intent intent) {
+        String action = intent.getAction();
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
+                || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
+                || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            NdefMessage[] msgs;
+            if (rawMsgs != null) {
+                msgs = new NdefMessage[rawMsgs.length];
+                for (int i = 0; i < rawMsgs.length; i++) {
+                    msgs[i] = (NdefMessage) rawMsgs[i];
+                }
+                Toast.makeText(this, msgs.toString(), Toast.LENGTH_SHORT).show();
+            } else {
+                // Unknown tag type
+                byte[] empty = new byte[0];
+                byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+                Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                byte[] payload = dumpTagData(tag).getBytes();
+                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
+                NdefMessage msg = new NdefMessage(new NdefRecord[] { record });
+                msgs = new NdefMessage[] { msg };
+                mTags.add(tag);
+            }
+        }
+    }
+
+    private String dumpTagData(Tag tag) {
+        String id = String.valueOf(toDec(tag.getId()));
+        //Toast.makeText(this,id, Toast.LENGTH_LONG).show();
+        if (id.equals("2089877081")){
+            callElevator(btCallElevator);
+        }
+
+        return id;
+    }
+    private long toDec(byte[] bytes) {
+        long result = 0;
+        long factor = 1;
+        for (int i = 0; i < bytes.length; ++i) {
+            long value = bytes[i] & 0xffl;
+            result += value * factor;
+            factor *= 256l;
+        }
+        return result;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null) {
+            if (!mAdapter.isEnabled()) {
+                showWirelessSettingsDialog();
+            }
+            mAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
+            mAdapter.enableForegroundNdefPush(this, mNdefPushMessage);
+        }
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
+    }
+}

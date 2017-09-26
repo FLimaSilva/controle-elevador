@@ -28,7 +28,7 @@ public class MainActivityAdmin extends BaseActivity {
     }
 
     public void callElevator(View view){
-        Intent intent = new Intent(getApplicationContext(), TagViewer.class);
+        Intent intent = new Intent(getApplicationContext(), CallElevatorActivity.class);
         startActivity(intent);
         //finish();
     }
@@ -39,8 +39,8 @@ public class MainActivityAdmin extends BaseActivity {
     }
 
     public void editUser(View view){
-        Intent intent = new Intent(getApplicationContext(), TagViewer.class);
-        startActivity(intent);
+        //Intent intent = new Intent(getApplicationContext(), TagViewer.class);
+        //startActivity(intent);
     }
 
     public void deleteUser(View view){
