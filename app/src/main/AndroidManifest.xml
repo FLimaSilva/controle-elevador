@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <uses-feature android:name="android.hardware.nfc" />
 
     <application
@@ -37,8 +38,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.NotificationsActivity" />
         <activity android:name=".view.ReportLsLd" />
-        <activity android:name=".view.ReportFrequencyActivity"></activity>
-        <activity android:name=".nfc.TagViewer"></activity>
+        <activity android:name=".view.ReportFrequencyActivity" />
+        <activity android:name=".nfc.TagViewer" />
+        <activity android:name=".view.RecordCardNfcActivity"></activity>
     </application>
 
 </manifest>

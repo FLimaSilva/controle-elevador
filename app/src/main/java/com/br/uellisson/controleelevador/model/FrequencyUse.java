@@ -3,7 +3,6 @@ package com.br.uellisson.controleelevador.model;
 import android.content.Context;
 
 import com.br.uellisson.controleelevador.dados.Util;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;

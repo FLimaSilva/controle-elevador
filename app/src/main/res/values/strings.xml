@@ -27,6 +27,12 @@
     <string name="exit">Sair</string>
     <string name="call_elevator">Chamar Elevador</string>
 
+    <string name="record_nfc">Gravar NFC</string>
+    <string name="tutorial_record_nfc"> Posicione um cartão NFC atrás do celular para que seja realizada a leitura.</string>
+    <string name="save_nfc">Salvar NFC</string>
+    <string name="save_nfc_success">Id do NFC salvo com sucesso!</string>
+    <string name="save_nfc_error">É necessário ler um cartão NFC antes de salvar!</string>
+
     <!-- Strings Permissoes -->
     <string name="permissions.required_permission_internet">Por favor, conceda a permissão de internet para utilizar o aplicativo</string>
     <string name="permissions.required_permissions">A permissão de gravar a imagem no seu celular é necessária para a utilização deste aplicativo</string>

@@ -79,6 +79,14 @@
                 android:text="@string/report_frequency" />
 
             <Button
+                android:id="@+id/bt_record_nfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickRecordNfc"
+                android:text="@string/record_nfc"
+                />
+
+            <Button
                 android:id="@+id/bt_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

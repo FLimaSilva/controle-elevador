@@ -62,6 +62,11 @@ public class MainActivityAdmin extends BaseActivity {
         startActivity(intent);
     }
 
+    public void clickRecordNfc(View view){
+        Intent intent = new Intent(getApplicationContext(), RecordCardNfcActivity.class);
+        startActivity(intent);
+    }
+
     public void exitApp(View view){
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
