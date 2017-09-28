@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -66,7 +67,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private NdefMessage mNdefPushMessage;
     private List<Tag> mTags = new ArrayList<Tag>();
     private NfcAdapter mAdapter;
-    private String nfcRegister;
+    private String idNfc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         resolveIntent(getIntent());
         enableArrow(ivUp);
         getAcessFloor();
+        setIdNfc();
     }
 
     @Override
@@ -441,13 +443,16 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private String dumpTagData(Tag tag) {
         String id = String.valueOf(toDec(tag.getId()));
         //Toast.makeText(this,id, Toast.LENGTH_LONG).show();
-        if (id.equals("2089877081")){
+        if (id.equals(idNfc)){
             if (btCallElevator.isEnabled()){
                 callElevator(btCallElevator);
             }
             else{
                 Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
             }
+        }
+        else {
+            Toast.makeText(this, "Não é possivel chamar o elevador com esse cartão.", Toast.LENGTH_SHORT).show();
         }
 
         return id;
@@ -461,5 +466,22 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             factor *= 256l;
         }
         return result;
+    }
+
+    public void setIdNfc(){
+        //accountsDb = mDatabase.child("accountsTable");
+        //databaseReference.child("idNfc");
+        databaseReference.child("idNfc").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                try{
+                    idNfc  = (String) snapshot.getValue();
+                } catch (Throwable e) {
+                    Log.i("Erro", "Erro peger nfc");
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
     }
 }
