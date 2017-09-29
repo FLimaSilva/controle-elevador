@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -19,6 +21,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
@@ -68,6 +72,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private List<Tag> mTags = new ArrayList<Tag>();
     private NfcAdapter mAdapter;
     private String idNfc;
+    private ProgressBar progressBar;
+    private RelativeLayout backgroundProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,6 +296,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         //Toast.makeText(this, floorAllowed, Toast.LENGTH_SHORT).show();
         if (floorAllowed!=null){
             manageAcessFloor(floorAllowed);
+            if (progressBar.getVisibility()==View.VISIBLE){
+                progressBar.setVisibility(View.GONE);
+                backgroundProgressBar.setBackground(null);
+            }
         }
     }
 
@@ -337,6 +347,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     }
 
     public void initViews(){
+        backgroundProgressBar = (RelativeLayout) findViewById(R.id.background_progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
         ivUp = (ImageView)findViewById(R.id.iv_up);
         setBackgroundImageView(ivUp, R.drawable.arrow_up_selector);
         ivDown = (ImageView)findViewById(R.id.iv_down);
@@ -444,16 +458,18 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private String dumpTagData(Tag tag) {
         String id = String.valueOf(toDec(tag.getId()));
         //Toast.makeText(this,id, Toast.LENGTH_LONG).show();
-        if (id.equals(idNfc)){
-            if (btCallElevator.isEnabled()){
-                callElevator(btCallElevator);
+        if (progressBar.getVisibility()!=View.VISIBLE){
+            if (id.equals(idNfc)){
+                if (btCallElevator.isEnabled()){
+                    callElevator(btCallElevator);
+                }
+                else{
+                    Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
+                }
             }
-            else{
-                Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(this, "Não é possivel chamar o elevador com esse cartão.", Toast.LENGTH_SHORT).show();
             }
-        }
-        else {
-            Toast.makeText(this, "Não é possivel chamar o elevador com esse cartão.", Toast.LENGTH_SHORT).show();
         }
 
         return id;
@@ -478,6 +494,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
                 try{
                     idNfc  = (String) snapshot.getValue();
+                    if (progressBar.getVisibility()==View.VISIBLE){
+                        progressBar.setVisibility(View.GONE);
+                        backgroundProgressBar.setBackground(null);
+                    }
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger nfc");
                 }

@@ -253,4 +253,21 @@
             android:onClick="exitApp"/>
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/background_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransparent"
+        >
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:progressTint="@color/colorOrange"/>
+    </RelativeLayout>
+
 </RelativeLayout>
