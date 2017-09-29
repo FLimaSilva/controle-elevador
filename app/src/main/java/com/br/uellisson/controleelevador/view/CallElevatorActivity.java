@@ -73,6 +73,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private List<Tag> mTags = new ArrayList<Tag>();
     private NfcAdapter mAdapter;
     private String idNfc;
+    private String nextFloor;
     private ProgressBar progressBar;
     private RelativeLayout backgroundProgressBar;
     private TextView tvCurrentFloor;
@@ -91,7 +92,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         enableArrow(ivUp);
         getAcessFloor();
         setIdNfc();
-        setCurrentFoor();
+        getCurrentFoor();
         initNfc();
         resolveIntent(getIntent());
     }
@@ -281,6 +282,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
+        saveNextFloor(qCallString);
     }
 
     @Override
@@ -490,8 +492,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     }
 
     public void setIdNfc(){
-        //accountsDb = mDatabase.child("accountsTable");
-        //databaseReference.child("idNfc");
         databaseReference.child("idNfc").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -510,13 +510,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         });
     }
 
-    public void setCurrentFoor(){
-        //accountsDb = mDatabase.child("accountsTable");
-        //databaseReference.child("idNfc");
+    public void getCurrentFoor(){
         databaseReference.child("currentFloor").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
                 try{
                     tvCurrentFloor.setText((String) snapshot.getValue());
                 } catch (Throwable e) {
@@ -527,24 +524,28 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         });
     }
 
-    public void setNextFloor(){
-        //accountsDb = mDatabase.child("accountsTable");
-        //databaseReference.child("idNfc");
-        databaseReference.child("idNfc").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getNextFloor(){
+        databaseReference.child("nextFloor").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
                 try{
-                    idNfc  = (String) snapshot.getValue();
-                    if (progressBar.getVisibility()==View.VISIBLE){
-                        progressBar.setVisibility(View.GONE);
-                        backgroundProgressBar.setBackground(null);
-                    }
+                    nextFloor  = (String) snapshot.getValue();
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger nfc");
                 }
             }
             @Override public void onCancelled(DatabaseError error) { }
         });
+    }
+
+    public void saveNextFloor(String id, DatabaseReference.CompletionListener... completionListener ){
+        DatabaseReference firebase = Util.getFirebase().child("nextFloor");
+
+        if( completionListener.length == 0 ){
+            firebase.setValue(id);
+        }
+        else{
+            firebase.setValue(id, completionListener[0]);
+        }
     }
 }
