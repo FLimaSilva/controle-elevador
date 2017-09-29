@@ -23,6 +23,7 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
@@ -74,6 +75,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private String idNfc;
     private ProgressBar progressBar;
     private RelativeLayout backgroundProgressBar;
+    private TextView tvCurrentFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         enableArrow(ivUp);
         getAcessFloor();
         setIdNfc();
+        setCurrentFoor();
         initNfc();
         resolveIntent(getIntent());
     }
@@ -351,6 +354,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        tvCurrentFloor = (TextView) findViewById(R.id.tv_curr_floor);
         ivUp = (ImageView)findViewById(R.id.iv_up);
         setBackgroundImageView(ivUp, R.drawable.arrow_up_selector);
         ivDown = (ImageView)findViewById(R.id.iv_down);
@@ -486,6 +490,44 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     }
 
     public void setIdNfc(){
+        //accountsDb = mDatabase.child("accountsTable");
+        //databaseReference.child("idNfc");
+        databaseReference.child("idNfc").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                try{
+                    idNfc  = (String) snapshot.getValue();
+                    if (progressBar.getVisibility()==View.VISIBLE){
+                        progressBar.setVisibility(View.GONE);
+                        backgroundProgressBar.setBackground(null);
+                    }
+                } catch (Throwable e) {
+                    Log.i("Erro", "Erro peger nfc");
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
+    }
+
+    public void setCurrentFoor(){
+        //accountsDb = mDatabase.child("accountsTable");
+        //databaseReference.child("idNfc");
+        databaseReference.child("currentFloor").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                try{
+                    tvCurrentFloor.setText((String) snapshot.getValue());
+                } catch (Throwable e) {
+                    Log.i("Erro", "Erro peger currentFloor");
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
+    }
+
+    public void setNextFloor(){
         //accountsDb = mDatabase.child("accountsTable");
         //databaseReference.child("idNfc");
         databaseReference.child("idNfc").addListenerForSingleValueEvent(new ValueEventListener() {
