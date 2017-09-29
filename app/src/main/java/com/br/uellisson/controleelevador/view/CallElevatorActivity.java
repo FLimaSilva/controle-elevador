@@ -79,11 +79,12 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         getSupportActionBar().setTitle(getString(R.string.call_elevator));
         initViews();
         initClass();
-        initNfc();
-        resolveIntent(getIntent());
+
         enableArrow(ivUp);
         getAcessFloor();
         setIdNfc();
+        initNfc();
+        resolveIntent(getIntent());
     }
 
     @Override
