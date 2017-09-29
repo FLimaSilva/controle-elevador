@@ -282,7 +282,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
-        saveNextFloor(qCallString);
+        saveNextFloor(String.valueOf(destination));
     }
 
     @Override
@@ -538,14 +538,14 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         });
     }
 
-    public void saveNextFloor(String id, DatabaseReference.CompletionListener... completionListener ){
+    public void saveNextFloor(String nextFloor, DatabaseReference.CompletionListener... completionListener ){
         DatabaseReference firebase = Util.getFirebase().child("nextFloor");
 
         if( completionListener.length == 0 ){
-            firebase.setValue(id);
+            firebase.setValue(nextFloor);
         }
         else{
-            firebase.setValue(id, completionListener[0]);
+            firebase.setValue(nextFloor, completionListener[0]);
         }
     }
 }
