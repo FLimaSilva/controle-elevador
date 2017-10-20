@@ -12,10 +12,11 @@ public class CallPresenter {
         Calendar calendar = Calendar.getInstance();
 
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
+        //TODO mês começa em 0 e vai até 11 por isso mont 9 == 10
+        int month = calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
         String dd = String.valueOf(day);
-        String mm = String.valueOf(month+1);
+        String mm = String.valueOf(month);
         String yy = String.valueOf(year);
 
         if (day<10){

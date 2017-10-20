@@ -40,7 +40,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,6 +80,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private ProgressBar progressBar;
     private RelativeLayout backgroundProgressBar;
     private TextView tvCurrentFloor;
+    private boolean firstUse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,7 +268,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
     private void initFrequencyUse(){
         frequencyUse = new FrequencyUse();
-        frequencyUse.setFirstUse("01-07-2017");
+        if (quantityCall==0){
+            DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+            String today = dateFormat.format(new Date(System.currentTimeMillis()));
+            frequencyUse.setFirstUse(today);
+        }
 
         callElevator = new CallElevator();
         callElevator.setRoute(String.valueOf(origin)+"-"+String.valueOf(destination));
@@ -293,11 +301,16 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         FrequencyUse frequencyUseDate = dataSnapshot.getValue(FrequencyUse.class);
-        if (frequencyUseDate.getQuantityCall()!=0){
-            quantityCall = frequencyUseDate.getQuantityCall();
+        if (frequencyUseDate!=null){
+            if (frequencyUseDate.getQuantityCall()>0){
+                quantityCall = frequencyUseDate.getQuantityCall();
+            }
         }
         User currentUser = dataSnapshot.getValue(User.class);
-        this.floorAllowed = currentUser.getFloorsAllowed();
+
+        if (currentUser!=null){
+            this.floorAllowed = currentUser.getFloorsAllowed();
+        }
         //Toast.makeText(this, floorAllowed, Toast.LENGTH_SHORT).show();
         if (floorAllowed!=null){
             btCallElevator.setEnabled(true);
