@@ -61,6 +61,7 @@
 
     <!-- Strings messages -->
     <string name="msg_elevator"> O elevador está a caminho.</string>
+    <string name="msg_equal_floor"> Selecione andares diferentes, antes de chamar o elevador.</string>
     <string name="msg_elevator_wait"> Aguarde... O elevador já está a caminho.</string>
     <string name="error_mail_password"> Cadastre um e-mail válido e uma senha com no mínimo 6 caracteres.</string>
 

@@ -18,7 +18,7 @@ public class ReportRecyclerView extends FirebaseRecyclerAdapter<CallElevator, Re
 
     @Override
     protected void populateViewHolder(ReportViewHolder viewHolder, CallElevator model, int position) {
-        viewHolder.tvRoute.setText(model.getRoute());
+        viewHolder.tvRoute.setText(model.getRoute().replace("0", "T"));
         viewHolder.tvUser.setText(model.getUserName());
         viewHolder.tvDate.setText(model.getDate());
         viewHolder.tvHour.setText(model.getHour());

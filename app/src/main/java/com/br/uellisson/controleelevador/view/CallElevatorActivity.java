@@ -252,18 +252,22 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     }
 
     public void callElevator(View view){
-        if (origin<destination){
-            ivUp.setEnabled(true);
-            ivDown.setEnabled(false);
+        if (origin==destination){
+            Toast.makeText(this, getString(R.string.msg_equal_floor), Toast.LENGTH_SHORT).show();
         }
-        else if(origin>destination){
-            ivDown.setEnabled(true);
-            ivUp.setEnabled(false);
+        else {
+            if (origin<destination){
+                ivUp.setEnabled(true);
+                ivDown.setEnabled(false);
+            }
+            else if(origin>destination){
+                ivDown.setEnabled(true);
+                ivUp.setEnabled(false);
+            }
+            ivElevator.setImageResource(R.mipmap.elevator_close);
+            saveCall();
+            view.setEnabled(false);
         }
-        ivElevator.setImageResource(R.mipmap.elevator_close);
-        Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
-        saveCall();
-        view.setEnabled(false);
     }
 
     private void initFrequencyUse(){
@@ -291,6 +295,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
         saveNextFloor(String.valueOf(destination));
+        Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
     }
 
     @Override
