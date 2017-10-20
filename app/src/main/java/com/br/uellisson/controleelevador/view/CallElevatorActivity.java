@@ -300,6 +300,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         this.floorAllowed = currentUser.getFloorsAllowed();
         //Toast.makeText(this, floorAllowed, Toast.LENGTH_SHORT).show();
         if (floorAllowed!=null){
+            btCallElevator.setEnabled(true);
             manageAcessFloor(floorAllowed);
             if (progressBar.getVisibility()==View.VISIBLE){
                 progressBar.setVisibility(View.GONE);
@@ -363,6 +364,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         setBackgroundImageView(ivDown, R.drawable.arrow_down_selector);
         ivElevator = (ImageView) findViewById(R.id.iv_elevator);
         btCallElevator = (Button) findViewById(R.id.bt_call_elevator);
+        btCallElevator.setEnabled(false);
 
         checkOriginT = (CheckedTextView) findViewById(R.id.check_origin_t);
         checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
