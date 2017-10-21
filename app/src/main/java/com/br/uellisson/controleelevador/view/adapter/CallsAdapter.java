@@ -41,7 +41,7 @@ public class CallsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final CallsViewHolder holder = (CallsViewHolder) viewHolder;
-        holder.tvRoute.setText(CallsList.get(position).getRoute());
+        holder.tvRoute.setText(CallsList.get(position).getRoute().replace("0","T"));
         holder.tvUser.setText(CallsList.get(position).getUserName());
         holder.tvDate.setText(CallsList.get(position).getDate());
         holder.tvHour.setText(CallsList.get(position).getHour());

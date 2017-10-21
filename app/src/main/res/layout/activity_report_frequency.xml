@@ -85,6 +85,44 @@
         android:textSize="@dimen/big_text"
         android:textStyle="bold" />
 
+    <RadioGroup
+        android:id="@+id/layout_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_filter"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonT1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="T-1"
+            />
+
+        <RadioButton
+            android:id="@+id/radioButtonT2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="T-2" />
+
+        <RadioButton
+            android:id="@+id/radioButton12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1-2" />
+
+        <RadioButton
+            android:id="@+id/radioButtonAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/all" />
+    </RadioGroup>
+
+    <!--
     <LinearLayout
         android:id="@+id/layout_filter"
         android:layout_width="match_parent"
@@ -121,7 +159,7 @@
             android:text="@string/all" />
 
     </LinearLayout>
-
+    -->
     <LinearLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"

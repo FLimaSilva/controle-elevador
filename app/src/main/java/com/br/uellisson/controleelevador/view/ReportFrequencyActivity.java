@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +37,10 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     private TextView firstUse;
     private TextView lastUSe;
     private TextView quantityCall;
-    private CheckBox checkBoxT1;
-    private CheckBox checkBoxT2;
-    private CheckBox checkBox12;
-    private CheckBox checkBoxAll;
+    private RadioButton radioButtonT1;
+    private RadioButton radioButtonT2;
+    private RadioButton radioButton12;
+    private RadioButton radioButtonAll;
     private List<CallElevator> listCalls;
     private RelativeLayout backgroundProgressBar;
     private ProgressBar progressBar;
@@ -57,14 +58,14 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         firstUse = (TextView)findViewById(R.id.first_use);
         lastUSe = (TextView)findViewById(R.id.last_use);
         quantityCall = (TextView)findViewById(R.id.quantity_call);
-        checkBoxT1 = (CheckBox) findViewById(R.id.checkBoxT1);
-        setFilter(checkBoxT1);
-        checkBoxT2 = (CheckBox) findViewById(R.id.checkBoxT2);
-        setFilter(checkBoxT2);
-        checkBox12 = (CheckBox) findViewById(R.id.checkBox12);
-        setFilter(checkBox12);
-        checkBoxAll = (CheckBox) findViewById(R.id.checkBoxAll);
-        setFilter(checkBoxAll);
+        radioButtonT1 = (RadioButton) findViewById(R.id.radioButtonT1);
+        setFilter(radioButtonT1);
+        radioButtonT2 = (RadioButton) findViewById(R.id.radioButtonT2);
+        setFilter(radioButtonT2);
+        radioButton12 = (RadioButton) findViewById(R.id.radioButton12);
+        setFilter(radioButton12);
+        radioButtonAll = (RadioButton) findViewById(R.id.radioButtonAll);
+        setFilter(radioButtonAll);
         databaseReference = Util.getFirebase();
         getListCalls();
 
@@ -124,11 +125,22 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         finish();
     }
 
-    public void setFilter(final CheckBox checkBox){
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    public void setFilter(final RadioButton radioButton){
+
+        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getApplicationContext(), checkBox.getText(), Toast.LENGTH_LONG ).show();
+                List<CallElevator> listCallsFilter = new ArrayList<CallElevator>();
+                for (int i = 0; i<listCalls.size(); i++){
+                    if (radioButton.getText().toString().equalsIgnoreCase("todos")){
+                        listCallsFilter.add(listCalls.get(i));
+                    }
+                    else if (listCalls.get(i).getRoute().replace("0","T").equalsIgnoreCase(radioButton.getText().toString())){
+                        listCallsFilter.add(listCalls.get(i));
+                    }
+                }
+                CallsAdapter callsAdapterFilter = new CallsAdapter(listCallsFilter, getApplicationContext());
+                rvUsers.setAdapter(callsAdapterFilter);
             }
         });
     }
