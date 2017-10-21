@@ -1,9 +1,17 @@
 package com.br.uellisson.controleelevador.view;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +20,7 @@ import com.br.uellisson.controleelevador.dados.Util;
 import com.br.uellisson.controleelevador.model.CallElevator;
 import com.br.uellisson.controleelevador.model.FrequencyUse;
 import com.br.uellisson.controleelevador.model.User;
+import com.br.uellisson.controleelevador.view.adapter.CallsAdapter;
 import com.br.uellisson.controleelevador.view.adapter.ReportRecyclerView;
 import com.br.uellisson.controleelevador.view.adapter.ReportViewHolder;
 import com.google.firebase.crash.FirebaseCrash;
@@ -20,10 +29,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReportFrequencyActivity extends BaseActivity implements ValueEventListener, DatabaseReference.CompletionListener {
     private TextView firstUse;
     private TextView lastUSe;
     private TextView quantityCall;
+    private CheckBox checkBoxT1;
+    private CheckBox checkBoxT2;
+    private CheckBox checkBox12;
+    private CheckBox checkBoxAll;
+    private List<CallElevator> listCalls;
+    private RelativeLayout backgroundProgressBar;
+    private ProgressBar progressBar;
+    private  RecyclerView rvUsers;
 
     private DatabaseReference databaseReference;
     @Override
@@ -31,14 +51,25 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_frequency);
 
+
+        backgroundProgressBar = (RelativeLayout) findViewById(R.id.background_progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         firstUse = (TextView)findViewById(R.id.first_use);
         lastUSe = (TextView)findViewById(R.id.last_use);
         quantityCall = (TextView)findViewById(R.id.quantity_call);
+        checkBoxT1 = (CheckBox) findViewById(R.id.checkBoxT1);
+        setFilter(checkBoxT1);
+        checkBoxT2 = (CheckBox) findViewById(R.id.checkBoxT2);
+        setFilter(checkBoxT2);
+        checkBox12 = (CheckBox) findViewById(R.id.checkBox12);
+        setFilter(checkBox12);
+        checkBoxAll = (CheckBox) findViewById(R.id.checkBoxAll);
+        setFilter(checkBoxAll);
+        databaseReference = Util.getFirebase();
+        getListCalls();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.report_frequency));
-
-        databaseReference = Util.getFirebase();
 
         final FrequencyUse frequencyUseContext = new FrequencyUse();
         frequencyUseContext.dataFrequencyUse( this );
@@ -56,16 +87,9 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     private void init(){
         final CallElevator callElevator = new CallElevator();
         callElevator.dataCallElevatorUpdated( this );
-        RecyclerView rvUsers = (RecyclerView) findViewById(R.id.rv_frequency);
+        rvUsers = (RecyclerView) findViewById(R.id.rv_frequency);
         rvUsers.setHasFixedSize( true );
         rvUsers.setLayoutManager( new LinearLayoutManager(this));
-        ReportRecyclerView adapter = new ReportRecyclerView(
-                CallElevator.class,
-                R.layout.item_report,
-                ReportViewHolder.class,
-                databaseReference.child("frequency_use").child("calls") );
-
-        rvUsers.setAdapter(adapter);
     }
 
     @Override
@@ -98,5 +122,42 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public void setFilter(final CheckBox checkBox){
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Toast.makeText(getApplicationContext(), checkBox.getText(), Toast.LENGTH_LONG ).show();
+            }
+        });
+    }
+
+    public void getListCalls(){
+        databaseReference.child("frequency_use").child("calls").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listCalls = new ArrayList<CallElevator>();
+                try{
+                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                        listCalls.add(child.getValue(CallElevator.class));
+                    }
+                    if (progressBar.getVisibility()==View.VISIBLE){
+                        progressBar.setVisibility(View.GONE);
+                        backgroundProgressBar.setBackground(null);
+                    }
+                    CallsAdapter callsAdapter = new CallsAdapter(listCalls, getApplicationContext());
+
+                    rvUsers.setAdapter(callsAdapter);
+                }
+                catch (Throwable e){
+                    Toast.makeText(getApplicationContext(), "Erro ao buscar chamadas!", Toast.LENGTH_LONG ).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
     }
 }

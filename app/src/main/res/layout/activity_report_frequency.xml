@@ -93,32 +93,32 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:id="@+id/checkBox4"
+            android:id="@+id/checkBoxT1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="T-1" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxT2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="T-2" />
 
         <CheckBox
-            android:id="@+id/checkBox5"
+            android:id="@+id/checkBox12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="1-2" />
 
         <CheckBox
-            android:id="@+id/checkBox6"
+            android:id="@+id/checkBoxAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Todos" />
+            android:text="@string/all" />
 
     </LinearLayout>
 
@@ -187,5 +187,22 @@
         android:layout_below="@+id/layout_header"
         android:layout_marginLeft="@dimen/min_margin"
         android:layout_marginRight="@dimen/min_margin"></android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/background_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransparent"
+        >
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:progressTint="@color/colorOrange"/>
+    </RelativeLayout>
 
 </RelativeLayout>

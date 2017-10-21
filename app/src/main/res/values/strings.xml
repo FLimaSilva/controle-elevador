@@ -64,7 +64,8 @@
     <string name="msg_equal_floor"> Selecione andares diferentes, antes de chamar o elevador.</string>
     <string name="msg_elevator_wait"> Aguarde... O elevador já está a caminho.</string>
     <string name="error_mail_password"> Cadastre um e-mail válido e uma senha com no mínimo 6 caracteres.</string>
-    <string name="filter_for_floor"> Filtros por roda(andar):</string>
+    <string name="filter_for_floor"> Filtros por rota(andar):</string>
+    <string name="all">todos</string>
 
     <!-- Strings NFC -->
     <string name="intro_message">This is a simple app to read various tags (NDEF, RFID, FeliCa, ISO 14443, etc).\n\nYou use it by holding a tag/card against the back of your device.\n\nPlease let me know if you want me to change how the data is displayed. Also send me an e-mail (adam@anyro.se) if you have any problems with the app and I\'ll let you know when I\'ve fixed it. You can also see the source code and report issues at https://github.com/nadam/nfc-reader.\n\nIf you can\'t read any tag, please try some of the other NFC apps on Google Play and let me know if this app is the only one not working. Thanks!\n\n/Adam</string>
