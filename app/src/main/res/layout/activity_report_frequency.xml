@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/min_margin"
             android:layout_toRightOf="@+id/textView10"
-            android:text="TextView"
             android:textSize="@dimen/big_text" />
 
         <TextView
@@ -51,7 +50,6 @@
             android:layout_below="@+id/first_use"
             android:layout_marginLeft="@dimen/min_margin"
             android:layout_toRightOf="@+id/textView11"
-            android:text="TextView"
             android:textSize="@dimen/big_text" />
 
         <TextView
@@ -71,16 +69,64 @@
             android:layout_below="@+id/last_use"
             android:layout_marginLeft="@dimen/min_margin"
             android:layout_toRightOf="@+id/textView12"
-            android:text="TextView"
             android:textSize="@dimen/big_text" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_info"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/filter_for_floor"
+        android:textSize="@dimen/big_text"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layout_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_filter"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="T-1" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="T-2" />
+
+        <CheckBox
+            android:id="@+id/checkBox5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1-2" />
+
+        <CheckBox
+            android:id="@+id/checkBox6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Todos" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_info"
+        android:layout_below="@id/layout_filter"
         android:background="@android:drawable/screen_background_dark"
         android:orientation="horizontal">
 
