@@ -130,17 +130,19 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                List<CallElevator> listCallsFilter = new ArrayList<CallElevator>();
-                for (int i = 0; i<listCalls.size(); i++){
-                    if (radioButton.getText().toString().equalsIgnoreCase("todos")){
-                        listCallsFilter.add(listCalls.get(i));
+                if (isChecked){
+                    List<CallElevator> listCallsFilter = new ArrayList<CallElevator>();
+                    for (int i = 0; i<listCalls.size(); i++){
+                        if (radioButton.getText().toString().equalsIgnoreCase("todos")){
+                            listCallsFilter.add(listCalls.get(i));
+                        }
+                        else if (listCalls.get(i).getRoute().replace("0","T").equalsIgnoreCase(radioButton.getText().toString())){
+                            listCallsFilter.add(listCalls.get(i));
+                        }
                     }
-                    else if (listCalls.get(i).getRoute().replace("0","T").equalsIgnoreCase(radioButton.getText().toString())){
-                        listCallsFilter.add(listCalls.get(i));
-                    }
+                    CallsAdapter callsAdapterFilter = new CallsAdapter(listCallsFilter, getApplicationContext());
+                    rvUsers.setAdapter(callsAdapterFilter);
                 }
-                CallsAdapter callsAdapterFilter = new CallsAdapter(listCallsFilter, getApplicationContext());
-                rvUsers.setAdapter(callsAdapterFilter);
             }
         });
     }
