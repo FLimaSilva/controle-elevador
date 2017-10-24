@@ -154,4 +154,15 @@ public class User {
         DatabaseReference firebase = Util.getFirebase().child("users").child(idUser);
         firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
     }
+
+    public void saveUserEdit(String userId, DatabaseReference.CompletionListener... completionListener){
+        DatabaseReference firebase = Util.getFirebase().child("users").child(userId);
+
+        if( completionListener.length == 0 ){
+            firebase.setValue(this);
+        }
+        else{
+            firebase.setValue(this, completionListener[0]);
+        }
+    }
 }
