@@ -90,6 +90,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
 
     protected void initViews(){
         name = (EditText) findViewById(R.id.et_name);
+        name.requestFocus();
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_password);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);

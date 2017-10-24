@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -57,6 +58,7 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
     ArrayList<User> listUsers;
     private String oldPassword;
     private String idUserSelect;
+    Button saveEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,13 +113,17 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         email = (EditText) findViewById(R.id.et_email);
         email.setEnabled(false);
         password = (EditText) findViewById(R.id.et_password);
-        //password.setEnabled(false);
+        password.setEnabled(false);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);
         progressBar.setVisibility(View.VISIBLE);
 
         checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
+        checkBox1.requestFocus();
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
         checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
+
+        saveEdit = (Button) findViewById(R.id.bt_register_user);
+        saveEdit.setText(R.string.edit_user);
     }
 
     protected void initUser(){
@@ -133,7 +139,9 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
             }
             else {
                 progressBar.setVisibility(View.VISIBLE);
-                setPassword(oldPassword, user.getPassword());
+                user.saveUserEdit(idUserSelect, UserEditActivity.this);
+                Log.i("setPassword", "Senha atualizada com sucesso");
+                //setPassword(oldPassword, user.getPassword());
             }
         }
         else {
@@ -252,31 +260,31 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         });
         }
 
-    public void setPassword(String oldPassword, final String newPassword){
-        AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), oldPassword);
-        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
-
-        firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    firebaseUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(getApplicationContext(), "Erro ao mudar a senha do usuário!", Toast.LENGTH_LONG ).show();
-                            }else {
-                                user.saveUserEdit(idUserSelect, UserEditActivity.this);
-                                Log.i("setPassword", "Senha atualizada com sucesso");
-                            }
-                        }
-                    });
-                }else {
-                    Toast.makeText(getApplicationContext(), "Erro na autenticação para atualizar a senha", Toast.LENGTH_LONG ).show();
-                    Log.i("setPassword", "Erro na autenticação para atualizar a senha");
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
+//    public void setPassword(String oldPassword, final String newPassword){
+//        AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), oldPassword);
+//        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
+//
+//        firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if(task.isSuccessful()){
+//                    firebaseUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(!task.isSuccessful()){
+//                                Toast.makeText(getApplicationContext(), "Erro ao mudar a senha do usuário!", Toast.LENGTH_LONG ).show();
+//                            }else {
+//                                user.saveUserEdit(idUserSelect, UserEditActivity.this);
+//                                Log.i("setPassword", "Senha atualizada com sucesso");
+//                            }
+//                        }
+//                    });
+//                }else {
+//                    Toast.makeText(getApplicationContext(), "Erro na autenticação ao atualizar a senha", Toast.LENGTH_LONG ).show();
+//                    Log.i("setPassword", "Erro na autenticação para atualizar a senha");
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//    }
 }
