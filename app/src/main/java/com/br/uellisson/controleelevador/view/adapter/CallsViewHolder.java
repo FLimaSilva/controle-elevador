@@ -10,15 +10,23 @@ import com.br.uellisson.controleelevador.R;
 
 /**
  * Created by usilva on 17/10/2017.
+ *
+ * Classe que inicializa os componetes do Adapter das chadadas
  */
 
 public class CallsViewHolder extends RecyclerView.ViewHolder {
-
+    /**
+     * Atributos da Classe
+     */
     TextView tvRoute;
     TextView tvUser;
     TextView tvDate;
     TextView tvHour;
 
+    /**
+     * Contrutor da Classe
+     * @param view
+     */
     public CallsViewHolder(View view) {
         super(view);
         tvRoute = (TextView) view.findViewById(R.id.tv_route);

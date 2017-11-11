@@ -4,10 +4,16 @@ import java.util.Calendar;
 
 /**
  * Created by uellisson on 25/09/2017.
+ *
+ * Classe que prepara os dados da chamada do elevador
+ * para serem exibidos
  */
-
 public class CallPresenter {
 
+    /**
+     * Método que formata a data da chamada
+     * @return
+     */
     public String getDate(){
         Calendar calendar = Calendar.getInstance();
 
@@ -29,6 +35,10 @@ public class CallPresenter {
         return dd+"-"+mm+"-"+yy;
     }
 
+    /**
+     * Método que formada a hora da chamada
+     * @return
+     */
     public String getHour(){
         Calendar calendar = Calendar.getInstance();
 

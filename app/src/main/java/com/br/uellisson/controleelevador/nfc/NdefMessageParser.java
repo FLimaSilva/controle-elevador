@@ -33,7 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utility class for creating {@link ParsedNdefMessage}s.
+ * Casse que contem os médodos utilizados no parser das
+ * informações do NFC
  */
 public class NdefMessageParser {
 
@@ -42,11 +43,17 @@ public class NdefMessageParser {
 
     }
 
-    /** Parse an NdefMessage */
+    /** método que faz o parse das informações do NFC
+     */
     public static List<ParsedNdefRecord> parse(NdefMessage message) {
         return getRecords(message.getRecords());
     }
 
+    /**
+     * Método que captura dados gravados no NFC
+     * @param records
+     * @return
+     */
     public static List<ParsedNdefRecord> getRecords(NdefRecord[] records) {
         List<ParsedNdefRecord> elements = new ArrayList<ParsedNdefRecord>();
         for (final NdefRecord record : records) {

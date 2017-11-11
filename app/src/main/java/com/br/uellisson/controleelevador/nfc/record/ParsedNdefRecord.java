@@ -21,11 +21,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
+/**
+ * Interface de gravaçao do NFC
+ */
 public interface ParsedNdefRecord {
 
     /**
-     * Returns a view to display this record.
+     * método que retorna uma tela para a apresentação
+     * do código do NFC capturado
      */
     public View getView(Activity activity, LayoutInflater inflater, ViewGroup parent,
                         int offset);

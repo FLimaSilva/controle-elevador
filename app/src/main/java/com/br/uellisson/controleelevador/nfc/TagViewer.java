@@ -55,21 +55,26 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * An {@link Activity} which handles a broadcast of a new tag that the device just discovered.
+ * Classe onde são exibidas informações do NFC
+ *
  */
 public class TagViewer extends Activity {
 
+    /**
+     * Atributos da classe
+     */
     private static final DateFormat TIME_FORMAT = SimpleDateFormat.getDateTimeInstance();
     private LinearLayout mTagContent;
-
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
     private NdefMessage mNdefPushMessage;
-
     private AlertDialog mDialog;
-
     private List<Tag> mTags = new ArrayList<Tag>();
 
+    /**
+     * Método Oncrete onde a tela é criada
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +97,13 @@ public class TagViewer extends Activity {
         }
     }
 
-    private void showMessage(int title, int message) {
-        mDialog.setTitle(title);
-        mDialog.setMessage(getText(message));
-        mDialog.show();
-    }
-
+    /**
+     * Método que captura um novo texto gravado
+     * @param text
+     * @param locale
+     * @param encodeInUtf8
+     * @return
+     */
     private NdefRecord newTextRecord(String text, Locale locale, boolean encodeInUtf8) {
         byte[] langBytes = locale.getLanguage().getBytes(Charset.forName("US-ASCII"));
 
@@ -115,6 +121,9 @@ public class TagViewer extends Activity {
         return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], data);
     }
 
+    /**
+     * Método acionado sempre que vocÊ entre na tela
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -127,6 +136,10 @@ public class TagViewer extends Activity {
         }
     }
 
+    /**
+     * Método acionado quando o usuário sai da tela de leitura e
+     * gravaçao do NFC para outra tela.
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -136,6 +149,9 @@ public class TagViewer extends Activity {
         }
     }
 
+    /**
+     * Método que mostra a mensagem que o uauário deve ativar seu NFC
+     */
     private void showWirelessSettingsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.nfc_disabled);
