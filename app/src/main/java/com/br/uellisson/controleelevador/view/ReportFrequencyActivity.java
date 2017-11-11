@@ -87,7 +87,7 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     }
     private void init(){
         final CallElevator callElevator = new CallElevator();
-        callElevator.dataCallElevatorUpdated( this );
+        callElevator.dataFrequencyUse( this );
         rvUsers = (RecyclerView) findViewById(R.id.rv_frequency);
         rvUsers.setHasFixedSize( true );
         rvUsers.setLayoutManager( new LinearLayoutManager(this));

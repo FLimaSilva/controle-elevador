@@ -14,11 +14,14 @@ import java.util.Map;
 
 /**
  * Created by uellisson on 05/08/2017.
+ *
+ * Classe modelo do objeto usuário
  */
-
 public class User {
+    /**
+     * Atributos da classe
+     */
     public static String PROVIDER = "com.br.uellisson.controleelevador.model.User.PROVIDER";
-
     private String id;
     private String name;
     private String email;
@@ -26,8 +29,10 @@ public class User {
     private String newPassword;
     private String floorsAllowed;
 
-    public User() {
-    }
+    /**
+     * Construtor vazio
+     */
+    public User() {}
 
     /**
      * Construtor login usuario
@@ -53,23 +58,9 @@ public class User {
     }
 
     /**
-     * Construtor Editar usuario
-     * @param id
-     * @param name
-     * @param email
-     * @param password
-     * @param newPassword
-     * @param floorsAllowed
+     * Métodos usados para capturar informações dos atributos (gets)
+     * e modificalos (sets)
      */
-    public User(String id, String name, String email, String password, String newPassword, String floorsAllowed) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.newPassword = newPassword;
-        this.floorsAllowed = floorsAllowed;
-    }
-
     public String getId() {
         return id;
     }
@@ -82,12 +73,6 @@ public class User {
         return name;
     }
 
-    private void setNameInMap( Map<String, Object> map ) {
-        if( getName() != null ){
-            map.put( "name", getName() );
-        }
-    }
-
     public void setNameIfNull(String name) {
         if( this.name == null ){
             this.name = name;
@@ -98,38 +83,24 @@ public class User {
         return email;
     }
 
-    private void setEmailInMap( Map<String, Object> map ) {
-        if( getEmail() != null ){
-            map.put( "email", getEmail() );
-        }
-    }
-
     public void setEmailIfNull(String email) {
         if( this.email == null ){
             this.email = email;
         }
-
     }
 
     public String getPassword() {
         return password;
     }
 
-    public String getNewPassword() {
-        return newPassword;
-    }
-
     public String getFloorsAllowed() {
         return floorsAllowed;
     }
 
-    public void setFloorsAllowedIfNull(String email) {
-        if( this.floorsAllowed == null ){
-            this.floorsAllowed = floorsAllowed;
-        }
-
-    }
-
+    /**
+     * Método que salva um usuário no banco de dados
+     * @param completionListener
+     */
     public void saveDB(DatabaseReference.CompletionListener... completionListener ){
         DatabaseReference firebase = Util.getFirebase().child("users").child( getId() );
 
@@ -141,13 +112,20 @@ public class User {
         }
     }
 
+    /**
+     * Méfod que salva o token do usuário logado
+     * nas preferÊncias do aplicativo.
+     * @param context
+     * @param token
+     */
     public void saveProviderSP(Context context, String token ){
         Util.saveSP( context, PROVIDER, token );
     }
-    public String getProviderSP(Context context ){
-        return( Util.getSP( context, PROVIDER) );
-    }
 
+    /**
+     * Método que busca os dados do usuário no banco.
+     * @param context
+     */
     public void dataUser(Context context ){
         String idUser = Util.getSP(context, Constants.USER_ID);
 

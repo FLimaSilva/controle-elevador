@@ -8,14 +8,15 @@ import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by uellisson on 07/09/2017.
+ *
+ * Classe de modelo do objeto das notificações
  */
-
 public class Notify {
-    String notify;
-    String dateHour;
-
-    public Notify() {
-    }
+    /**
+     * Atributos da classe
+     */
+    private String notify;
+    private String dateHour;
 
     public String getNotify() {
         return notify;

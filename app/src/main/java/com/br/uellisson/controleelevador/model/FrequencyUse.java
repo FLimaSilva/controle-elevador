@@ -13,18 +13,24 @@ import java.util.Map;
 
 /**
  * Created by uellisson on 07/09/2017.
+ *
+ * Classe de modelo do Objeto FrequÊncia de uso.
  */
 @IgnoreExtraProperties
 public class FrequencyUse {
 
-   // private CallElevator calls;
+    /**
+     * Atributos da classe
+     */
     private String firstUse;
     private String lastUse;
     private int quantityCall;
 
-    public FrequencyUse() {
-    }
 
+    /**
+     * Métodos usados para capturar informações dos atributos (gets)
+     * e modificalos (sets)
+     */
     public String getFirstUse() {
         return firstUse;
     }
@@ -72,22 +78,11 @@ public class FrequencyUse {
         firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
     }
 
-    public void dataFrequencyUseUpdated(Context context ){
-        DatabaseReference firebase = Util.getFirebase().child("frequency_use");
-        firebase.addValueEventListener( (ValueEventListener) context );
-    }
-
-    public void saveFrequencyCall(DatabaseReference.CompletionListener... completionListener ){
-        DatabaseReference firebase = Util.getFirebase().child("frequency_use");
-
-        if( completionListener.length == 0 ){
-            firebase.setValue(this);
-        }
-        else{
-            firebase.setValue(this, completionListener[0]);
-        }
-    }
-
+    /**
+     * Método que atualiza a frequênica de chamadas do elevador
+     * no banco de dados.
+     * @param completionListener
+     */
     public void updateFrequencyCall( DatabaseReference.CompletionListener... completionListener ){
 
         DatabaseReference firebase = Util.getFirebase().child("frequency_use");

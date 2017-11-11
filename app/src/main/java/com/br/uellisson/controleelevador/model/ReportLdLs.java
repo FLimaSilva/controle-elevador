@@ -7,17 +7,28 @@ package com.br.uellisson.controleelevador.model;
  * dos limites de subida e descida do elevador.
  */
 public class ReportLdLs {
-
+    /**
+     * Atributos da classe
+     */
     private String date;
     private String hour;
     private String event;
 
+    /**
+     * Construtor da classe
+     * @param date
+     * @param hour
+     * @param event
+     */
     public ReportLdLs(String date, String hour, String event) {
         this.date = date;
         this.hour = hour;
         this.event = event;
     }
 
+    /**
+     * Métodos usados para capturar informações dos atributos (gets)
+     */
     public String getDate() {
         return date;
     }
