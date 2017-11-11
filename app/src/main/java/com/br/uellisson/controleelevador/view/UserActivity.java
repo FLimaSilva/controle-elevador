@@ -29,8 +29,14 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe responsável pela criação e operação da tela
+ * de Cadastro de usuário do aplicativo
+ */
 public class UserActivity extends BaseActivity implements DatabaseReference.CompletionListener{
-
+    /**
+     * Atributos da Classe
+     */
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private User user;
@@ -42,6 +48,10 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     private CheckBox checkBox2;
     private CheckBox checkBox3;
 
+    /**
+     * Método onde é criada a tela de cadatro e edição do usuário
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +156,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     @Override
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
         mAuth.signOut();
-        showToast( "Conta criada com sucesso!" );
+        Toast.makeText(this,"Conta criada com sucesso!",Toast.LENGTH_LONG).show();
         closeProgressBar();
         finish();
     }

@@ -24,13 +24,23 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Classe responsável pela criação e operação da tela
+ * de login do aplicativo
+ */
 public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener{
+    /**
+     * Atributos da Classe
+     */
     private User user;
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager callbackManager;
 
+    /**
+     * Método onde é criada a tela de Login do aplicativo
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

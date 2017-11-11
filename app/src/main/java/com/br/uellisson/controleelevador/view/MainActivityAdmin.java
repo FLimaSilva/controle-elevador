@@ -9,11 +9,23 @@ import com.br.uellisson.controleelevador.R;
 import com.br.uellisson.controleelevador.nfc.TagViewer;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Classe responsável pela criação e operação da tela
+ * de principal do administador do aplicativo
+ */
 public class MainActivityAdmin extends BaseActivity {
 
+    /**
+     * Atributos da Classe
+     */
     private Button btRegisterUser;
     private Button btExit;
 
+    /**
+     * Método onde é criada a tela principal do
+     * Administrador do aplicativo
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

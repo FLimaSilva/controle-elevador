@@ -47,8 +47,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Classe responsável pela criação e operação da tela
+ * de chamadas do elevador.
+ */
 public class CallElevatorActivity extends BaseActivity implements ValueEventListener, DatabaseReference.CompletionListener{
 
+    /**
+     * Atributos da Classe
+     */
     private ImageView ivUp;
     private ImageView ivDown;
     private ImageView ivElevator;
@@ -82,6 +89,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private TextView tvCurrentFloor;
     private boolean firstUse;
 
+    /**
+     * Método onde é criada a tela de Chamadas do elevador
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,12 +106,16 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
         enableArrow(ivUp);
         getAcessFloor();
-        setIdNfc();
+        getIdNfc();
         getCurrentFoor();
         initNfc();
         resolveIntent(getIntent());
     }
 
+    /**
+     * Método que é acionado sempre que o usuário acessa a tela
+     * de chamdas do elevador
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,12 +128,21 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
+    /**
+     * método que chama o verificação dos nfcs
+     * proximos do celular
+     * @param intent
+     */
     @Override
     public void onNewIntent(Intent intent) {
         setIntent(intent);
         resolveIntent(intent);
     }
 
+    /**
+     * Médodo para o usuário sair do aplicativo
+     * @param view
+     */
     public void exitApp(View view){
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -126,6 +150,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         finish();
     }
 
+    /**
+     * Método que ativa os andares de origem do liberados
+     * para o usuário
+     * @param floorAllowed
+     */
     public void enableOrigin(int floorAllowed){
         checkOriginT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +204,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
+    /**
+     * Método que muda os andares de origem, que o usuário não tem acesso,
+     * para indisponiveis
+     */
     public void unCheckedOrigin(){
         checkOriginT.setChecked(false);
         checkOrigin1.setChecked(false);
@@ -182,6 +215,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         checkOrigin3.setChecked(false);
     }
 
+   /**
+     * Método que ativa os andares de destino do liberados
+     * para o usuário
+     * @param floorAllowed
+     */
     public void enableDestination(int floorAllowed){
         checkDestinationT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,6 +271,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
+    /**
+     * Método que muda os andares de destino, que o usuário não tem acesso,
+     * para indisponiveis
+     */
     public void unCheckedDestination(){
         checkDestinationT.setChecked(false);
         checkDestination1.setChecked(false);
@@ -240,6 +282,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         checkDestination3.setChecked(false);
     }
 
+    /**
+     * Método que ativa e muda a direção das setas
+      * @param imageView
+     */
     public void enableArrow(ImageView imageView){
         if (imageView==ivUp){
             ivUp.setEnabled(true);
@@ -251,6 +297,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
+    /**
+     * Método que chama o elevador
+     * @param view
+     */
     public void callElevator(View view){
         if (origin==destination){
             Toast.makeText(this, getString(R.string.msg_equal_floor), Toast.LENGTH_SHORT).show();
@@ -270,7 +320,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
-    private void initFrequencyUse(){
+    /**
+     * Mátodo que inicializa os dados da chamada do elevador,
+     * antes de salvar a chamada
+     */
+    private void initCallElevator(){
         frequencyUse = new FrequencyUse();
         if (quantityCall==0){
             DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
@@ -285,8 +339,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         setDateHour();
     }
 
+    /**
+     * ´Método que salva a chamada do elevador
+     */
     private void saveCall(){
-        initFrequencyUse();
+        initCallElevator();
         String qCallString = String.valueOf(quantityCall+1);
         if (quantityCall<9){
             qCallString = "0"+qCallString;
@@ -298,11 +355,22 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Método que é executado quando os dados da chamada do
+     * elevador é salva no banco de dados
+     * @param databaseError
+     * @param databaseReference
+     */
     @Override
     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
        // showToast( "Chamada salva com sucesso!" );
     }
 
+    /**
+     * Método usado para pegar dados do banco
+     * necessário para a chamada do elevador
+     * @param dataSnapshot
+     */
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         FrequencyUse frequencyUseDate = dataSnapshot.getValue(FrequencyUse.class);
@@ -327,18 +395,28 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
+    /**
+     * Método chamada quando a conexão com o banco é cancelada,
+     * antes de pegar os dados
+     * @param databaseError
+     */
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
     }
 
+    /**
+     * Método que formata a data de chamada do elevador
+     */
     public void setDateHour(){
-
         callElevator.setDate(callPresenter.getDate());
         frequencyUse.setLastUse(callPresenter.getDate());
         callElevator.setHour(callPresenter.getHour());
     }
 
+    /**
+     * Método que pega os andares que o usuário tem acesso
+     */
     public void getAcessFloor(){
         String idUser = Util.getSP(getApplicationContext(), Constants.USER_ID);
 
@@ -348,6 +426,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
     }
 
+    /**
+     * Método que gerencia a ativação dos andares que o
+     * usuário tem acesso.
+     * @param acessFloor
+     */
     public void manageAcessFloor(String acessFloor){
         for (int i = 0; i<acessFloor.length(); i++){
             if (!acessFloor.substring(i, i+1).equals("0")){
@@ -357,12 +440,25 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
+    /**
+     * Método que resolve problema de compatibildiade do
+     * background utilizado nos componentes da tela
+     * @param checkedTextView
+     * @param drawable
+     */
     private void setBackgroundCheckedTextView(CheckedTextView checkedTextView, int drawable){
         if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1)
             checkedTextView.setBackground(getResources().getDrawable(drawable));
         else
             checkedTextView.setBackground(ContextCompat.getDrawable(this, drawable));
     }
+
+    /**
+     * Método que resolve problema de compatibildiade do
+     * background utilizado nos componentes da tela
+     * @param imageView
+     * @param drawable
+     */
     private void setBackgroundImageView(ImageView imageView, int drawable){
         if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1)
             imageView.setBackground(getResources().getDrawable(drawable));
@@ -370,6 +466,9 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             imageView.setBackground(ContextCompat.getDrawable(this, drawable));
     }
 
+    /**
+     * Método que inicializa as views (componentes gráficos) da tela
+     */
     public void initViews(){
         backgroundProgressBar = (RelativeLayout) findViewById(R.id.background_progress_bar);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -403,6 +502,9 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         setBackgroundCheckedTextView(checkDestination3, R.drawable.cicle_selector);
     }
 
+    /**
+     * Método que inicializa os objetos usados na classe.
+     */
     public void initClass(){
         mAdapter = NfcAdapter.getDefaultAdapter(this);
         databaseReference = Util.getFirebase();
@@ -412,6 +514,9 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         callPresenter = new CallPresenter();
     }
 
+    /**
+     * Método que incializa os atributos do NFC
+     */
     public void initNfc() {
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -419,6 +524,13 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 "Message from NFC Reader :-)", Locale.ENGLISH, true) });
     }
 
+    /**
+     * Método que captura dos dados do NFC
+      * @param text
+     * @param locale
+     * @param encodeInUtf8
+     * @return
+     */
     private NdefRecord newTextRecord(String text, Locale locale, boolean encodeInUtf8) {
         byte[] langBytes = locale.getLanguage().getBytes(Charset.forName("US-ASCII"));
 
@@ -436,6 +548,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], data);
     }
 
+    /**
+     * Método que notifica o usuário que o NFC do seu dispositivo
+     * está desligado.
+     */
     private void showWirelessSettingsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.nfc_disabled);
@@ -454,6 +570,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         return;
     }
 
+    /**
+     * Método que processa dados do NFC
+     * @param intent
+     */
     private void resolveIntent(Intent intent) {
         String action = intent.getAction();
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
@@ -472,7 +592,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 byte[] empty = new byte[0];
                 byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
                 Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                byte[] payload = dumpTagData(tag).getBytes();
+                byte[] payload = callElevatorNFC(tag).getBytes();
                 NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
                 NdefMessage msg = new NdefMessage(new NdefRecord[] { record });
                 msgs = new NdefMessage[] { msg };
@@ -481,7 +601,12 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
-    private String dumpTagData(Tag tag) {
+    /**
+     * Método que chama elevador com NFC
+     * @param tag
+     * @return
+     */
+    private String callElevatorNFC(Tag tag) {
         String id = String.valueOf(toDec(tag.getId()));
         //Toast.makeText(this,id, Toast.LENGTH_LONG).show();
         if (progressBar.getVisibility()!=View.VISIBLE){
@@ -500,6 +625,12 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
         return id;
     }
+
+    /**
+     * Método que converte id do NFC para decimal
+     * @param bytes
+     * @return
+     */
     private long toDec(byte[] bytes) {
         long result = 0;
         long factor = 1;
@@ -511,7 +642,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         return result;
     }
 
-    public void setIdNfc(){
+    /**
+     * Método que pega o id do NFC do usuário no banco de dados
+     */
+    public void getIdNfc(){
         databaseReference.child("idNfc").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -530,6 +664,9 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         });
     }
 
+    /**
+     * Método que pega o andar atual do elevador
+     */
     public void getCurrentFoor(){
         databaseReference.child("currentFloor").addValueEventListener(new ValueEventListener() {
             @Override
@@ -544,20 +681,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         });
     }
 
-    public void getNextFloor(){
-        databaseReference.child("nextFloor").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                try{
-                    nextFloor  = (String) snapshot.getValue();
-                } catch (Throwable e) {
-                    Log.i("Erro", "Erro peger nfc");
-                }
-            }
-            @Override public void onCancelled(DatabaseError error) { }
-        });
-    }
-
+    /**
+     * Método que salva o próximo andar do elevador
+     * @param nextFloor
+     * @param completionListener
+     */
     public void saveNextFloor(String nextFloor, DatabaseReference.CompletionListener... completionListener ){
         DatabaseReference firebase = Util.getFirebase().child("nextFloor");
 

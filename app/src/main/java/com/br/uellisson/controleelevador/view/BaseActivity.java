@@ -23,13 +23,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Classe que representa a Base de todas as Activities
+ */
 abstract public class BaseActivity extends AppCompatActivity {
 
+    /**
+     * Atributos da classe
+     */
     protected EditText email;
     protected EditText password;
     protected ProgressBar progressBar;
 
+    /**
+     * Método para exibir uma mensagem que fica na parte inferior da tela
+     * @param message
+     */
     protected void showSnackbar(String message ){
         Snackbar.make(progressBar,
                 message,
@@ -37,6 +46,11 @@ abstract public class BaseActivity extends AppCompatActivity {
                 .setAction("Action", null).show();
     }
 
+    /**
+     * Método que coloca as setas de voltar nas tela
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -45,27 +59,23 @@ abstract public class BaseActivity extends AppCompatActivity {
         return false;
     }
 
-    protected void showToast( String message ){
-        Toast.makeText(this,
-                message,
-                Toast.LENGTH_LONG)
-                .show();
-    }
-
+    /**
+     * Metodos que exibe o loadind
+     */
     protected void openProgressBar(){
         progressBar.setVisibility( View.VISIBLE );
     }
 
+    /**
+     * Metodos que exconde o loadind
+     */
     protected void closeProgressBar(){
         progressBar.setVisibility( View.GONE );
     }
 
-    //abstract protected void initViews();
-    //abstract protected void initUser();
-
 
     /**
-     * Verifica as permissoes do usuario
+     * Método que verifica as permissoes do usuario
      * @return
      */
     public boolean checkAndRequestPermissions(){
@@ -86,7 +96,7 @@ abstract public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Captura e trata a resposta do popup de permissoes
+     * Método que captura e trata a resposta do popup de permissoes
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -150,7 +160,7 @@ abstract public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Exibe o popup de explicacao para as permissoes
+     * Método que Exibe o popup de explicacao para as permissoes
      * @param message
      * @param okListener
      */

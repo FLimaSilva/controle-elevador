@@ -33,7 +33,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe responsável pela criação e operação da tela
+ * de Relatório de frequênica de uso do aplicativo
+ */
 public class ReportFrequencyActivity extends BaseActivity implements ValueEventListener, DatabaseReference.CompletionListener {
+    /**
+     * Atributos da Classe
+     */
     private TextView firstUse;
     private TextView lastUSe;
     private TextView quantityCall;
@@ -45,8 +52,13 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     private RelativeLayout backgroundProgressBar;
     private ProgressBar progressBar;
     private  RecyclerView rvUsers;
-
     private DatabaseReference databaseReference;
+
+    /**
+     * Método onde é criada a tela do relatório de frequÊncia de
+     * uso do elevador
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +90,11 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         init();
     }
 
+    /**
+     * Método que coloca as setas de voltar na tela
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

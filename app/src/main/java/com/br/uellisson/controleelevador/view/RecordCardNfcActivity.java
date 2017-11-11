@@ -34,8 +34,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Classe responsável pela criação e operação da tela
+ * da gravação de cartões NFC do aplicativo
+ */
 public class RecordCardNfcActivity extends BaseActivity {
 
+    /**
+     * Atributos da Classe
+     */
     private PendingIntent mPendingIntent;
     private NdefMessage mNdefPushMessage;
     private List<Tag> mTags = new ArrayList<Tag>();
@@ -45,6 +52,11 @@ public class RecordCardNfcActivity extends BaseActivity {
     private DatabaseReference databaseReference;
     private String idNfc;
 
+    /**
+     * Método onde é criada a tela de gravação dos
+     * cartões NFC
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

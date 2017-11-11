@@ -15,11 +15,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.crash.FirebaseCrash;
 
+/**
+ * Classe responsável pela criação e operação da tela
+ * de recuperação de senha do aplicativo
+ */
 public class ResetActivity extends BaseActivity {
 
+    /**
+     * Atributos da Classe
+     */
     private AutoCompleteTextView email;
     private FirebaseAuth firebaseAuth;
 
+    /**
+     * Método onde é criada a tela de recuperação de senha
+     * do usuário
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
