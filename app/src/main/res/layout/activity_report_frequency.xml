@@ -119,7 +119,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/all" />
+            android:text="@string/all"
+            android:checked="true"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/layout_filter2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_filter"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButton1T"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1-T" />
+
+        <RadioButton
+            android:id="@+id/radioButton2T"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2-T" />
+
+        <RadioButton
+            android:id="@+id/radioButton21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2-1" />
+
     </RadioGroup>
 
     <!--
@@ -164,7 +195,7 @@
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_filter"
+        android:layout_below="@id/layout_filter2"
         android:background="@android:drawable/screen_background_dark"
         android:orientation="horizontal">
 

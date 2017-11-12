@@ -49,6 +49,9 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     private RadioButton radioButton12;
     private RadioButton radioButtonAll;
     private List<CallElevator> listCalls;
+    private RadioButton radioButton1T;
+    private RadioButton radioButton2T;
+    private RadioButton radioButton21;
     private RelativeLayout backgroundProgressBar;
     private ProgressBar progressBar;
     private  RecyclerView rvUsers;
@@ -78,6 +81,12 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         setFilter(radioButton12);
         radioButtonAll = (RadioButton) findViewById(R.id.radioButtonAll);
         setFilter(radioButtonAll);
+        radioButton1T = (RadioButton) findViewById(R.id.radioButton1T);
+        setFilter(radioButton1T);
+        radioButton2T = (RadioButton) findViewById(R.id.radioButton2T);
+        setFilter(radioButton2T);
+        radioButton21 = (RadioButton) findViewById(R.id.radioButton21);
+        setFilter(radioButton21);
         databaseReference = Util.getFirebase();
         getListCalls();
 
@@ -147,17 +156,31 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                List<CallElevator> listCallsFilter = new ArrayList<CallElevator>();
-                for (int i = 0; i<listCalls.size(); i++){
-                    if (radioButton.getText().toString().equalsIgnoreCase("todos")){
-                        listCallsFilter.add(listCalls.get(i));
+                if (isChecked){
+                    String textRadioButton = radioButton.getText().toString();
+                    List<CallElevator> listCallsFilter = new ArrayList<CallElevator>();
+                    if (textRadioButton.equals("T-1")||textRadioButton.equals("T-2")||textRadioButton.equals("1-2")||textRadioButton.equals("todos")){
+                        radioButton1T.setChecked(false);
+                        radioButton2T.setChecked(false);
+                        radioButton21.setChecked(false);
                     }
-                    else if (listCalls.get(i).getRoute().replace("0","T").equalsIgnoreCase(radioButton.getText().toString())){
-                        listCallsFilter.add(listCalls.get(i));
+                    else {
+                        radioButtonT1.setChecked(false);
+                        radioButtonT2.setChecked(false);
+                        radioButton12.setChecked(false);
+                        radioButtonAll.setChecked(false);
                     }
+                    for (int i = 0; i<listCalls.size(); i++){
+                        if (textRadioButton.equalsIgnoreCase("todos")){
+                            listCallsFilter.add(listCalls.get(i));
+                        }
+                        else if (listCalls.get(i).getRoute().replace("0","T").equalsIgnoreCase(radioButton.getText().toString())){
+                            listCallsFilter.add(listCalls.get(i));
+                        }
+                    }
+                    CallsAdapter callsAdapterFilter = new CallsAdapter(listCallsFilter, getApplicationContext());
+                    rvUsers.setAdapter(callsAdapterFilter);
                 }
-                CallsAdapter callsAdapterFilter = new CallsAdapter(listCallsFilter, getApplicationContext());
-                rvUsers.setAdapter(callsAdapterFilter);
             }
         });
     }

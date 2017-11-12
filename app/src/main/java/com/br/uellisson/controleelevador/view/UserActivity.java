@@ -100,6 +100,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
 
     protected void initViews(){
         name = (EditText) findViewById(R.id.et_name);
+        name.requestFocus();
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_password);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);
@@ -107,6 +108,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
         checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
         checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
+        spnUsers.setVisibility(View.GONE);
     }
 
     protected void initUser(){

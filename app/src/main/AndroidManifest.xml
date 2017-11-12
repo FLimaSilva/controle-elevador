@@ -36,6 +36,9 @@
         <activity
             android:name=".view.CallElevatorActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.UserEditActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".view.NotificationsActivity" />
         <activity android:name=".view.ReportLsLd" />
         <activity android:name=".view.ReportFrequencyActivity" />
