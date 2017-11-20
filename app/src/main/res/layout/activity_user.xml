@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.br.uellisson.controleelevador.view.UserActivity"
+    tools:context="edu.tcc.controleelevador.view.UserActivity"
     android:focusable="true"
     android:focusableInTouchMode="true">
 

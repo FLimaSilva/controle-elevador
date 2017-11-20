@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.br.uellisson.controleelevador.view.CallElevatorActivity">
+    tools:context="edu.tcc.controleelevador.view.CallElevatorActivity">
 
     <TextView
         android:id="@+id/tv_curr_floor"

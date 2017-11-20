@@ -12,7 +12,7 @@
     <uses-feature android:name="android.hardware.nfc" />
 
     <application
-        android:name=".view.CustomApplication"
+        android:name="edu.tcc.controleelevador.view.CustomApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,7 +20,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.LoginActivity">
+        <activity android:name="edu.tcc.controleelevador.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,22 +28,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivityAdmin"
+            android:name="edu.tcc.controleelevador.view.MainActivityAdmin"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.UserActivity"
+            android:name="edu.tcc.controleelevador.view.UserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.CallElevatorActivity"
+            android:name="edu.tcc.controleelevador.view.CallElevatorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.UserEditActivity"
+            android:name="edu.tcc.controleelevador.view.UserEditActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.NotificationsActivity" />
-        <activity android:name=".view.ReportLsLd" />
-        <activity android:name=".view.ReportFrequencyActivity" />
-        <activity android:name=".nfc.TagViewer" />
-        <activity android:name=".view.RecordCardNfcActivity"></activity>
+        <activity android:name="edu.tcc.controleelevador.view.NotificationsActivity" />
+        <activity android:name="edu.tcc.controleelevador.view.ReportLsLd" />
+        <activity android:name="edu.tcc.controleelevador.view.ReportFrequencyActivity" />
+        <activity android:name="edu.tcc.controleelevador.nfc.TagViewer" />
+        <activity android:name="edu.tcc.controleelevador.view.RecordCardNfcActivity"></activity>
     </application>
 
 </manifest>

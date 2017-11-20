@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    tools:context="com.br.uellisson.controleelevador.view.MainActivityAdmin">
+    tools:context="edu.tcc.controleelevador.view.MainActivityAdmin">
 
     <ScrollView
         android:layout_width="match_parent"
