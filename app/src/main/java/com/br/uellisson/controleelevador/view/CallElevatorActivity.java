@@ -314,7 +314,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 ivDown.setEnabled(true);
                 ivUp.setEnabled(false);
             }
-            ivElevator.setImageResource(R.mipmap.elevator_close);
             saveCall();
             view.setEnabled(false);
         }
@@ -696,8 +695,23 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             public void onDataChange(DataSnapshot snapshot) {
                 try{
                     long openPort = (long) snapshot.getValue();
-                    if (openPort!=0){
+                    //0 para porta aberta e 1 para porta fechada antes de
+                    //finalizar o serviço e 2 apos finaliza a chamada.
+                    if (openPort==0){
                         saveNextFloor(destination);
+                        ivElevator.setImageResource(R.mipmap.elevator_open);
+                        btCallElevator.setText(getString(R.string.wait));
+                        btCallElevator.setEnabled(false);
+                    }
+                    else if (openPort==1){
+                        ivElevator.setImageResource(R.mipmap.elevator_close);
+                        btCallElevator.setText(getString(R.string.wait));
+                        btCallElevator.setEnabled(false);
+                    }
+                    else {
+                        ivElevator.setImageResource(R.mipmap.elevator_open);
+                        btCallElevator.setText(getString(R.string.call_elevator));
+                        btCallElevator.setEnabled(true);
                     }
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger currentFloor");

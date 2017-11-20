@@ -26,6 +26,7 @@
     <string name="delete_user">Excluir Usuário</string>
     <string name="exit">Sair</string>
     <string name="call_elevator">Chamar Elevador</string>
+    <string name="wait">Aguarde...</string>
 
     <string name="record_nfc">Gravar NFC</string>
     <string name="tutorial_record_nfc"> Posicione um cartão NFC atrás do celular para que seja realizada a leitura.</string>
