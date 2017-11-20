@@ -83,11 +83,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private List<Tag> mTags = new ArrayList<Tag>();
     private NfcAdapter mAdapter;
     private String idNfc;
-    private String nextFloor;
+    private int nextFloor;
     private ProgressBar progressBar;
     private RelativeLayout backgroundProgressBar;
     private TextView tvCurrentFloor;
-    private boolean firstUse;
 
     /**
      * Método onde é criada a tela de Chamadas do elevador
@@ -351,7 +350,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
-        saveNextFloor(String.valueOf(destination));
+        saveNextFloor(destination);
         Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
     }
 
@@ -672,7 +671,13 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 try{
-                    tvCurrentFloor.setText((String) snapshot.getValue());
+                    long currentFloor = (long) snapshot.getValue();
+                    if (currentFloor==0){
+                        tvCurrentFloor.setText("T");
+                    }
+                    else {
+                        tvCurrentFloor.setText(String.valueOf(currentFloor)+"º");
+                    }
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger currentFloor");
                 }
@@ -686,7 +691,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
      * @param nextFloor
      * @param completionListener
      */
-    public void saveNextFloor(String nextFloor, DatabaseReference.CompletionListener... completionListener ){
+    public void saveNextFloor(int nextFloor, DatabaseReference.CompletionListener... completionListener ){
         DatabaseReference firebase = Util.getFirebase().child("nextFloor");
 
         if( completionListener.length == 0 ){
