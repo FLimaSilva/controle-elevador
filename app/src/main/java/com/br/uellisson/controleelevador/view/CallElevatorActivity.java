@@ -107,6 +107,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         getAcessFloor();
         getIdNfc();
         getCurrentFoor();
+        getOpenPort();
         initNfc();
         resolveIntent(getIntent());
     }
@@ -350,7 +351,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
-        saveNextFloor(destination);
+        saveNextFloor(origin);
         Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
     }
 
@@ -677,6 +678,26 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     }
                     else {
                         tvCurrentFloor.setText(String.valueOf(currentFloor)+"º");
+                    }
+                } catch (Throwable e) {
+                    Log.i("Erro", "Erro peger currentFloor");
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
+    }
+
+    /**
+     * Método que pega o andar atual do elevador
+     */
+    public void getOpenPort(){
+        databaseReference.child("openPort").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                try{
+                    long openPort = (long) snapshot.getValue();
+                    if (openPort!=0){
+                        saveNextFloor(destination);
                     }
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger currentFloor");
