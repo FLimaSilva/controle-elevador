@@ -18,6 +18,13 @@ public class Notify {
     private String notify;
     private String dateHour;
 
+    public Notify() {}
+
+    public Notify(String notify, String dateHour) {
+        this.notify = notify;
+        this.dateHour = dateHour;
+    }
+
     public String getNotify() {
         return notify;
     }
@@ -36,8 +43,8 @@ public class Notify {
         firebase.addValueEventListener( (ValueEventListener) context );
     }
 
-    public void saveNotify( DatabaseReference.CompletionListener... completionListener ){
-        DatabaseReference firebase = Util.getFirebase().child("notifications");
+    public void saveNotify(String id, DatabaseReference.CompletionListener... completionListener ){
+        DatabaseReference firebase = Util.getFirebase().child("notifications").child(id);
 
         if( completionListener.length == 0 ){
             firebase.setValue(this);

@@ -66,4 +66,34 @@ public class NotificationsActivity extends BaseActivity implements ValueEventLis
     public void onCancelled(DatabaseError databaseError) {
 
     }
+
+    /**
+     *  public void getListNotifications(){
+     databaseReference.child("notifications").addListenerForSingleValueEvent(new ValueEventListener() {
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+    listNotifications = new ArrayList<Notify>();
+    try{
+    for (DataSnapshot child: dataSnapshot.getChildren()) {
+    listNotifications.add(child.getValue(Notify.class));
+    }
+    if (progressBar.getVisibility()==View.VISIBLE){
+    progressBar.setVisibility(View.GONE);
+    backgroundProgressBar.setBackground(null);
+    }
+    CallsAdapter callsAdapter = new CallsAdapter(listCalls, getApplicationContext());
+
+    rvUsers.setAdapter(callsAdapter);
+    }
+    catch (Throwable e){
+    Toast.makeText(getApplicationContext(), "Erro ao buscar chamadas!", Toast.LENGTH_LONG ).show();
+    progressBar.setVisibility(View.GONE);
+    }
+    }
+    @Override public void onCancelled(DatabaseError error) { }
+    });
+     }
+     */
 }

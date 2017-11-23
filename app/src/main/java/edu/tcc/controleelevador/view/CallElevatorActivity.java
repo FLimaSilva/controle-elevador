@@ -1,6 +1,7 @@
 package edu.tcc.controleelevador.view;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
@@ -31,8 +33,11 @@ import edu.tcc.controleelevador.dados.Constants;
 import edu.tcc.controleelevador.dados.Util;
 import edu.tcc.controleelevador.model.CallElevator;
 import edu.tcc.controleelevador.model.FrequencyUse;
+import edu.tcc.controleelevador.model.Notify;
 import edu.tcc.controleelevador.model.User;
 import edu.tcc.controleelevador.presenter.CallPresenter;
+import edu.tcc.controleelevador.view.adapter.CallsAdapter;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,17 +73,21 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private CheckedTextView checkOrigin2;
     private CheckedTextView checkOrigin3;
     private Button btCallElevator;
-    int origin;
-    int destination;
-    int quantityCall;
-    String floorAllowed;
-    long currentFloor;
+    private int origin;
+    private int destination;
+    private int quantityCall;
+    private String floorAllowed;
+    private long currentFloor;
     private int nextFloor;
+    private long ld;
+    private long ls;
+    private int qtdNotifications;
+    private List<Notify> listNotifications;
 
     private DatabaseReference databaseReference;
     private CallElevator callElevator;
     private FrequencyUse frequencyUse;
-    CallPresenter callPresenter;
+    private CallPresenter callPresenter;
 
     private PendingIntent mPendingIntent;
     private NdefMessage mNdefPushMessage;
@@ -111,6 +120,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         getOpenPort();
         initNfc();
         resolveIntent(getIntent());
+        getListNotifications();
     }
 
     /**
@@ -743,5 +753,69 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             ivDown.setEnabled(true);
             ivUp.setEnabled(false);
         }
+    }
+
+    public void getLd(){
+        databaseReference.child("ld").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                try{
+                    ld = (long) snapshot.getValue();
+                    if (ld!=0){
+                        saveNotificationLdLs("ultrapassou limite de descida");
+                    }
+                } catch (Throwable e) {
+                    Log.i("Erro", "Erro peger limite de descida");
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
+    }
+
+    /**
+     * Método que salva a ultrapassagem do limite de descida do elevador
+     * @param notification
+     */
+    public void saveNotificationLdLs(String notification){
+        DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        String today = dateFormat.format(new Date(System.currentTimeMillis()));
+        Notify notify = new Notify(notification, today);
+        notify.saveNotify("notify_"+String.valueOf(qtdNotifications), this);
+        qtdNotifications++;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.attention);
+        builder.setMessage(R.string.error_ld)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.show();
+        }
+
+    public void getListNotifications(){
+        databaseReference.child("notifications").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                        qtdNotifications++;
+                    }
+                    getLd();
+                    if (progressBar.getVisibility()==View.VISIBLE){
+                        progressBar.setVisibility(View.GONE);
+                        backgroundProgressBar.setBackground(null);
+                    }
+                }
+                catch (Throwable e){
+                    Toast.makeText(getApplicationContext(), "Erro ao buscar quantidade de notificações!", Toast.LENGTH_LONG ).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
     }
 }
