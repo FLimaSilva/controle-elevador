@@ -72,6 +72,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     int destination;
     int quantityCall;
     String floorAllowed;
+    long currentFloor;
+    private int nextFloor;
 
     private DatabaseReference databaseReference;
     private CallElevator callElevator;
@@ -83,7 +85,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private List<Tag> mTags = new ArrayList<Tag>();
     private NfcAdapter mAdapter;
     private String idNfc;
-    private int nextFloor;
     private ProgressBar progressBar;
     private RelativeLayout backgroundProgressBar;
     private TextView tvCurrentFloor;
@@ -306,14 +307,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             Toast.makeText(this, getString(R.string.msg_equal_floor), Toast.LENGTH_SHORT).show();
         }
         else {
-            if (origin<destination){
-                ivUp.setEnabled(true);
-                ivDown.setEnabled(false);
-            }
-            else if(origin>destination){
-                ivDown.setEnabled(true);
-                ivUp.setEnabled(false);
-            }
+            manageUpDown();
             saveCall();
             view.setEnabled(false);
         }
@@ -351,6 +345,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
         saveNextFloor(origin);
+        nextFloor = origin;
         Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
     }
 
@@ -671,7 +666,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 try{
-                    long currentFloor = (long) snapshot.getValue();
+                    currentFloor = (long) snapshot.getValue();
                     if (currentFloor==0){
                         tvCurrentFloor.setText("T");
                     }
@@ -699,6 +694,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     //finalizar o serviço e 2 apos finaliza a chamada.
                     if (openPort==0){
                         saveNextFloor(destination);
+                        nextFloor = destination;
                         ivElevator.setImageResource(R.mipmap.elevator_open);
                         btCallElevator.setText(getString(R.string.wait));
                         btCallElevator.setEnabled(false);
@@ -713,6 +709,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
                     }
+                    manageUpDown();
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger currentFloor");
                 }
@@ -734,6 +731,17 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
         else{
             firebase.setValue(nextFloor, completionListener[0]);
+        }
+    }
+
+    public void manageUpDown(){
+        if (currentFloor<nextFloor){
+            ivUp.setEnabled(true);
+            ivDown.setEnabled(false);
+        }
+        else if(currentFloor>nextFloor){
+            ivDown.setEnabled(true);
+            ivUp.setEnabled(false);
         }
     }
 }
