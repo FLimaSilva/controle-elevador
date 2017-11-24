@@ -776,7 +776,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
      * @param notification
      */
     public void saveNotificationLdLs(String notification){
-        DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
         String today = dateFormat.format(new Date(System.currentTimeMillis()));
         Notify notify = new Notify(notification, today);
         notify.saveNotify("notify_"+String.valueOf(qtdNotifications), this);
