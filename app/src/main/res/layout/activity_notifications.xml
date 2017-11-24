@@ -38,7 +38,7 @@
             android:layout_alignParentRight="false"
             android:layout_below="@+id/tv_user"
             android:layout_marginBottom="@dimen/min_margin"
-            android:layout_marginLeft="@dimen/min_margin"
+            android:layout_marginLeft="@dimen/normal_margin"
             android:layout_marginTop="@dimen/min_margin"
             android:layout_weight="6"
             android:text="@string/dateHour"

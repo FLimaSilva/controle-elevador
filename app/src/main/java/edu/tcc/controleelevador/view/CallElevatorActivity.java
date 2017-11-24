@@ -761,10 +761,27 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 try{
                     ld = (long) snapshot.getValue();
                     if (ld!=0){
-                        saveNotificationLdLs("ultrapassou limite de descida");
+                        saveNotificationLdLs(getString(R.string.error_ld));
                     }
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger limite de descida");
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
+    }
+
+    public void getLs(){
+        databaseReference.child("ls").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                try{
+                    ls = (long) snapshot.getValue();
+                    if (ls!=0){
+                        saveNotificationLdLs(getString(R.string.error_ls));
+                    }
+                } catch (Throwable e) {
+                    Log.i("Erro", "Erro peger limite de subida");
                 }
             }
             @Override public void onCancelled(DatabaseError error) { }
@@ -776,15 +793,24 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
      * @param notification
      */
     public void saveNotificationLdLs(String notification){
-        DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+        DateFormat dateFormat=new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         String today = dateFormat.format(new Date(System.currentTimeMillis()));
         Notify notify = new Notify(notification, today);
+        String msgError = "";
+
         notify.saveNotify("notify_"+String.valueOf(qtdNotifications), this);
         qtdNotifications++;
 
+        if (notification.contains("descida")){
+            msgError = getString(R.string.msg_error_ld);
+        }
+        else {
+            msgError = getString(R.string.msg_error_ls);
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.attention);
-        builder.setMessage(R.string.error_ld)
+        builder.setMessage(msgError)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
@@ -804,6 +830,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         qtdNotifications++;
                     }
                     getLd();
+                    getLs();
                     if (progressBar.getVisibility()==View.VISIBLE){
                         progressBar.setVisibility(View.GONE);
                         backgroundProgressBar.setBackground(null);
