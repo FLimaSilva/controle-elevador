@@ -82,6 +82,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private long ld;
     private long ls;
     private int qtdNotifications;
+    private int openPortPrev;
 
     private DatabaseReference databaseReference;
     private CallElevator callElevator;
@@ -316,7 +317,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             Toast.makeText(this, getString(R.string.msg_equal_floor), Toast.LENGTH_SHORT).show();
         }
         else {
-            manageUpDown();
             saveCall();
             view.setEnabled(false);
         }
@@ -353,8 +353,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
-        saveNextFloor(origin);
-        nextFloor = origin;
+        saveNextFloor(origin+10);
+        nextFloor = origin+10;
         Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
     }
 
@@ -682,6 +682,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     else {
                         tvCurrentFloor.setText(String.valueOf(currentFloor)+"º");
                     }
+                    if (openPortPrev==0 && currentFloor==nextFloor-10){
+                        saveNextFloor(nextFloor-10);
+                    }
+                    manageUpDown();
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger currentFloor");
                 }
@@ -702,8 +706,9 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     //0 para porta aberta e 1 para porta fechada antes de
                     //finalizar o serviço e 2 apos finaliza a chamada.
                     if (openPort==0){
-                        saveNextFloor(destination);
-                        nextFloor = destination;
+                        openPortPrev=0;
+                        saveNextFloor(destination+10);
+                        nextFloor = destination+10;
                         ivElevator.setImageResource(R.mipmap.elevator_open);
                         btCallElevator.setText(getString(R.string.wait));
                         btCallElevator.setEnabled(false);
@@ -714,6 +719,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         btCallElevator.setEnabled(false);
                     }
                     else {
+                        openPortPrev=2;
                         ivElevator.setImageResource(R.mipmap.elevator_open);
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
@@ -744,11 +750,15 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     }
 
     public void manageUpDown(){
-        if (currentFloor<nextFloor){
+        int nextFloorCompare=nextFloor;
+        if (nextFloorCompare>10){
+            nextFloorCompare = nextFloor-10;
+        }
+        if (currentFloor<nextFloorCompare){
             ivUp.setEnabled(true);
             ivDown.setEnabled(false);
         }
-        else if(currentFloor>nextFloor){
+        else if(currentFloor>nextFloorCompare){
             ivDown.setEnabled(true);
             ivUp.setEnabled(false);
         }
