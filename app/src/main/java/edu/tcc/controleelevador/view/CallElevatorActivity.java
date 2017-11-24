@@ -82,7 +82,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private long ld;
     private long ls;
     private int qtdNotifications;
-    private List<Notify> listNotifications;
 
     private DatabaseReference databaseReference;
     private CallElevator callElevator;

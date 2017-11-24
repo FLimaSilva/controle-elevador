@@ -184,7 +184,7 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
     public void getListCalls(){
         databaseReference.child("frequency_use").child("calls").addListenerForSingleValueEvent(new ValueEventListener() {
 
-            @RequiresApi(api = Build.VERSION_CODES.M)
+            //@RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listCalls = new ArrayList<CallElevator>();

@@ -39,11 +39,22 @@
         <activity
             android:name="edu.tcc.controleelevador.view.UserEditActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="edu.tcc.controleelevador.view.NotificationsActivity" />
-        <activity android:name="edu.tcc.controleelevador.view.ReportLsLd" />
-        <activity android:name="edu.tcc.controleelevador.view.ReportFrequencyActivity" />
-        <activity android:name="edu.tcc.controleelevador.nfc.TagViewer" />
-        <activity android:name="edu.tcc.controleelevador.view.RecordCardNfcActivity"></activity>
+        <activity
+            android:name="edu.tcc.controleelevador.view.NotificationsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="edu.tcc.controleelevador.view.ReportLsLd"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="edu.tcc.controleelevador.view.ReportFrequencyActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="edu.tcc.controleelevador.nfc.TagViewer"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="edu.tcc.controleelevador.view.RecordCardNfcActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
