@@ -353,8 +353,14 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
-        saveNextFloor(origin+10);
-        nextFloor = origin+10;
+        if (currentFloor==origin){
+            saveNextFloor(destination+10);
+            nextFloor = destination+10;
+        }
+        else {
+            saveNextFloor(origin+10);
+            nextFloor = origin+10;
+        }
         Toast.makeText(this, getString(R.string.msg_elevator), Toast.LENGTH_SHORT).show();
     }
 
@@ -719,7 +725,11 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         btCallElevator.setEnabled(false);
                     }
                     else {
-                        openPortPrev=2;
+                        if (currentFloor!=origin){
+                            openPortPrev=2;
+                        }else {
+                            openPortPrev=0;
+                        }
                         ivElevator.setImageResource(R.mipmap.elevator_open);
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
@@ -751,7 +761,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
     public void manageUpDown(){
         int nextFloorCompare=nextFloor;
-        if (nextFloorCompare>10){
+        if (nextFloorCompare>=10){
             nextFloorCompare = nextFloor-10;
         }
         if (currentFloor<nextFloorCompare){
