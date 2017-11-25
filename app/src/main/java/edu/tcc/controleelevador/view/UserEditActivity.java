@@ -59,6 +59,7 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
     private DatabaseReference databaseReference;
     ArrayList<User> listUsers;
     private String oldPassword;
+    private String oldMail;
     private String idUserSelect;
     Button saveEdit;
 
@@ -113,7 +114,7 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         name = (EditText) findViewById(R.id.et_name);
         name.setVisibility(View.GONE);
         email = (EditText) findViewById(R.id.et_email);
-        email.setEnabled(false);
+        //email.setEnabled(false);
         password = (EditText) findViewById(R.id.et_password);
         //password.setEnabled(false);
         progressBar = (ProgressBar) findViewById(R.id.sign_up_progress);
@@ -145,11 +146,11 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
             if (user.getEmail().equals("") || user.getPassword().equals("")) {
                 Toast.makeText(this, "Preencha todos as informações", Toast.LENGTH_LONG).show();
             } else {
-                if (password.getText().toString().equals(oldPassword)){
+                if (password.getText().toString().equals(oldPassword) && email.getText().toString().equals(oldMail)){
                     user.saveUserEdit(idUserSelect, UserEditActivity.this);
                 }
                 else {
-                    myAuth(user.getEmail(), oldPassword);
+                    myAuth(oldMail, oldPassword);
                 }
                 progressBar.setVisibility(View.VISIBLE);
                 Log.i("setPassword", "Senha atualizada com sucesso");
@@ -176,6 +177,7 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
                 email.setText(listUsers.get(position).getEmail());
                 password.setText(listUsers.get(position).getPassword());
                 oldPassword = listUsers.get(position).getPassword();
+                oldMail = listUsers.get(position).getEmail();
                 floorNfc = listUsers.get(position).getFloorNfc();
                 setFloor(listUsers.get(position).getFloorsAllowed());
                 idUserSelect = listUsers.get(position).getId();
@@ -277,7 +279,7 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         });
     }
 
-    public void editMailPassword(String oldPassword, final String newPassword) {
+    public void editPassword(final String oldPassword, final String newPassword, final String newMail) {
         final FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
         final String email = user2.getEmail();
         AuthCredential credential = EmailAuthProvider.getCredential(email, oldPassword);
@@ -305,8 +307,37 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         });
     }
 
+    public void editMail(String oldPassword, final String newPassword, final String newMail) {
+        final FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
+        final String email = user2.getEmail();
+        AuthCredential credential = EmailAuthProvider.getCredential(email, oldPassword);
+
+        user2.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    user2.updateEmail(newMail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                user.saveUserEdit(idUserSelect, UserEditActivity.this);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Erro ao mudar a e-mail do usuário!", Toast.LENGTH_LONG).show();
+                                myAuth(Util.getSP(getApplicationContext(), Constants.USER_MAIL), Util.getSP(getApplicationContext(), Constants.USER_PASSWORD));
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "falha de autenticação!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     public void myAuth(final String mail, final String oldPassword) {
         final String newPassword = password.getText().toString();
+        final String newMail = email.getText().toString();
+
         FirebaseAuth.getInstance().signOut();
         mAuth.signInWithEmailAndPassword(
                 mail, oldPassword)
@@ -320,7 +351,12 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
                             return;
                         } else {
                             if (!mail.equals(Constants.EMAIL_ADMIN)){
-                                editMailPassword(oldPassword, newPassword);
+                                if (!newPassword.equals(oldPassword)){
+                                    editPassword(oldPassword, newPassword, newMail);
+                                }
+                                else if (!newMail.equals(oldMail)){
+                                    editMail(oldPassword, newPassword, newMail);
+                                }
                             }
                         }
                     }
