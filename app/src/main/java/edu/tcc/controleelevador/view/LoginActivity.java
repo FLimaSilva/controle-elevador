@@ -178,6 +178,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                         }
                         else {
                             Util.saveSP(getApplicationContext(), Constants.USER_MAIL, mAuth.getCurrentUser().getEmail());
+                            Util.saveSP(getApplicationContext(), Constants.USER_PASSWORD, user.getPassword());
                             Util.saveSP(getApplicationContext(), Constants.USER_ID, mAuth.getCurrentUser().getUid());
                         }
                     }
