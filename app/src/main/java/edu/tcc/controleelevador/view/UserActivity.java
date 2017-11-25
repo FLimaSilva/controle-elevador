@@ -1,15 +1,22 @@
 package edu.tcc.controleelevador.view;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
@@ -43,7 +50,8 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
     private Integer[] arrayFloors = {0, 0};
     private CheckBox checkBox1;
     private CheckBox checkBox2;
-    private CheckBox checkBox3;
+    private RadioButton radioButton1Nfc;
+    private RadioButton radioButton2Nfc;
 
     /**
      * Método onde é criada a tela de cadatro e edição do usuário
@@ -104,13 +112,21 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
         spnUsers = (Spinner) findViewById(R.id.spn_users);
         checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
-        checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
+        radioButton1Nfc = (RadioButton) findViewById(R.id.radioButton1Nfc);
+        radioButton2Nfc = (RadioButton) findViewById(R.id.radioButton2Nfc);
         spnUsers.setVisibility(View.GONE);
     }
 
     protected void initUser(){
         floorsAllowed = arrayFloors[0].toString()+arrayFloors[1].toString();//+arrayFloors[2].toString();
         user = new User(name.getText().toString(), email.getText().toString(),password.getText().toString(), floorsAllowed);
+
+        if(radioButton1Nfc.isChecked()){
+            user.setFloorNfc(1);
+        }
+        else {
+            user.setFloorNfc(2);
+        }
     }
 
     public void sendSignUpData( View view ){
@@ -196,6 +212,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     arrayFloors[0] = 1;
+                    radioButton1Nfc.setChecked(true);
                 }
                 else {
                     arrayFloors[0] = 0;
@@ -208,6 +225,7 @@ public class UserActivity extends BaseActivity implements DatabaseReference.Comp
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     arrayFloors[1] = 2;
+                    radioButton2Nfc.setChecked(true);
                 }
                 else {
                     arrayFloors[1] = 0;

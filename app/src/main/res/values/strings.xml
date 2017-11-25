@@ -16,6 +16,7 @@
 
     <!-- Strings Register -->
     <string name="floors_allowed">Andares permitidos</string>
+    <string name="floor_nfc">Andar de destino quando usar NFC</string>
     <string name="floors_one">1º Andar</string>
     <string name="floors_two">2º Andar</string>
     <string name="floors_three">3º Andar</string>

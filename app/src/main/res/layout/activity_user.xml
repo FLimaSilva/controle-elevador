@@ -41,8 +41,8 @@
             <Spinner
                 android:id="@+id/spn_users"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="40dp"
+                android:background="@android:drawable/btn_dropdown" />
 
             <EditText
                 android:id="@+id/et_name"
@@ -121,6 +121,35 @@
                     android:visibility="gone"/>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textViewNfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold"
+                android:text="@string/floor_nfc" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButton1Nfc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/floors_one"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton2Nfc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/min_margin"
+                    android:text="@string/floors_two" />
+            </RadioGroup>
+
             <Button
                 android:id="@+id/bt_register_user"
                 android:layout_width="match_parent"
@@ -146,8 +175,8 @@
         android:id="@+id/sign_up_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 

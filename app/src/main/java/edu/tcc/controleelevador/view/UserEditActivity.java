@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,10 +42,12 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
     private EditText name;
     private Spinner spnUsers;
     private String floorsAllowed;
+    private int floorNfc;
     private Integer[] arrayFloors = {0, 0};
     private CheckBox checkBox1;
     private CheckBox checkBox2;
-    private CheckBox checkBox3;
+    private RadioButton radioButton1Nfc;
+    private RadioButton radioButton2Nfc;
     private DatabaseReference databaseReference;
     ArrayList<User> listUsers;
     private String oldPassword;
@@ -80,7 +83,7 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         initViews();
         actionCheckBox();
         databaseReference = Util.getFirebase();
-        getListCalls();
+        getListUsers();
     }
 
     @Override
@@ -111,8 +114,8 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
         checkBox1.requestFocus();
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
-        checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
-
+        radioButton1Nfc = (RadioButton) findViewById(R.id.radioButton1Nfc);
+        radioButton2Nfc = (RadioButton) findViewById(R.id.radioButton2Nfc);
         saveEdit = (Button) findViewById(R.id.bt_register_user);
         saveEdit.setText(R.string.edit_user);
     }
@@ -120,6 +123,12 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
     protected void initUser(){
         floorsAllowed = arrayFloors[0].toString()+arrayFloors[1].toString();//+arrayFloors[2].toString();
         user = new User(name.getText().toString(), email.getText().toString(),password.getText().toString(), floorsAllowed);
+        if(radioButton1Nfc.isChecked()){
+            user.setFloorNfc(1);
+        }
+        else {
+            user.setFloorNfc(2);
+        }
     }
 
     public void sendSignUpData( View view ){
@@ -151,11 +160,11 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         spnUsers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
                 name.setText(listUsers.get(position).getName());
                 email.setText(listUsers.get(position).getEmail());
                 password.setText(listUsers.get(position).getPassword());
                 oldPassword = listUsers.get(position).getPassword();
+                floorNfc = listUsers.get(position).getFloorNfc();
                 setFloor(listUsers.get(position).getFloorsAllowed());
                 idUserSelect = listUsers.get(position).getId();
             }
@@ -167,7 +176,7 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
         });
     }
 
-    public void getListCalls(){
+    public void getListUsers(){
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -210,19 +219,27 @@ public class UserEditActivity extends BaseActivity implements DatabaseReference.
 
     public void setFloor(String floorAllowed){
 
-        if (floorAllowed.equals("01")) {
-            checkBox1.setChecked(false);
-            checkBox2.setChecked(true);
-        }
-        else if (floorAllowed.equals("10")) {
+        if (floorAllowed.equals("10")) {
             checkBox1.setChecked(true);
             checkBox2.setChecked(false);
+            radioButton1Nfc.setChecked(true);
+        }
+        else if (floorAllowed.equals("02")) {
+            checkBox1.setChecked(false);
+            checkBox2.setChecked(true);
+            radioButton2Nfc.setChecked(true);
         }
         else if (floorAllowed.equals("12")) {
             checkBox1.setChecked(true);
             checkBox2.setChecked(true);
+            radioButton1Nfc.setChecked(true);
         }
-
+        if(floorNfc==1){
+            radioButton1Nfc.setChecked(true);
+        }
+        else if (floorNfc==2){
+            radioButton2Nfc.setChecked(true);
+        }
     }
 
     public void actionCheckBox(){

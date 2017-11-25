@@ -23,6 +23,7 @@ public class User {
     private String password;
     private String newPassword;
     private String floorsAllowed;
+    private int floorNfc;
 
     /**
      * Construtor vazio
@@ -137,5 +138,13 @@ public class User {
         else{
             firebase.setValue(this, completionListener[0]);
         }
+    }
+
+    public int getFloorNfc() {
+        return floorNfc;
+    }
+
+    public void setFloorNfc(int floorNfc) {
+        this.floorNfc = floorNfc;
     }
 }
