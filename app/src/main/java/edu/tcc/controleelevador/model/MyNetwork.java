@@ -20,6 +20,17 @@ public class MyNetwork {
     private String net3Name;
     private String net3password;
 
+    public MyNetwork() {}
+
+    public MyNetwork(String net1Name, String net1password, String net2Name, String net2password, String net3Name, String net3password) {
+        this.net1Name = net1Name;
+        this.net1password = net1password;
+        this.net2Name = net2Name;
+        this.net2password = net2password;
+        this.net3Name = net3Name;
+        this.net3password = net3password;
+    }
+
     public String getNet1Name() {
         return net1Name;
     }
@@ -72,7 +83,7 @@ public class MyNetwork {
      * Método que salva um usuário no banco de dados
      * @param completionListener
      */
-    public void saveNetworkd(DatabaseReference.CompletionListener... completionListener ){
+    public void saveNetworks(DatabaseReference.CompletionListener... completionListener ){
         DatabaseReference firebase = Util.getFirebase().child("networks");
 
         if( completionListener.length == 0 ){
@@ -87,10 +98,8 @@ public class MyNetwork {
      * Método que busca os dados do usuário no banco.
      * @param context
      */
-    public void dataUser(Context context ){
-        String idUser = Util.getSP(context, Constants.USER_ID);
-
-        DatabaseReference firebase = Util.getFirebase().child("users").child(idUser);
+    public void dataNetworks(Context context ){
+        DatabaseReference firebase = Util.getFirebase().child("networks");
         firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
     }
 

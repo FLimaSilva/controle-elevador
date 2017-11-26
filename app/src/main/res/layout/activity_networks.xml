@@ -13,8 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"/>
+        android:layout_centerVertical="true" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -71,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textNetwork2"
@@ -116,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textnetwork3"
@@ -161,13 +160,14 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/bt_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/saveRegister" />
+                android:text="@string/save_register"
+                android:onClick="clickSaveNetworks"/>
 
         </LinearLayout>
     </ScrollView>
