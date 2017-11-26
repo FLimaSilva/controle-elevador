@@ -29,6 +29,14 @@
     <string name="call_elevator">Chamar Elevador</string>
     <string name="wait">Aguarde...</string>
 
+    <!-- Strings Networks Activity -->
+    <string name="network1">Dados de acesso Rede 1</string>
+    <string name="network2">Dados de acesso Rede 2</string>
+    <string name="network3">Dados de acesso Rede 3</string>
+    <string name="register_networks">Cadastrar Redes</string>
+    <string name="edit_networks">Editar Redes</string>
+    <string name="saveRegister">Salvar Cadastro</string>
+
     <string name="record_nfc">Gravar NFC</string>
     <string name="tutorial_record_nfc"> Posicione um cartão NFC atrás do celular para que seja realizada a leitura.</string>
     <string name="save_nfc">Salvar NFC</string>

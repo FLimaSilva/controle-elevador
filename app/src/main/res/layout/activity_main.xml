@@ -87,6 +87,22 @@
                 />
 
             <Button
+                android:id="@+id/bt_register_networks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickRegisterNetworks"
+                android:text="@string/register_networks"
+                />
+
+            <Button
+                android:id="@+id/bt_edit_networks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickEditNetworks"
+                android:text="@string/edit_networks"
+                />
+
+            <Button
                 android:id="@+id/bt_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

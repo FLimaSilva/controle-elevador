@@ -41,20 +41,20 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="edu.tcc.controleelevador.view.NotificationsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="edu.tcc.controleelevador.view.ReportLsLd"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="edu.tcc.controleelevador.view.ReportFrequencyActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="edu.tcc.controleelevador.nfc.TagViewer"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="edu.tcc.controleelevador.view.RecordCardNfcActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="edu.tcc.controleelevador.view.NetworksActivity"></activity>
     </application>
 
 </manifest>

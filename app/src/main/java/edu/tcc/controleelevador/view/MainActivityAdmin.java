@@ -54,8 +54,14 @@ public class MainActivityAdmin extends BaseActivity {
         startActivity(intent);
     }
 
-    public void deleteUser(View view){
+    public void clickRegisterNetworks(View view){
+        Intent intent = new Intent(getApplicationContext(), NetworksActivity.class);
+        startActivity(intent);
+    }
 
+    public void clickEditNetworks(View view){
+        Intent intent = new Intent(getApplicationContext(), NetworksActivity.class);
+        startActivity(intent);
     }
 
     public void clickReportLsLd(View view){

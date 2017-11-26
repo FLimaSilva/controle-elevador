@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.tcc.controleelevador.view.NetworksActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBarNetwork"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/normal_margin"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textnetwork1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:layout_weight="4.60"
+                android:text="@string/network1"
+                android:textAlignment="center"
+                android:textSize="@dimen/big_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textName1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:text="@string/name"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_name1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/tv_password1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/password"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_password1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/textNetwork2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/network2"
+                android:textAlignment="center"
+                android:textSize="@dimen/big_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:text="@string/name"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_name2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/tv_password2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/password"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_password2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/textnetwork3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/network3"
+                android:textAlignment="center"
+                android:textSize="@dimen/big_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textName3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:text="@string/name"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_name3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/tv_password3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/min_margin"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/password"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_password3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/bt_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saveRegister" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
