@@ -97,6 +97,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private ProgressBar progressBar;
     private RelativeLayout backgroundProgressBar;
     private TextView tvCurrentFloor;
+    long openPort;
 
     /**
      * Método onde é criada a tela de Chamadas do elevador
@@ -120,7 +121,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         getOpenPort();
         initNfc();
         resolveIntent(getIntent());
-        getListNotifications();
     }
 
     /**
@@ -708,7 +708,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 try{
-                    long openPort = (long) snapshot.getValue();
+                    openPort = (long) snapshot.getValue();
                     //0 para porta aberta e 1 para porta fechada antes de
                     //finalizar o serviço e 2 apos finaliza a chamada.
                     if (openPort==0){
@@ -733,6 +733,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         ivElevator.setImageResource(R.mipmap.elevator_open);
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
+                        getListNotifications();
                     }
                     manageUpDown();
                 } catch (Throwable e) {
@@ -781,7 +782,13 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 try{
                     ld = (long) snapshot.getValue();
                     if (ld!=0){
+                        btCallElevator.setText(getString(R.string.wait));
+                        btCallElevator.setEnabled(false);
                         saveNotificationLdLs(getString(R.string.error_ld));
+                    }
+                    else if (ls==0 && openPort==2){
+                        btCallElevator.setText(getString(R.string.call_elevator));
+                        btCallElevator.setEnabled(true);
                     }
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger limite de descida");
@@ -798,7 +805,13 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 try{
                     ls = (long) snapshot.getValue();
                     if (ls!=0){
+                        btCallElevator.setText(getString(R.string.wait));
+                        btCallElevator.setEnabled(false);
                         saveNotificationLdLs(getString(R.string.error_ls));
+                    }
+                    else if (ld==0 && openPort==2){
+                        btCallElevator.setText(getString(R.string.call_elevator));
+                        btCallElevator.setEnabled(true);
                     }
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger limite de subida");
