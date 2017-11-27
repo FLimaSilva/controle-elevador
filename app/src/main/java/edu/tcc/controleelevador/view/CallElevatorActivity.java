@@ -72,6 +72,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private CheckedTextView checkOrigin1;
     private CheckedTextView checkOrigin2;
     private CheckedTextView checkOrigin3;
+    private TextView tvFloorNfc;
     private Button btCallElevator;
     private int origin;
     private int destination;
@@ -97,7 +98,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
     private ProgressBar progressBar;
     private RelativeLayout backgroundProgressBar;
     private TextView tvCurrentFloor;
-    long openPort;
+    private long openPort;
+    private int floorNfc;
 
     /**
      * Método onde é criada a tela de Chamadas do elevador
@@ -134,6 +136,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
             if (!mAdapter.isEnabled()) {
                 showWirelessSettingsDialog();
             }
+            tvFloorNfc.setVisibility(View.VISIBLE);
             mAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
             mAdapter.enableForegroundNdefPush(this, mNdefPushMessage);
         }
@@ -392,6 +395,10 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
 
         if (currentUser!=null){
             this.floorAllowed = currentUser.getFloorsAllowed();
+            if (currentUser.getFloorNfc()!=0){
+                this.floorNfc = currentUser.getFloorNfc();
+            }
+            tvFloorNfc.setText(getString(R.string.msg_floor_nfc, String.valueOf(floorNfc)));
         }
         //Toast.makeText(this, floorAllowed, Toast.LENGTH_SHORT).show();
         if (floorAllowed!=null){
@@ -491,6 +498,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         ivElevator = (ImageView) findViewById(R.id.iv_elevator);
         btCallElevator = (Button) findViewById(R.id.bt_call_elevator);
         btCallElevator.setEnabled(false);
+        tvFloorNfc = (TextView) findViewById(R.id.tv_floor_nfc);
 
         checkOriginT = (CheckedTextView) findViewById(R.id.check_origin_t);
         checkOrigin1 = (CheckedTextView) findViewById(R.id.check_origin_1);
@@ -621,6 +629,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         if (progressBar.getVisibility()!=View.VISIBLE){
             if (id.equals(idNfc)){
                 if (btCallElevator.isEnabled()){
+                    origin=0;
+                    destination=floorNfc;
                     callElevator(btCallElevator);
                 }
                 else{

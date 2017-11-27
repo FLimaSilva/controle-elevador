@@ -43,6 +43,7 @@
     <string name="save_nfc">Salvar NFC</string>
     <string name="save_nfc_success">Id do NFC salvo com sucesso!</string>
     <string name="save_nfc_error">É necessário ler um cartão NFC antes de salvar!</string>
+    <string name="msg_floor_nfc">Usando o NFC você irá do térreo para %1$s° andar </string>
 
     <!-- Strings Permissoes -->
     <string name="permissions.required_permission_internet">Por favor, conceda a permissão de internet para utilizar o aplicativo</string>
