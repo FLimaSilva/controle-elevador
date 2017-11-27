@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -192,6 +193,7 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
                     for (DataSnapshot child: dataSnapshot.getChildren()) {
                         listCalls.add(child.getValue(CallElevator.class));
                     }
+                    //sortListCall(listCalls);
                     if (progressBar.getVisibility()==View.VISIBLE){
                         progressBar.setVisibility(View.GONE);
                         backgroundProgressBar.setBackground(null);
@@ -207,5 +209,27 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
             }
             @Override public void onCancelled(DatabaseError error) { }
         });
+    }
+
+    public void sortListCall(List<CallElevator> listCallsDb){
+        List<CallElevator> listCallsSorted = new ArrayList<>();
+        CallElevator callSort = new CallElevator();
+
+        for (int i = 0; i < listCallsDb.size(); i++)  {
+            int dateHour = Integer.parseInt(listCallsDb.get(i).getDate().replace("-","").substring(4,8)+listCallsDb.get(i).getDate().replace("-","").substring(2,4)+listCallsDb.get(i).getDate().replace("-","").substring(0,2)+listCallsDb.get(i).getHour().replace(":",""));
+            for(int j=0;j<listCallsSorted.size(); j++){
+                int dateHourJ = Integer.parseInt(listCallsDb.get(j)
+                        .getDate().replace("-","").substring(4,8)+
+                        listCallsDb.get(j).getDate().replace("-","")
+                                .substring(2,4)+listCallsDb.get(j)
+                        .getDate().replace("-","").substring(0,2)
+                        +listCallsDb.get(j).getHour().replace(":",""));
+
+                if (dateHour>dateHourJ){
+                    listCallsSorted.add(j, listCallsDb.get(j));
+                }
+
+            }
+        }
     }
 }
