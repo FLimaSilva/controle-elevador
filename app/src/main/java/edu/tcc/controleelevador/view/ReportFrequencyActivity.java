@@ -193,12 +193,12 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
                     for (DataSnapshot child: dataSnapshot.getChildren()) {
                         listCalls.add(child.getValue(CallElevator.class));
                     }
-                    //sortListCall(listCalls);
                     if (progressBar.getVisibility()==View.VISIBLE){
                         progressBar.setVisibility(View.GONE);
                         backgroundProgressBar.setBackground(null);
                     }
                     CallsAdapter callsAdapter = new CallsAdapter(listCalls, getApplicationContext());
+                    //CallsAdapter callsAdapter = new CallsAdapter(sortListCall(listCalls), getApplicationContext());
 
                     rvUsers.setAdapter(callsAdapter);
                 }
@@ -211,25 +211,35 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
         });
     }
 
-    public void sortListCall(List<CallElevator> listCallsDb){
+    public List<CallElevator> sortListCall(List<CallElevator> listCallsDb){
         List<CallElevator> listCallsSorted = new ArrayList<>();
-        CallElevator callSort = new CallElevator();
+        CallElevator callSortTemp = new CallElevator();
 
         for (int i = 0; i < listCallsDb.size(); i++)  {
-            int dateHour = Integer.parseInt(listCallsDb.get(i).getDate().replace("-","").substring(4,8)+listCallsDb.get(i).getDate().replace("-","").substring(2,4)+listCallsDb.get(i).getDate().replace("-","").substring(0,2)+listCallsDb.get(i).getHour().replace(":",""));
+            long dateHour = Long.parseLong(listCallsDb.get(i).getDate().replace("-","").substring(4,8)+listCallsDb.get(i).getDate().replace("-","").substring(2,4)+listCallsDb.get(i).getDate().replace("-","").substring(0,2)+listCallsDb.get(i).getHour().replace(":",""));
+            if (listCallsSorted.isEmpty()){
+                listCallsSorted.add(listCallsDb.get(i));
+            }
             for(int j=0;j<listCallsSorted.size(); j++){
-                int dateHourJ = Integer.parseInt(listCallsDb.get(j)
+                callSortTemp = listCallsDb.get(j);
+                long dateHourJ = Long.parseLong(callSortTemp
                         .getDate().replace("-","").substring(4,8)+
-                        listCallsDb.get(j).getDate().replace("-","")
-                                .substring(2,4)+listCallsDb.get(j)
+                        callSortTemp.getDate().replace("-","")
+                                .substring(2,4)+callSortTemp
                         .getDate().replace("-","").substring(0,2)
-                        +listCallsDb.get(j).getHour().replace(":",""));
+                        +callSortTemp.getHour().replace(":",""));
 
                 if (dateHour>dateHourJ){
+                    callSortTemp = listCallsDb.get(j-1);
+                    listCallsSorted.add(j-1, listCallsDb.get(j));
+                    listCallsSorted.add(callSortTemp);
+                }
+                else {
                     listCallsSorted.add(j, listCallsDb.get(j));
                 }
 
             }
         }
+        return listCallsSorted;
     }
 }
