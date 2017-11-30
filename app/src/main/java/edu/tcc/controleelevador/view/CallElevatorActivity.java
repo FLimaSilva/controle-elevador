@@ -357,8 +357,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         frequencyUse.updateFrequencyCall(CallElevatorActivity.this);
         callElevator.saveCall("call_"+qCallString, CallElevatorActivity.this);
         if (currentFloor==origin){
-            saveNextFloor(destination+10);
-            nextFloor = destination+10;
+            saveNextFloor(destination);
+            nextFloor = destination;
         }
         else {
             saveNextFloor(origin+10);
@@ -698,9 +698,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     else {
                         tvCurrentFloor.setText(String.valueOf(currentFloor)+"º");
                     }
-                    if (openPortPrev==0 && currentFloor==nextFloor-10){
-                        saveNextFloor(nextFloor-10);
-                    }
+
                     manageUpDown();
                 } catch (Throwable e) {
                     Log.i("Erro", "Erro peger currentFloor");
@@ -722,9 +720,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                     //0 para porta aberta e 1 para porta fechada antes de
                     //finalizar o serviço e 2 apos finaliza a chamada.
                     if (openPort==0){
-                        openPortPrev=0;
-                        saveNextFloor(destination+10);
-                        nextFloor = destination+10;
+                        saveNextFloor(destination);
+                        nextFloor = destination;//+10;
                         ivElevator.setImageResource(R.mipmap.elevator_open);
                         btCallElevator.setText(getString(R.string.wait));
                         btCallElevator.setEnabled(false);
