@@ -122,6 +122,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         getCurrentFoor();
         getOpenPort();
         initNfc();
+        getListNotifications();
         resolveIntent(getIntent());
     }
 
@@ -747,7 +748,6 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
                         manageAcessFloor(floorAllowed);
-                        getListNotifications();
                     }
                     manageUpDown();
                 } catch (Throwable e) {
@@ -845,16 +845,17 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         Notify notify = new Notify(notification, today);
         String msgError = "";
 
-        notify.saveNotify("notify_"+String.valueOf(qtdNotifications), this);
+        if (qtdNotifications<10){
+            notify.saveNotify("notify_0000"+String.valueOf(qtdNotifications), this);
+        }else if (qtdNotifications<100){
+            notify.saveNotify("notify_000"+String.valueOf(qtdNotifications), this);
+        }else if (qtdNotifications<1000){
+            notify.saveNotify("notify_00"+String.valueOf(qtdNotifications), this);
+        }else{
+            notify.saveNotify("notify_0"+String.valueOf(qtdNotifications), this);
+        }
         qtdNotifications++;
-
-        if (notification.contains("descida")){
-            msgError = getString(R.string.msg_error_ld);
-        }
-        else {
-            msgError = getString(R.string.msg_error_ls);
-        }
-
+        msgError = getString(R.string.msg_error_elevator);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.attention);
         builder.setMessage(msgError)

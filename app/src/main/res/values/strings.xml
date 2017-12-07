@@ -70,8 +70,7 @@
     <!-- Strings report_notify -->
     <string name="notify">Notificação </string>
     <string name="dateHour">Data e Hora</string>
-    <string name="msg_error_ld">O elevador ultrapassou o limite de descida, por favor utilize a escada!</string>
-    <string name="msg_error_ls">O elevador ultrapassou o limite de subida, por favor utilize a escada!</string>
+    <string name="msg_error_elevator">O elevador está em manutenção, por favor utilize a escada!</string>
     <string name="attention">Atenção! </string>
     <string name="error_ld">O elevador ultrapassou o limite de descida.</string>
     <string name="error_ls">O elevador ultrapassou o limite de subida.</string>
