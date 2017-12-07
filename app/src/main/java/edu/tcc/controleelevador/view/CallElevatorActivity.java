@@ -746,6 +746,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         ivElevator.setImageResource(R.mipmap.elevator_open);
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
+                        manageAcessFloor(floorAllowed);
                         getListNotifications();
                     }
                     manageUpDown();
