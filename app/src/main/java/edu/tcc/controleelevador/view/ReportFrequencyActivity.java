@@ -197,8 +197,7 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
                         progressBar.setVisibility(View.GONE);
                         backgroundProgressBar.setBackground(null);
                     }
-                    CallsAdapter callsAdapter = new CallsAdapter(listCalls, getApplicationContext());
-                    //CallsAdapter callsAdapter = new CallsAdapter(sortListCall(listCalls), getApplicationContext());
+                    CallsAdapter callsAdapter = new CallsAdapter(sortListCall(listCalls), getApplicationContext());
 
                     rvUsers.setAdapter(callsAdapter);
                 }
@@ -213,32 +212,9 @@ public class ReportFrequencyActivity extends BaseActivity implements ValueEventL
 
     public List<CallElevator> sortListCall(List<CallElevator> listCallsDb){
         List<CallElevator> listCallsSorted = new ArrayList<>();
-        CallElevator callSortTemp = new CallElevator();
 
-        for (int i = 0; i < listCallsDb.size(); i++)  {
-            long dateHour = Long.parseLong(listCallsDb.get(i).getDate().replace("-","").substring(4,8)+listCallsDb.get(i).getDate().replace("-","").substring(2,4)+listCallsDb.get(i).getDate().replace("-","").substring(0,2)+listCallsDb.get(i).getHour().replace(":",""));
-            if (listCallsSorted.isEmpty()){
-                listCallsSorted.add(listCallsDb.get(i));
-            }
-            for(int j=0;j<listCallsSorted.size(); j++){
-                callSortTemp = listCallsDb.get(j);
-                long dateHourJ = Long.parseLong(callSortTemp
-                        .getDate().replace("-","").substring(4,8)+
-                        callSortTemp.getDate().replace("-","")
-                                .substring(2,4)+callSortTemp
-                        .getDate().replace("-","").substring(0,2)
-                        +callSortTemp.getHour().replace(":",""));
-
-                if (dateHour>dateHourJ){
-                    callSortTemp = listCallsDb.get(j-1);
-                    listCallsSorted.add(j-1, listCallsDb.get(j));
-                    listCallsSorted.add(callSortTemp);
-                }
-                else {
-                    listCallsSorted.add(j, listCallsDb.get(j));
-                }
-
-            }
+        for (int i = listCallsDb.size()-1; i >= 0; i--)  {
+            listCallsSorted.add(listCallsDb.get(i));
         }
         return listCallsSorted;
     }

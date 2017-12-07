@@ -351,6 +351,12 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         initCallElevator();
         String qCallString = String.valueOf(quantityCall+1);
         if (quantityCall<9){
+            qCallString = "000"+qCallString;
+        }
+        else if (quantityCall<100){
+            qCallString = "00"+qCallString;
+        }
+        else if (quantityCall<1000){
             qCallString = "0"+qCallString;
         }
         frequencyUse.setQuantityCall(Integer.parseInt(qCallString));
