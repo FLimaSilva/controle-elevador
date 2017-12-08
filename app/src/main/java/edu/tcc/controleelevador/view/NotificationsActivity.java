@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.br.uellisson.controleelevador.R;
 import edu.tcc.controleelevador.dados.Util;
+import edu.tcc.controleelevador.model.CallElevator;
 import edu.tcc.controleelevador.model.Notify;
 import edu.tcc.controleelevador.view.adapter.NotificationsAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +65,7 @@ public class NotificationsActivity extends BaseActivity {
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     listNotifications.add(child.getValue(Notify.class));
                 }
-                NotificationsAdapter notificationsAdapter = new NotificationsAdapter(listNotifications, getApplicationContext());
+                NotificationsAdapter notificationsAdapter = new NotificationsAdapter(sortListNotificarions(listNotifications), getApplicationContext());
                 rvNotifications.setAdapter(notificationsAdapter);
                 if (progressBar.getVisibility()==View.VISIBLE){
                     progressBar.setVisibility(View.GONE);
@@ -77,5 +78,14 @@ public class NotificationsActivity extends BaseActivity {
         }
         @Override public void onCancelled(DatabaseError error) { }
         });
+    }
+
+    public List<Notify> sortListNotificarions(List<Notify> listNotificationsDb){
+        List<Notify> listNotificationsSorted = new ArrayList<Notify>();
+
+        for (int i = listNotificationsDb.size()-1; i >= 0; i--)  {
+            listNotificationsSorted.add(listNotificationsDb.get(i));
+        }
+        return listNotificationsSorted;
     }
 }
