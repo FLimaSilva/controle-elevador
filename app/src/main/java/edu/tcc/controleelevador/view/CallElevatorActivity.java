@@ -286,6 +286,28 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         }
     }
 
+    public void resetOrigin(){
+        if (checkOriginT.isChecked()){
+            origin = 0;
+        }
+        else if (checkOrigin1.isChecked()){
+            origin = 1;
+        }else {
+            origin = 2;
+        }
+    }
+
+    public void resetDestination(){
+        if (checkDestinationT.isChecked()){
+            destination = 0;
+        }
+        else if (checkDestination1.isChecked()){
+            destination = 1;
+        }else {
+            destination = 2;
+        }
+    }
+
     /**
      * Método que muda os andares de destino, que o usuário não tem acesso,
      * para indisponiveis
@@ -749,6 +771,8 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         btCallElevator.setEnabled(true);
                         manageAcessFloor(floorAllowed);
                         quantityCall++;
+                        resetOrigin();
+                        resetDestination();
                     }
                     manageUpDown();
                 } catch (Throwable e) {
