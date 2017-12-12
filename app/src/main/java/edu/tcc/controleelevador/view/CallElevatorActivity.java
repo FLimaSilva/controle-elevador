@@ -748,6 +748,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
                         manageAcessFloor(floorAllowed);
+                        quantityCall++;
                     }
                     manageUpDown();
                 } catch (Throwable e) {
