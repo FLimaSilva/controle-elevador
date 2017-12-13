@@ -124,6 +124,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         initNfc();
         getListNotifications();
         resolveIntent(getIntent());
+        getQtdCalls();
     }
 
     /**
@@ -417,7 +418,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
         FrequencyUse frequencyUseDate = dataSnapshot.getValue(FrequencyUse.class);
         if (frequencyUseDate!=null){
             if (frequencyUseDate.getQuantityCall()>0){
-                quantityCall = frequencyUseDate.getQuantityCall();
+                //quantityCall = frequencyUseDate.getQuantityCall();
             }
         }
         User currentUser = dataSnapshot.getValue(User.class);
@@ -770,7 +771,7 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                         btCallElevator.setText(getString(R.string.call_elevator));
                         btCallElevator.setEnabled(true);
                         manageAcessFloor(floorAllowed);
-                        quantityCall++;
+                        getQtdCalls();
                         resetOrigin();
                         resetDestination();
                     }
@@ -912,6 +913,27 @@ public class CallElevatorActivity extends BaseActivity implements ValueEventList
                 catch (Throwable e){
                     Toast.makeText(getApplicationContext(), "Erro ao buscar quantidade de notificações!", Toast.LENGTH_LONG ).show();
                     progressBar.setVisibility(View.GONE);
+                }
+            }
+            @Override public void onCancelled(DatabaseError error) { }
+        });
+    }
+
+    public void getQtdCalls(){
+        quantityCall=0;
+        databaseReference.child("frequency_use").child("calls").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            //@RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                 try{
+                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                        quantityCall++;
+                    }
+                }
+                catch (Throwable e){
+//                    Toast.makeText(getApplicationContext(), "Erro ao buscar chamadas!", Toast.LENGTH_LONG ).show();
+//                    progressBar.setVisibility(View.GONE);
                 }
             }
             @Override public void onCancelled(DatabaseError error) { }
